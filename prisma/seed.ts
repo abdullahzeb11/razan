@@ -71,7 +71,9 @@ async function main() {
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
   if (email && password) {
-    const passwordHash = await bcrypt.hash(password, 12);
+    // Cost factor 10 — fast enough on free-tier compute, still ~70ms to
+    // verify which is the practical anti-brute-force floor for an admin tool.
+    const passwordHash = await bcrypt.hash(password, 10);
     await prisma.user.upsert({
       where: { email },
       create: {
