@@ -10,6 +10,7 @@ import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { AppointmentList, type CustomerAppointment } from "@/components/account/appointment-list";
 import { ProfileCard } from "@/components/account/profile-card";
+import { signOutCustomer } from "@/app/actions/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -100,7 +101,7 @@ export default async function AccountDashboard({
                 {t("bookAnother")}
               </Link>
             </Button>
-            <form action="/api/auth/signout" method="POST">
+            <form action={signOutCustomer}>
               <Button type="submit" variant="ghost" size="sm">
                 <LogOut className="h-4 w-4" />
                 {t("signOut")}

@@ -12,6 +12,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { LogoMark } from "@/components/brand/logo";
+import { signOutAdmin } from "@/app/actions/auth";
 import { cn } from "@/lib/utils";
 
 type NavItem = {
@@ -105,7 +106,7 @@ export function AdminSidebar({
           <p className="truncate text-[11px] text-muted-foreground">
             {user.email}
           </p>
-          <form action="/api/auth/signout" method="POST" className="mt-3">
+          <form action={signOutAdmin} className="mt-3">
             <button
               type="submit"
               className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-border bg-background px-3 py-1.5 text-xs font-medium transition-colors hover:bg-destructive hover:text-destructive-foreground"

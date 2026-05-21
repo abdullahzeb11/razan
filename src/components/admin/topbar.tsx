@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { LogoMark } from "@/components/brand/logo";
+import { signOutAdmin } from "@/app/actions/auth";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -50,7 +51,7 @@ export function AdminTopbar({ title }: { title: string }) {
               {n.label}
             </Link>
           ))}
-          <form action="/api/auth/signout" method="POST">
+          <form action={signOutAdmin}>
             <button
               type="submit"
               className="mt-2 w-full rounded-lg border border-border px-3 py-2 text-sm hover:bg-destructive hover:text-destructive-foreground"
