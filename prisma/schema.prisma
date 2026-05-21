@@ -1,0 +1,320 @@
+// Al-Shifa Hijama — full platform schema.
+// Designed once, evolved via migrations. Covers every module in the spec:
+// auth, appointments, services, reviews, blog, gallery, contact, settings.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─── Auth & users ──────────────────────────────────────────────────────────
+
+enum Role {
+  CUSTOMER
+  STAFF
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  UNSPECIFIED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  phone         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  role          Role      @default(CUSTOMER)
+  gender        Gender    @default(UNSPECIFIED)
+  locale        String    @default("ar")
+  dateOfBirth   DateTime?
+  city          String?
+  notes         String?
+
+  accounts      Account[]
+  sessions      Session[]
+  appointments  Appointment[]
+  reviews       Review[]
+  notifications Notification[]
+  posts         Post[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([role])
+  @@index([phone])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─── Services & pricing ────────────────────────────────────────────────────
+
+model Service {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  // Bilingual content
+  nameEn          String
+  nameAr          String
+  descriptionEn   String   @db.Text
+  descriptionAr   String   @db.Text
+  shortEn         String?
+  shortAr         String?
+  // Pricing & duration
+  priceSar        Int      // halalas? — keeping whole SAR for simplicity
+  durationMinutes Int
+  // UX
+  icon            String?  // lucide name
+  image           String?
+  featured        Boolean  @default(false)
+  homeVisit       Boolean  @default(false)
+  active          Boolean  @default(true)
+  sortOrder       Int      @default(0)
+
+  appointments Appointment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([active, featured])
+}
+
+// ─── Appointments ──────────────────────────────────────────────────────────
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum AppointmentLocation {
+  CLINIC
+  HOME_VISIT
+}
+
+model Appointment {
+  id           String              @id @default(cuid())
+  userId       String?
+  serviceId    String
+  status       AppointmentStatus   @default(PENDING)
+  location     AppointmentLocation @default(CLINIC)
+  scheduledAt  DateTime
+  durationMin  Int
+  // Guest booking fallback (when not logged in)
+  guestName    String?
+  guestPhone   String?
+  guestEmail   String?
+  // Address for home visits
+  addressLine  String?
+  city         String?
+  // Internal
+  notes        String?             @db.Text
+  cancelReason String?
+  priceSar     Int
+  // Reminders
+  reminderSent Boolean             @default(false)
+
+  user    User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  service Service @relation(fields: [serviceId], references: [id])
+  review  Review?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([scheduledAt])
+  @@index([status])
+  @@index([userId])
+}
+
+// ─── Reviews ───────────────────────────────────────────────────────────────
+
+model Review {
+  id            String   @id @default(cuid())
+  appointmentId String?  @unique
+  userId        String?
+  authorName    String
+  rating        Int      // 1..5
+  body          String   @db.Text
+  approved      Boolean  @default(false)
+  featured      Boolean  @default(false)
+
+  appointment Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+  user        User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+
+  @@index([approved, featured])
+}
+
+// ─── Blog (bilingual) ──────────────────────────────────────────────────────
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Category {
+  id     String @id @default(cuid())
+  slug   String @unique
+  nameEn String
+  nameAr String
+  posts  Post[]
+}
+
+model Post {
+  id            String     @id @default(cuid())
+  slug          String     @unique
+  locale        String     // "en" | "ar"
+  status        PostStatus @default(DRAFT)
+  title         String
+  excerpt       String?    @db.Text
+  body          String     @db.Text  // MDX or HTML
+  coverImage    String?
+  // SEO
+  metaTitle     String?
+  metaDescription String?  @db.Text
+  ogImage       String?
+  readingMinutes Int       @default(5)
+
+  authorId   String?
+  categoryId String?
+
+  author   User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([locale, status, publishedAt])
+}
+
+// ─── Gallery (before/after) ────────────────────────────────────────────────
+
+model GalleryItem {
+  id        String  @id @default(cuid())
+  beforeUrl String
+  afterUrl  String
+  captionEn String?
+  captionAr String?
+  featured  Boolean @default(false)
+  sortOrder Int     @default(0)
+  createdAt DateTime @default(now())
+}
+
+// ─── Contact inbox ─────────────────────────────────────────────────────────
+
+enum MessageStatus {
+  NEW
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+model ContactMessage {
+  id      String        @id @default(cuid())
+  name    String
+  phone   String?
+  email   String?
+  subject String?
+  message String        @db.Text
+  status  MessageStatus @default(NEW)
+  source  String?       // "landing" | "chat" | ...
+  createdAt DateTime    @default(now())
+
+  @@index([status, createdAt])
+}
+
+// ─── Notifications ─────────────────────────────────────────────────────────
+
+enum NotificationChannel {
+  IN_APP
+  WHATSAPP
+  EMAIL
+}
+
+model Notification {
+  id      String              @id @default(cuid())
+  userId  String
+  channel NotificationChannel @default(IN_APP)
+  title   String
+  body    String              @db.Text
+  read    Boolean             @default(false)
+  payload Json?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, read])
+}
+
+// ─── Settings (singleton key/value for CMS) ────────────────────────────────
+
+model Setting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Phone OTP (customer auth) ─────────────────────────────────────────────
+//
+// Codes are stored hashed (bcrypt). Each phone may have one active code at a
+// time — we overwrite on resend. Attempts are bounded to mitigate brute force.
+
+model OneTimeCode {
+  id         String   @id @default(cuid())
+  phone      String   @unique
+  codeHash   String
+  expiresAt  DateTime
+  attempts   Int      @default(0)
+  consumedAt DateTime?
+  createdAt  DateTime @default(now())
+
+  @@index([phone, expiresAt])
+}

@@ -1,0 +1,377 @@
+{
+  "Meta": {
+    "title": "Al-Shifa Hijama Center — The sunnah of healing, refined.",
+    "description": "Licensed prophetic cupping (hijama) in Saudi Arabia. Single-use sterile tools, certified practitioners, in-clinic and home visits. Book in under a minute.",
+    "ogAlt": "Al-Shifa Hijama Center",
+    "keywords": "hijama, cupping therapy Saudi Arabia, hijama Riyadh, hijama Jeddah, prophetic medicine, sunnah cupping, wet cupping"
+  },
+  "Nav": {
+    "services": "Services",
+    "benefits": "Benefits",
+    "sunnah": "The Sunnah",
+    "gallery": "Gallery",
+    "testimonials": "Reviews",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "blog": "Journal",
+    "book": "Book appointment",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "signIn": "Sign in",
+    "account": "My account"
+  },
+  "Hero": {
+    "eyebrow": "Certified prophetic cupping",
+    "title": "The sunnah of healing,",
+    "titleAccent": "refined.",
+    "subtitle": "We practice hijama with reverence for the sunnah, clinical precision, and a calm, considered hospitality. MoH-licensed practitioners, single-use sterile instruments, and total privacy for every guest.",
+    "ctaBook": "Book your session",
+    "ctaWhatsapp": "Chat on WhatsApp",
+    "trust1": "Saudi MoH licensed",
+    "trust2": "Single-use sterile tools",
+    "trust3": "Sunnah days available",
+    "ratingLabel": "Rated {rating}/5 by over {count} patients",
+    "stat1Value": "7,200+",
+    "stat1Label": "Sessions delivered",
+    "stat2Value": "12 yrs",
+    "stat2Label": "Clinical experience",
+    "stat3Value": "4.9",
+    "stat3Label": "Average rating"
+  },
+  "Benefits": {
+    "eyebrow": "Why hijama?",
+    "title": "A prophetic therapy that modern medicine respects",
+    "subtitle": "Wet cupping has been shown to support circulation, ease chronic pain, and improve recovery. Every benefit below is grounded in clinical reviews and our daily practice.",
+    "items": {
+      "circulation": {
+        "title": "Circulation",
+        "body": "Hijama stimulates local blood flow and helps relieve vascular stasis in treated areas."
+      },
+      "detox": {
+        "title": "Cellular renewal",
+        "body": "Wet cupping aids the removal of stagnant interstitial fluid and supports tissue renewal."
+      },
+      "pain": {
+        "title": "Chronic pain relief",
+        "body": "Strongest evidence is for lower-back, neck, shoulder pain, and migraine."
+      },
+      "immune": {
+        "title": "Immune support",
+        "body": "Mild local trauma triggers a controlled inflammatory response that supports immune activity."
+      },
+      "stress": {
+        "title": "Stress & sleep",
+        "body": "Patients consistently report deeper sleep and lower stress in the days that follow."
+      },
+      "energy": {
+        "title": "Renewed energy",
+        "body": "A lighter, more energetic feeling is reported by most patients within a week."
+      }
+    }
+  },
+  "Sunnah": {
+    "eyebrow": "From the prophetic tradition",
+    "title": "“Indeed, the best of remedies you have is hijama.”",
+    "narrator": "— Sahih al-Bukhari & Muslim",
+    "body": "Hijama is among the most emphasized therapies in the prophetic tradition. At Al-Shifa we keep this practice alive with modern clinical standards, and align our calendar with the recommended sunnah days.",
+    "daysTitle": "The recommended days",
+    "daysBody": "The 17th, 19th, and 21st of every Hijri month — as narrated from the Prophet ﷺ.",
+    "viewSchedule": "View the Hijri calendar"
+  },
+  "Services": {
+    "eyebrow": "Our services",
+    "title": "Hijama packages",
+    "subtitle": "Three packages built around real patient needs. Every session includes a consultation, full sterilization, and a post-session report.",
+    "duration": "{minutes} min",
+    "currency": "SAR",
+    "from": "from",
+    "book": "Book now",
+    "popular": "Most booked",
+    "items": {
+      "classic": {
+        "name": "Classic Hijama",
+        "description": "Wet cupping at the primary sunnah points (kahil & akhda'ayn). Ideal for prevention, headaches, and neck tension.",
+        "includes": ["15-min consultation", "5–7 sunnah points", "Single-use sterile kit", "Post-session report"]
+      },
+      "therapeutic": {
+        "name": "Therapeutic Hijama",
+        "description": "A tailored protocol for back, shoulder, and sciatic pain — paired with adjunct massage and a personal point-map.",
+        "includes": ["30-min consultation", "10–14 targeted points", "Adjunct massage", "7-day follow-up"]
+      },
+      "home": {
+        "name": "Home Visit",
+        "description": "We come to you in Riyadh. The same protocol as the clinic, with the highest sterilization standards and total privacy.",
+        "includes": ["We respect your schedule", "Full on-site sterilization", "Portable medical-grade kit", "Riyadh coverage"]
+      }
+    }
+  },
+  "Gallery": {
+    "eyebrow": "Before & after",
+    "title": "Real results from our patients",
+    "subtitle": "Published with consent. Individual outcomes may vary.",
+    "before": "Before",
+    "after": "After"
+  },
+  "Testimonials": {
+    "eyebrow": "Patient stories",
+    "title": "Trust, built one session at a time",
+    "subtitle": "Over 7,200 sessions and thousands of stories. Here are a few.",
+    "items": {
+      "0": {
+        "name": "Ahmed Al-Otaibi",
+        "city": "Riyadh",
+        "body": "Honestly, my back pain dropped noticeably after just two sessions. Sterilization is professional and the practitioner is experienced. Highly recommended."
+      },
+      "1": {
+        "name": "Noura Al-Qahtani",
+        "city": "Riyadh",
+        "body": "First time trying hijama — they received me in a private women's room with a certified practitioner. A calm, dignified experience."
+      },
+      "2": {
+        "name": "Khalid Al-Shahri",
+        "city": "Jeddah",
+        "body": "The home visit was right on time. Kit was spotless and the result was excellent — I felt the difference by the next day."
+      },
+      "3": {
+        "name": "Sarah Al-Dossari",
+        "city": "Riyadh",
+        "body": "I love that scheduling is flexible and that they follow up after the session. I now visit them on the sunnah days every month."
+      }
+    }
+  },
+  "FAQ": {
+    "eyebrow": "Frequently asked",
+    "title": "Everything you need before booking",
+    "items": {
+      "0": {
+        "q": "Does hijama hurt?",
+        "a": "It feels like a light pinch during the small superficial scratches. Most patients describe it as far easier than expected, and it's over quickly."
+      },
+      "1": {
+        "q": "How long is a session?",
+        "a": "Between 30 and 60 minutes including consultation, depending on the package."
+      },
+      "2": {
+        "q": "Are you licensed?",
+        "a": "Yes. The clinic and our practitioners are licensed by the Saudi Ministry of Health under the complementary medicine framework."
+      },
+      "3": {
+        "q": "Which days are preferred?",
+        "a": "The 17th, 19th, and 21st of each Hijri month. We open extra slots on those days."
+      },
+      "4": {
+        "q": "When is hijama not advised?",
+        "a": "For pregnant women, those with bleeding disorders, or on blood thinners. We'll assess in your consultation."
+      },
+      "5": {
+        "q": "Do you offer home visits?",
+        "a": "Yes, within Riyadh. You can book it directly from the services section."
+      }
+    }
+  },
+  "Map": {
+    "eyebrow": "Find us",
+    "title": "In the heart of Riyadh",
+    "subtitle": "A quiet location with private parking and separate male and female rooms.",
+    "address": "King Fahd Rd, Al-Olaya, Riyadh 12212",
+    "hours": "Sat – Thu: 9:00 AM – 10:00 PM",
+    "directions": "Get directions",
+    "call": "Call us"
+  },
+  "Contact": {
+    "eyebrow": "Contact",
+    "title": "Got a question? We're here.",
+    "subtitle": "Leave us a message and we'll reply within one business hour.",
+    "form": {
+      "name": "Full name",
+      "phone": "Mobile number",
+      "email": "Email",
+      "message": "Your message",
+      "submit": "Send message",
+      "submitting": "Sending…",
+      "success": "Message received. We'll be in touch shortly.",
+      "error": "Could not send the message. Please try again."
+    }
+  },
+  "CTA": {
+    "title": "Begin your journey with Al-Shifa",
+    "subtitle": "Book in under a minute. We'll help you choose the right package for your case.",
+    "book": "Book now",
+    "whatsapp": "Chat with us"
+  },
+  "Footer": {
+    "tagline": "Al-Shifa — the sunnah of healing, refined.",
+    "navTitle": "Explore",
+    "servicesTitle": "Services",
+    "contactTitle": "Contact",
+    "newsletterTitle": "Get gentle health notes",
+    "newsletterBody": "One short, useful note from our practitioners every two weeks. Never spam.",
+    "subscribe": "Subscribe",
+    "rights": "© {year} Al-Shifa Hijama Center. All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "Whatsapp": {
+    "label": "Chat on WhatsApp",
+    "prefilled": "As-salamu alaykum, I'd like to book a hijama appointment."
+  },
+  "Theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "Booking": {
+    "metaTitle": "Book a hijama appointment",
+    "metaDescription": "Reserve your session at Al-Shifa — pick a package and a time in under a minute.",
+    "eyebrow": "Effortless booking",
+    "title": "Book your appointment in a few steps",
+    "subtitle": "Choose a package, pick a time, share your details — a WhatsApp confirmation lands instantly.",
+    "next": "Next",
+    "back": "Back",
+    "confirm": "Confirm booking",
+    "confirming": "Confirming…",
+    "step1": {
+      "short": "Service",
+      "title": "Choose your package",
+      "subtitle": "Three packages tailored to different needs — every session includes a consultation and full sterilization."
+    },
+    "step2": {
+      "short": "Date & time",
+      "title": "When works for you?",
+      "subtitle": "Pick a day and time. Dates marked in gold are the recommended sunnah days (17, 19, 21 Hijri).",
+      "sunnahLegend": "Recommended sunnah day",
+      "noSlots": "No slots available on this day — try another.",
+      "periods": {
+        "morning": "Morning",
+        "afternoon": "Afternoon",
+        "evening": "Evening"
+      }
+    },
+    "step3": {
+      "short": "Details",
+      "title": "Your details",
+      "subtitle": "We need your name and mobile to send the booking confirmation.",
+      "name": "Full name",
+      "phone": "Mobile number",
+      "email": "Email (optional)",
+      "address": "Street address",
+      "city": "City",
+      "notes": "Notes (optional)",
+      "location": {
+        "clinic": "At the clinic",
+        "home": "Home visit"
+      }
+    },
+    "step4": {
+      "short": "Review",
+      "title": "Review your booking",
+      "subtitle": "Double-check the details. We'll WhatsApp you to confirm in minutes.",
+      "service": "Service",
+      "date": "Date",
+      "time": "Time",
+      "location": "Location",
+      "clinic": "At the clinic — Riyadh",
+      "home": "Home visit",
+      "name": "Name",
+      "phone": "Mobile",
+      "email": "Email",
+      "notes": "Notes",
+      "minutes": "min",
+      "terms": "By confirming you accept our cancellation policy and agree that the clinic may contact you on WhatsApp to finalize the appointment."
+    },
+    "confirmed": {
+      "title": "Your booking is in",
+      "subtitle": "Thank you {name} — we'll WhatsApp you within minutes to confirm the appointment.",
+      "reference": "Booking ref",
+      "service": "Service",
+      "date": "Date",
+      "time": "Time",
+      "location": "Location",
+      "home": "Home visit",
+      "name": "Name",
+      "phone": "Mobile",
+      "email": "Email",
+      "minutes": "min",
+      "approvalNote": "Your appointment is pending our review. You'll receive a final WhatsApp confirmation shortly.",
+      "whatsappCta": "Chat on WhatsApp",
+      "whatsappPrefilled": "As-salamu alaykum, I just booked a hijama appointment and want to confirm it.",
+      "addToCalendar": "Add to calendar",
+      "backHome": "Back to home"
+    }
+  },
+  "Account": {
+    "login": {
+      "title": "Sign in",
+      "subtitle": "We'll sign you in with a code sent to your WhatsApp.",
+      "heroEyebrow": "Patient account",
+      "heroTitle": "Your healing journey, in your pocket.",
+      "heroBody": "Track upcoming sessions, reschedule with one tap, and keep your details ready for every booking — from any device.",
+      "phone": "Mobile number",
+      "sendCode": "Send code",
+      "sending": "Sending…",
+      "invalidPhone": "That phone number doesn't look right.",
+      "changeNumber": "Change number",
+      "sentTo": "Code sent to {phone}",
+      "code": "Verification code",
+      "verify": "Verify & sign in",
+      "verifying": "Verifying…",
+      "invalidCode": "Code is invalid or expired.",
+      "resend": "Resend code",
+      "resendIn": "Resend in {seconds}s",
+      "backToSite": "Back to site",
+      "welcome": "Welcome! What should we call you on future bookings?",
+      "yourName": "Your full name",
+      "saving": "Saving…",
+      "finish": "Finish sign-up",
+      "invalidName": "That name is too short"
+    },
+    "dashboard": {
+      "title": "My account",
+      "eyebrow": "Welcome back",
+      "greeting": "Hi, {name}",
+      "subtitle": "Everything about your appointments and profile in one place.",
+      "bookAnother": "Book another",
+      "signOut": "Sign out",
+      "upcoming": "Upcoming",
+      "past": "History",
+      "emptyUpcoming": "No upcoming sessions. Book your next one.",
+      "emptyPast": "No past sessions yet.",
+      "reference": "Ref",
+      "home": "Home visit",
+      "clinic": "At the clinic",
+      "reschedule": "Reschedule",
+      "cancel": "Cancel",
+      "cancelConfirm": "Sure?",
+      "cancelYes": "Yes",
+      "cancelNo": "No",
+      "cancelError": "Couldn't cancel — please try again.",
+      "rescheduleTitle": "Pick a new time",
+      "rescheduleSubtitle": "We'll move your appointment immediately.",
+      "rescheduleCancel": "Cancel",
+      "rescheduleConfirm": "Confirm change",
+      "rescheduling": "Updating…",
+      "rescheduleError": "Couldn't reschedule — pick another time.",
+      "status": {
+        "PENDING": "Pending",
+        "CONFIRMED": "Confirmed",
+        "COMPLETED": "Completed",
+        "CANCELLED": "Cancelled",
+        "NO_SHOW": "No-show"
+      }
+    },
+    "profile": {
+      "title": "Your details",
+      "subtitle": "We only use these for booking confirmations.",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "name": "Name",
+      "phone": "Mobile",
+      "phoneLocked": "Locked — this is your sign-in",
+      "email": "Email",
+      "city": "City"
+    }
+  }
+}
