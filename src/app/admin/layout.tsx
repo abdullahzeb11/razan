@@ -33,9 +33,10 @@ export default async function AdminLayout({
     );
   }
 
-  const pendingCount = await prisma.appointment.count({
-    where: { status: "PENDING" },
-  });
+  const [pendingCount, newMessagesCount] = await Promise.all([
+    prisma.appointment.count({ where: { status: "PENDING" } }),
+    prisma.contactMessage.count({ where: { status: "NEW" } }),
+  ]);
 
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning className={fontVariables}>
@@ -45,6 +46,7 @@ export default async function AdminLayout({
             <AdminSidebar
               user={{ name: session.user.name, email: session.user.email }}
               pendingCount={pendingCount}
+              newMessagesCount={newMessagesCount}
             />
             <div className="flex min-w-0 flex-1 flex-col">
               <AdminTopbar title="Al-Shifa Admin" />

@@ -9,6 +9,7 @@ import {
   Briefcase,
   Star,
   FileText,
+  Inbox,
   LogOut,
   ExternalLink,
 } from "lucide-react";
@@ -29,15 +30,18 @@ const NAV: NavItem[] = [
   { href: "/admin/customers", label: "Customers", icon: Users },
   { href: "/admin/services", label: "Services", icon: Briefcase },
   { href: "/admin/posts", label: "Posts", icon: FileText },
+  { href: "/admin/messages", label: "Messages", icon: Inbox },
   { href: "/admin/reviews", label: "Reviews", icon: Star },
 ];
 
 export function AdminSidebar({
   user,
   pendingCount,
+  newMessagesCount,
 }: {
   user: { name?: string | null; email?: string | null };
   pendingCount: number;
+  newMessagesCount: number;
 }) {
   const pathname = usePathname();
 
@@ -74,18 +78,27 @@ export function AdminSidebar({
                 <Icon className="h-4 w-4" />
                 {item.label}
               </span>
-              {item.label === "Appointments" && pendingCount > 0 ? (
-                <span
-                  className={cn(
-                    "rounded-full px-1.5 py-0.5 text-[10px] font-semibold",
-                    active
-                      ? "bg-primary-foreground/20 text-primary-foreground"
-                      : "bg-gold/20 text-gold-foreground",
-                  )}
-                >
-                  {pendingCount}
-                </span>
-              ) : null}
+              {(() => {
+                const badge =
+                  item.label === "Appointments"
+                    ? pendingCount
+                    : item.label === "Messages"
+                      ? newMessagesCount
+                      : 0;
+                if (badge <= 0) return null;
+                return (
+                  <span
+                    className={cn(
+                      "rounded-full px-1.5 py-0.5 text-[10px] font-semibold",
+                      active
+                        ? "bg-primary-foreground/20 text-primary-foreground"
+                        : "bg-gold/20 text-gold-foreground",
+                    )}
+                  >
+                    {badge}
+                  </span>
+                );
+              })()}
             </Link>
           );
         })}
