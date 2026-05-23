@@ -160,10 +160,10 @@ export function AppointmentCard({ a }: { a: AppointmentCardData }) {
               target="_blank"
               rel="noreferrer"
               title="Send WhatsApp confirmation"
-              className="inline-flex items-center gap-1 rounded-full bg-[#25D366] px-2 py-1 text-[10px] font-semibold text-white transition-colors hover:bg-[#1da851]"
+              aria-label="Send WhatsApp confirmation"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#25D366] text-white transition-colors hover:bg-[#1da851]"
             >
-              <WAGlyph className="h-3 w-3" />
-              Confirm
+              <WAGlyph className="h-3.5 w-3.5" />
             </a>
           ) : null}
           {next.length > 0 ? (
