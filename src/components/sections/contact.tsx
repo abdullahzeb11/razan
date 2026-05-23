@@ -48,7 +48,7 @@ export function Contact() {
   }
 
   return (
-    <section className="relative py-20 sm:py-28">
+    <section className="relative py-16 sm:py-24 lg:py-28">
       <div className="container-narrow">
         <SectionHeader
           eyebrow={t("eyebrow")}
@@ -58,7 +58,7 @@ export function Contact() {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mt-12 rounded-3xl border border-border bg-card p-7 shadow-soft sm:p-10"
+          className="mt-10 rounded-2xl border border-border bg-card p-5 shadow-soft sm:mt-12 sm:rounded-3xl sm:p-10"
           noValidate
         >
           <div className="grid gap-5 sm:grid-cols-2">
@@ -91,7 +91,7 @@ export function Contact() {
             />
           </div>
 
-          <div className="mt-7 flex items-center justify-between gap-4">
+          <div className="mt-6 flex flex-col-reverse items-stretch gap-3 sm:mt-7 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
             <div className="text-sm">
               {state === "success" && (
                 <span className="inline-flex items-center gap-2 text-primary">
@@ -106,7 +106,13 @@ export function Contact() {
                 </span>
               )}
             </div>
-            <Button type="submit" variant="gold" size="lg" disabled={state === "loading"}>
+            <Button
+              type="submit"
+              variant="gold"
+              size="lg"
+              disabled={state === "loading"}
+              className="w-full justify-center sm:w-auto"
+            >
               {state === "loading" ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />

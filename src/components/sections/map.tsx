@@ -17,7 +17,7 @@ export function MapSection() {
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
 
   return (
-    <section id="contact" className="relative py-20 sm:py-28">
+    <section id="contact" className="relative py-16 sm:py-24 lg:py-28">
       <div className="container-wide">
         <SectionHeader
           eyebrow={t("eyebrow")}
@@ -25,9 +25,9 @@ export function MapSection() {
           subtitle={t("subtitle")}
         />
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-12">
+        <div className="mt-10 grid gap-6 sm:mt-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <div className="aspect-[5/4] overflow-hidden rounded-3xl border border-border bg-card shadow-soft sm:aspect-[16/10]">
+            <div className="aspect-[5/4] overflow-hidden rounded-2xl border border-border bg-card shadow-soft sm:aspect-[16/10] sm:rounded-3xl">
               <iframe
                 title="Al-Shifa Hijama Center location"
                 src={embedUrl}
@@ -40,7 +40,7 @@ export function MapSection() {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="rounded-3xl border border-border bg-card p-7">
+            <div className="rounded-2xl border border-border bg-card p-5 sm:rounded-3xl sm:p-7">
               <div className="space-y-5 text-sm">
                 <InfoRow icon={<MapPin className="h-4 w-4" />} title={t("address")}>
                   {locale === "ar"
@@ -66,7 +66,7 @@ export function MapSection() {
                 </InfoRow>
               </div>
 
-              <div className="mt-7 grid gap-3 sm:grid-cols-2">
+              <div className="mt-6 grid gap-2.5 sm:mt-7 sm:grid-cols-2 sm:gap-3">
                 <Button asChild variant="default">
                   <a
                     href={directionsUrl}

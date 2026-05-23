@@ -18,7 +18,7 @@ export function Hero() {
       <div className="absolute inset-x-0 -top-32 -z-10 h-[520px] bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.18),transparent_60%)]" />
       <div className="absolute end-[-15%] top-[-10%] -z-10 h-[480px] w-[480px] rounded-full bg-gold/10 blur-3xl" />
 
-      <div className="container-wide grid items-center gap-12 pb-16 lg:grid-cols-12 lg:gap-8 lg:pb-24">
+      <div className="container-wide grid items-center gap-10 pb-12 sm:gap-12 sm:pb-16 lg:grid-cols-12 lg:gap-8 lg:pb-24">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
@@ -30,16 +30,16 @@ export function Hero() {
             {t("eyebrow")}
           </div>
 
-          <h1 className="mt-6 text-display-2xl balance">
+          <h1 className="mt-5 text-display-xl balance sm:mt-6 sm:text-display-2xl">
             {t("title")}{" "}
             <span className="text-gold-leaf">{t("titleAccent")}</span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
             {t("subtitle")}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-7 flex flex-wrap items-center gap-3 sm:mt-8">
             <Button asChild variant="gold" size="lg">
               <Link href="/book">
                 {t("ctaBook")}
@@ -95,7 +95,7 @@ function TrustChip({ icon, label }: { icon: React.ReactNode; label: string }) {
 function HeroCard() {
   const t = useTranslations("Hero");
   return (
-    <div className="relative mx-auto aspect-[4/5] max-w-md">
+    <div className="relative mx-auto mb-8 aspect-[4/5] max-w-[320px] sm:mb-0 sm:max-w-md">
       {/* Outer glass card with arabesque pattern */}
       <div className="absolute inset-0 glass rounded-[2rem] p-2">
         <div className="relative h-full w-full overflow-hidden rounded-[1.65rem] bg-gradient-to-br from-primary-deep via-primary to-primary-deep">
@@ -178,7 +178,7 @@ function FloatingTile({
       style={{ animationDelay: `${delay}s` }}
     >
       <div
-        className={`min-w-[120px] rounded-2xl border border-white/15 px-4 py-3 backdrop-blur-xl ${
+        className={`min-w-[100px] rounded-xl border border-white/15 px-3 py-2.5 backdrop-blur-xl sm:min-w-[120px] sm:rounded-2xl sm:px-4 sm:py-3 ${
           highlight
             ? "bg-gold/95 text-gold-foreground"
             : "bg-white/10 text-white"
@@ -186,9 +186,9 @@ function FloatingTile({
       >
         <div className="flex items-center gap-1.5">
           {rating ? <Star className="h-3.5 w-3.5 fill-gold text-gold" /> : null}
-          <p className="text-lg font-semibold leading-none">{value}</p>
+          <p className="text-base font-semibold leading-none sm:text-lg">{value}</p>
         </div>
-        <p className="mt-1 text-[11px] uppercase tracking-wider opacity-80">
+        <p className="mt-1 text-[10px] uppercase tracking-wider opacity-80 sm:text-[11px]">
           {label}
         </p>
       </div>
@@ -204,8 +204,8 @@ function StatsStrip() {
     { v: t("stat3Value"), l: t("stat3Label") },
   ];
   return (
-    <div className="container-wide py-10">
-      <dl className="grid grid-cols-3 gap-6">
+    <div className="container-wide py-8 sm:py-10">
+      <dl className="grid grid-cols-3 gap-3 sm:gap-6">
         {stats.map((s, i) => (
           <motion.div
             key={i}
@@ -215,10 +215,10 @@ function StatsStrip() {
             transition={{ duration: 0.6, delay: i * 0.08 }}
             className="text-center sm:text-start"
           >
-            <dt className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+            <dt className="text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground sm:text-[11px] sm:tracking-[0.18em]">
               {s.l}
             </dt>
-            <dd className="mt-2 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+            <dd className="mt-1.5 text-xl font-semibold tracking-tight text-foreground sm:mt-2 sm:text-3xl lg:text-4xl">
               {s.v}
             </dd>
           </motion.div>

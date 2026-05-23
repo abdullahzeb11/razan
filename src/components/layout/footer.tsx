@@ -22,15 +22,15 @@ export function Footer() {
 
   return (
     <footer className="relative mt-24 border-t border-border bg-gradient-to-b from-background to-secondary/40">
-      <div className="container-wide py-16">
-        <div className="grid gap-12 lg:grid-cols-12">
+      <div className="container-wide py-12 sm:py-16">
+        <div className="grid gap-10 sm:gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <LogoWordmark locale={locale} />
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
               {t("tagline")}
             </p>
 
-            <form className="mt-7 flex max-w-md items-center gap-2">
+            <form className="mt-6 flex max-w-md flex-col gap-2 sm:mt-7 sm:flex-row sm:items-center">
               <label className="sr-only" htmlFor="newsletter">
                 {t("newsletterTitle")}
               </label>
@@ -38,9 +38,14 @@ export function Footer() {
                 id="newsletter"
                 type="email"
                 placeholder={t("newsletterTitle")}
-                className="h-11 flex-1 rounded-full border border-border bg-background px-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="h-11 w-full flex-1 rounded-full border border-border bg-background px-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
-              <Button type="submit" variant="default" size="sm" className="h-11 px-5">
+              <Button
+                type="submit"
+                variant="default"
+                size="sm"
+                className="h-11 w-full justify-center px-5 sm:w-auto"
+              >
                 <Send className="h-4 w-4" />
                 {t("subscribe")}
               </Button>
