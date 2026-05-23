@@ -54,5 +54,11 @@ export default auth((req: NextRequest & { auth?: unknown }) => {
 });
 
 export const config = {
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  // Exclude Next.js conventions that live at the app root (no locale prefix):
+  // - /api/*, /_next/*, /_vercel/* — framework internals
+  // - /icon, /apple-icon, /opengraph-image — file-convention routes
+  // - any path containing a dot (e.g. /favicon.ico, /sitemap.xml, /robots.txt)
+  matcher: [
+    "/((?!api|_next|_vercel|icon|apple-icon|opengraph-image|.*\\..*).*)",
+  ],
 };
