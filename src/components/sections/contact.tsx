@@ -10,14 +10,18 @@ import { Button } from "@/components/ui/button";
 import { SectionHeader } from "./section";
 
 const schema = z.object({
-  name: z.string().min(2).max(80),
+  name: z.string().min(2, "Name is too short").max(80),
   phone: z
     .string()
-    .min(8)
+    .min(8, "Phone number is too short")
     .max(20)
-    .regex(/^[+\d\s()-]+$/, "Invalid phone"),
-  email: z.string().email().optional().or(z.literal("")),
-  message: z.string().min(8).max(1000),
+    .regex(/^[+\d\s()-]+$/, "Phone number looks invalid"),
+  email: z
+    .string()
+    .email("Email looks invalid")
+    .optional()
+    .or(z.literal("")),
+  message: z.string().min(8, "Message is too short").max(1000),
 });
 type FormValues = z.infer<typeof schema>;
 
@@ -29,7 +33,11 @@ export function Contact() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>({ resolver: zodResolver(schema) });
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    mode: "onBlur",
+    reValidateMode: "onChange",
+  });
 
   async function onSubmit(values: FormValues) {
     setState("loading");
