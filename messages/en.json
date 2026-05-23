@@ -301,6 +301,26 @@
       "backHome": "Back to home"
     }
   },
+  "Chat": {
+    "open": "Open chat",
+    "close": "Close chat",
+    "title": "Ask Al-Shifa",
+    "subtitle": "We usually reply instantly",
+    "greetingTitle": "How can we help?",
+    "greetingBody": "Ask about hijama, our services, sunnah days, or how to book. We won't give medical advice — just clear, practical answers.",
+    "starter1": "What's the difference between your services?",
+    "starter2": "When are the sunnah days this month?",
+    "starter3": "How do I book an appointment?",
+    "starter4": "Do you offer home visits?",
+    "placeholder": "Type your question…",
+    "send": "Send",
+    "stop": "Stop",
+    "reset": "Start a new chat",
+    "disclaimer": "Replies are AI-generated. For medical advice, please consult a doctor.",
+    "errorRateLimit": "Too many messages — please wait a moment and try again.",
+    "errorOffline": "AI chat is offline. Please WhatsApp us instead.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
   "Blog": {
     "metaTitle": "Journal — Al-Shifa Hijama Center",
     "metaDescription": "Reflections on hijama, prophetic medicine, pain management, and the everyday wellness practices of our patients.",

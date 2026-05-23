@@ -103,6 +103,10 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-8px)" },
         },
+        "chat-bounce": {
+          "0%, 80%, 100%": { transform: "translateY(0)", opacity: "0.5" },
+          "40%": { transform: "translateY(-4px)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -110,6 +114,7 @@ const config: Config = {
         "fade-up": "fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
         "shimmer": "shimmer 3s linear infinite",
         "float": "float 6s ease-in-out infinite",
+        "chat-bounce": "chat-bounce 1.2s ease-in-out infinite",
       },
     },
   },

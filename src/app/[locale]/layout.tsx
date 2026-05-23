@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppFloat } from "@/components/layout/whatsapp-float";
+import { ChatWidget } from "@/components/chat/chat-widget";
 import { fontVariables } from "@/lib/fonts";
 import { siteConfig } from "@/lib/site-config";
 import { localBusinessJsonLd } from "@/lib/seo";
@@ -111,6 +112,7 @@ export default async function LocaleLayout({
             <main>{children}</main>
             <Footer />
             <WhatsAppFloat />
+            <ChatWidget />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
