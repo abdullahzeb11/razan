@@ -15,9 +15,9 @@ export const siteConfig = {
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
     "https://alshifa.sa",
   contact: {
-    phoneDisplay: "+966 50 000 0000",
-    phoneTel: "+966500000000",
-    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "966500000000",
+    phoneDisplay: "+966 55 250 7654",
+    phoneTel: "+966552507654",
+    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "966575056318",
     email: "hello@alshifa.sa",
     addressEn: "King Fahd Rd, Al-Olaya, Riyadh 12212, Saudi Arabia",
     addressAr: "طريق الملك فهد، حي العليا، الرياض ١٢٢١٢، المملكة العربية السعودية",
