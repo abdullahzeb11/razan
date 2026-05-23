@@ -97,16 +97,13 @@ export function AppointmentCard({ a }: { a: AppointmentCardData }) {
             {a.guestPhone ? (
               <DropdownMenuItem asChild>
                 <a
-                  href={waLink(
-                    a.guestPhone,
-                    "Hi, regarding your Al-Shifa appointment…",
-                  )}
+                  href={buildWhatsAppConfirmLink(a)}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2"
                 >
                   <WAGlyph className="h-4 w-4" />
-                  WhatsApp
+                  WhatsApp confirm
                 </a>
               </DropdownMenuItem>
             ) : null}
@@ -156,19 +153,54 @@ export function AppointmentCard({ a }: { a: AppointmentCardData }) {
 
       <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
         <p className="text-xs font-semibold tabular-nums">{a.priceSar} SAR</p>
-        {next.length > 0 ? (
-          <button
-            type="button"
-            onClick={() => move(next[0].status)}
-            className="inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            {next[0].icon}
-            {next[0].label}
-          </button>
-        ) : null}
+        <div className="flex items-center gap-1.5">
+          {a.guestPhone && (a.status === "PENDING" || a.status === "CONFIRMED") ? (
+            <a
+              href={buildWhatsAppConfirmLink(a)}
+              target="_blank"
+              rel="noreferrer"
+              title="Send WhatsApp confirmation"
+              className="inline-flex items-center gap-1 rounded-full bg-[#25D366] px-2 py-1 text-[10px] font-semibold text-white transition-colors hover:bg-[#1da851]"
+            >
+              <WAGlyph className="h-3 w-3" />
+              Confirm
+            </a>
+          ) : null}
+          {next.length > 0 ? (
+            <button
+              type="button"
+              onClick={() => move(next[0].status)}
+              className="inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              {next[0].icon}
+              {next[0].label}
+            </button>
+          ) : null}
+        </div>
       </div>
     </article>
   );
+}
+
+/** Build a wa.me link with the full confirmation message pre-filled. */
+function buildWhatsAppConfirmLink(a: AppointmentCardData): string {
+  if (!a.guestPhone) return "#";
+  const date = new Intl.DateTimeFormat("en-SA", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Asia/Riyadh",
+  }).format(new Date(a.scheduledAt));
+  const time = new Intl.DateTimeFormat("en-SA", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Riyadh",
+  }).format(new Date(a.scheduledAt));
+  const name = a.guestName ?? "";
+  const message = `As-salamu alaykum ${name},\n\nThis confirms your appointment at Al-Shifa Hijama Center:\n\n• Service: ${a.serviceName}\n• When: ${date} at ${time}\n• Where: ${a.location === "HOME_VISIT" ? "Home visit" + (a.addressLine ? ` — ${a.addressLine}` : "") : "At the clinic"}\n• Ref: ${a.id.slice(-8).toUpperCase()}\n\nReply to this message if you need to reschedule. See you then. 🌿`;
+  return waLink(a.guestPhone, message);
 }
 
 function Row({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {

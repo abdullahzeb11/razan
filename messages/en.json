@@ -284,7 +284,7 @@
     },
     "confirmed": {
       "title": "Your booking is in",
-      "subtitle": "Thank you {name} — we'll WhatsApp you within minutes to confirm the appointment.",
+      "subtitle": "Thank you {name} — we'll WhatsApp you shortly to confirm the appointment.",
       "reference": "Booking ref",
       "service": "Service",
       "date": "Date",
