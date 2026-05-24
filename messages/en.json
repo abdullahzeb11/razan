@@ -108,14 +108,14 @@
     }
   },
   "Gallery": {
-    "eyebrow": "Inside the clinic",
-    "title": "Moments from our practice",
-    "subtitle": "A quiet, considered space — single-use sterile tools, private rooms, and unhurried care for every guest.",
+    "eyebrow": "How we practice",
+    "title": "Four commitments behind every session",
+    "subtitle": "The principles we hold ourselves to — visible in every appointment, every patient, every day.",
     "captions": {
-      "1": "Hijama in practice",
-      "2": "Sunnah remedies",
-      "3": "Sterile precision",
-      "4": "A calm space"
+      "1": { "title": "The sunnah cadence", "detail": "17 · 19 · 21 Hijri" },
+      "2": { "title": "Sterile by ritual", "detail": "Single-use, every session" },
+      "3": { "title": "Total privacy", "detail": "Separate, calm rooms" },
+      "4": { "title": "We come to you", "detail": "Home visits across Riyadh" }
     }
   },
   "Testimonials": {
