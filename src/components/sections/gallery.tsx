@@ -1,22 +1,38 @@
 "use client";
 
-import * as React from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { SectionHeader } from "./section";
-import { cn } from "@/lib/utils";
 
+/**
+ * Curated Unsplash photos showing the clinical / wellness environment.
+ * Replace with your own clinic photography once available.
+ * All four images are sized to a 3:4 portrait aspect ratio at 900px width.
+ */
 const GALLERY = [
-  { id: 1, hueA: "168 30% 18%", hueB: "168 65% 38%" },
-  { id: 2, hueA: "165 45% 22%", hueB: "41 60% 55%" },
-  { id: 3, hueA: "168 28% 16%", hueB: "168 55% 32%" },
-  { id: 4, hueA: "165 35% 20%", hueB: "41 50% 60%" },
-];
+  {
+    id: "1",
+    url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "2",
+    url: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "3",
+    url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "4",
+    url: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=80",
+  },
+] as const;
 
 export function Gallery() {
   const t = useTranslations("Gallery");
+
   return (
-    <section id="gallery" className="relative py-20 sm:py-28">
+    <section id="gallery" className="relative py-16 sm:py-24 lg:py-28">
       <div className="container-wide">
         <SectionHeader
           eyebrow={t("eyebrow")}
@@ -24,15 +40,13 @@ export function Gallery() {
           subtitle={t("subtitle")}
         />
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
           {GALLERY.map((item, i) => (
-            <BeforeAfterCard
+            <GalleryCard
               key={item.id}
-              hueA={item.hueA}
-              hueB={item.hueB}
+              url={item.url}
+              caption={t(`captions.${item.id}`)}
               index={i}
-              beforeLabel={t("before")}
-              afterLabel={t("after")}
             />
           ))}
         </div>
@@ -41,118 +55,38 @@ export function Gallery() {
   );
 }
 
-function BeforeAfterCard({
-  hueA,
-  hueB,
+function GalleryCard({
+  url,
+  caption,
   index,
-  beforeLabel,
-  afterLabel,
 }: {
-  hueA: string;
-  hueB: string;
+  url: string;
+  caption: string;
   index: number;
-  beforeLabel: string;
-  afterLabel: string;
 }) {
-  const [pos, setPos] = React.useState(50);
-  const ref = React.useRef<HTMLDivElement>(null);
-
-  const onMove = (clientX: number) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const pct = ((clientX - rect.left) / rect.width) * 100;
-    setPos(Math.max(0, Math.min(100, pct)));
-  };
-
   return (
-    <motion.div
+    <motion.figure
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay: index * 0.06 }}
-      className="group relative aspect-[3/4] overflow-hidden rounded-2xl border border-border bg-card shadow-soft"
+      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative aspect-[3/4] overflow-hidden rounded-2xl border border-border bg-secondary shadow-soft transition-shadow hover:shadow-elevated"
     >
-      <div
-        ref={ref}
-        className="relative h-full w-full cursor-ew-resize select-none touch-none"
-        onMouseMove={(e) => onMove(e.clientX)}
-        onTouchMove={(e) => onMove(e.touches[0].clientX)}
-      >
-        {/* "After" base layer */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(135deg, hsl(${hueB}) 0%, hsl(${hueA}) 100%)`,
-          }}
-        >
-          <CardFiligree variant="after" />
-        </div>
-
-        {/* "Before" overlay clipped by slider */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(135deg, hsl(${hueA}) 0%, hsl(${hueA}) 100%)`,
-            clipPath: `polygon(0 0, ${pos}% 0, ${pos}% 100%, 0 100%)`,
-          }}
-        >
-          <CardFiligree variant="before" />
-        </div>
-
-        {/* Slider handle */}
-        <div
-          className="absolute inset-y-0 z-10 flex w-px items-center justify-center bg-white/80 shadow-[0_0_0_1px_rgba(0,0,0,0.1)]"
-          style={{ insetInlineStart: `${pos}%` }}
-        >
-          <div className={cn(
-            "flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary-deep shadow-elevated transition-transform group-hover:scale-110",
-          )}>
-            <svg viewBox="0 0 16 16" className="h-3.5 w-3.5">
-              <path
-                d="M5 4L2 8l3 4M11 4l3 4-3 4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-        </div>
-
-        {/* Labels */}
-        <span className="absolute start-3 top-3 z-20 rounded-full bg-black/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
-          {beforeLabel}
-        </span>
-        <span className="absolute end-3 top-3 z-20 rounded-full bg-gold px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-gold-foreground">
-          {afterLabel}
-        </span>
-      </div>
-    </motion.div>
-  );
-}
-
-function CardFiligree({ variant }: { variant: "before" | "after" }) {
-  return (
-    <svg
-      className={cn(
-        "absolute inset-0 h-full w-full",
-        variant === "before" ? "text-white/8" : "text-white/15",
-      )}
-      viewBox="0 0 200 280"
-      fill="none"
-      aria-hidden
-    >
-      <g stroke="currentColor" strokeWidth="0.5" opacity="0.8">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <circle key={i} cx="100" cy="140" r={20 + i * 16} />
-        ))}
-      </g>
-      <g transform="translate(100 140)" fill="currentColor" opacity="0.25">
-        <rect x="-26" y="-26" width="52" height="52" />
-        <rect x="-26" y="-26" width="52" height="52" transform="rotate(45)" />
-      </g>
-    </svg>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={url}
+        alt={caption}
+        loading="lazy"
+        className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+      />
+      {/* Subtle bottom gradient for the caption */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
+      <figcaption className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gold">
+          {caption}
+        </p>
+        <div className="mt-1 h-px w-8 bg-gold/60 transition-all duration-500 group-hover:w-14 group-hover:bg-gold" />
+      </figcaption>
+    </motion.figure>
   );
 }

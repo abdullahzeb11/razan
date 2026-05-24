@@ -108,11 +108,15 @@
     }
   },
   "Gallery": {
-    "eyebrow": "Before & after",
-    "title": "Real results from our patients",
-    "subtitle": "Published with consent. Individual outcomes may vary.",
-    "before": "Before",
-    "after": "After"
+    "eyebrow": "Inside the clinic",
+    "title": "Moments from our practice",
+    "subtitle": "A quiet, considered space — single-use sterile tools, private rooms, and unhurried care for every guest.",
+    "captions": {
+      "1": "Sterile preparation",
+      "2": "The treatment room",
+      "3": "Practitioner's hands",
+      "4": "A calm recovery"
+    }
   },
   "Testimonials": {
     "eyebrow": "Patient stories",
