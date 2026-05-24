@@ -4,7 +4,7 @@ import * as React from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Menu, UserRound } from "lucide-react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -23,8 +23,10 @@ import { cn } from "@/lib/utils";
 export function Navbar({ isSignedIn = false }: { isSignedIn?: boolean }) {
   const t = useTranslations("Nav");
   const locale = useLocale() as "ar" | "en";
+  const pathname = usePathname();
   const [scrolled, setScrolled] = React.useState(false);
   const { scrollY } = useScroll();
+  const onHome = pathname === "/";
 
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 24));
 
@@ -46,25 +48,33 @@ export function Navbar({ isSignedIn = false }: { isSignedIn?: boolean }) {
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {siteConfig.nav.map((item) =>
-            item.href.startsWith("/") ? (
-              <Link
-                key={item.key}
-                href={item.href}
-                className="rounded-full px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-              >
+          {siteConfig.nav.map((item) => {
+            const cls =
+              "rounded-full px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground";
+            // Route link (e.g. /blog) — always render as Link.
+            if (item.href.startsWith("/")) {
+              return (
+                <Link key={item.key} href={item.href} className={cls}>
+                  {t(item.key)}
+                </Link>
+              );
+            }
+            // Hash link (e.g. #sunnah) — if visitor is on the homepage, plain
+            // anchor scrolls within page. If they're elsewhere, route home
+            // first then scroll to the hash.
+            if (onHome) {
+              return (
+                <a key={item.key} href={item.href} className={cls}>
+                  {t(item.key)}
+                </a>
+              );
+            }
+            return (
+              <Link key={item.key} href={`/${item.href}`} className={cls}>
                 {t(item.key)}
               </Link>
-            ) : (
-              <a
-                key={item.key}
-                href={item.href}
-                className="rounded-full px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-              >
-                {t(item.key)}
-              </a>
-            ),
-          )}
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-1.5">
@@ -121,25 +131,29 @@ export function Navbar({ isSignedIn = false }: { isSignedIn?: boolean }) {
                 </SheetTitle>
               </SheetHeader>
               <div className="mt-8 flex flex-col gap-1">
-                {siteConfig.nav.map((item) => (
-                  <SheetClose asChild key={item.key}>
-                    {item.href.startsWith("/") ? (
-                      <Link
-                        href={item.href}
-                        className="rounded-xl px-3 py-3 text-base font-medium text-foreground transition-colors hover:bg-accent"
-                      >
-                        {t(item.key)}
-                      </Link>
-                    ) : (
-                      <a
-                        href={item.href}
-                        className="rounded-xl px-3 py-3 text-base font-medium text-foreground transition-colors hover:bg-accent"
-                      >
-                        {t(item.key)}
-                      </a>
-                    )}
-                  </SheetClose>
-                ))}
+                {siteConfig.nav.map((item) => {
+                  const cls =
+                    "rounded-xl px-3 py-3 text-base font-medium text-foreground transition-colors hover:bg-accent";
+                  const isRoute = item.href.startsWith("/");
+                  const isHashOnHome = !isRoute && onHome;
+                  return (
+                    <SheetClose asChild key={item.key}>
+                      {isRoute ? (
+                        <Link href={item.href} className={cls}>
+                          {t(item.key)}
+                        </Link>
+                      ) : isHashOnHome ? (
+                        <a href={item.href} className={cls}>
+                          {t(item.key)}
+                        </a>
+                      ) : (
+                        <Link href={`/${item.href}`} className={cls}>
+                          {t(item.key)}
+                        </Link>
+                      )}
+                    </SheetClose>
+                  );
+                })}
               </div>
               <div className="mt-8 flex flex-col gap-3">
                 <SheetClose asChild>
