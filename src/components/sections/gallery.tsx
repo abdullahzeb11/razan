@@ -12,19 +12,23 @@ import { SectionHeader } from "./section";
 const GALLERY = [
   {
     id: "1",
-    url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=80",
+    // Cupping cups close-up — actual hijama equipment
+    url: "https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "2",
-    url: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80",
+    // Sunnah remedies — honey and natural ingredients
+    url: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "3",
-    url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=900&q=80",
+    // Gloved practitioner hands — sterile, gender-neutral, clinical
+    url: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "4",
-    url: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=80",
+    // Calm clinic interior with natural light
+    url: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=900&q=80",
   },
 ] as const;
 
