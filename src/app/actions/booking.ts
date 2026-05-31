@@ -150,11 +150,59 @@ async function notifyOnBooking(args: {
   // 2. Admin email — fires whenever Resend is configured.
   const ref = args.appointmentId.slice(-8).toUpperCase();
   const adminPanelUrl = `${siteConfig.url}/admin/appointments`;
+  const bookingUrl = `${siteConfig.url}/${args.locale}/book/confirmed/${args.appointmentId}`;
+  const divider = "━━━━━━━━━━━━━━━";
+  const whereAr =
+    args.location === "HOME_VISIT"
+      ? "زيارة منزلية" + (args.addressLine ? ` — ${args.addressLine}` : "")
+      : "في العيادة";
+  const whereEn =
+    args.location === "HOME_VISIT"
+      ? "Home visit" + (args.addressLine ? ` — ${args.addressLine}` : "")
+      : "At the clinic";
+
   const waReply = waLink(
     args.customerPhone,
     args.locale === "ar"
-      ? `السلام عليكم ${args.customerName}، نؤكد حجزك في مركز رزان — ${args.serviceName} يوم ${customerWhen}. نراك قريبًا إن شاء الله.`
-      : `As-salamu alaykum ${args.customerName}, this confirms your appointment at Razan Hijama Center — ${args.serviceNameEn} on ${enDate} at ${enTime}. See you then.`,
+      ? `🌿 *مركز رزان للحجامة*
+${divider}
+
+السلام عليكم *${args.customerName}*،
+
+موعدك مؤكد ✅
+
+📋 *الخدمة:* ${args.serviceName}
+📅 *التاريخ:* ${customerWhen}
+📍 *المكان:* ${whereAr}
+🎫 *المرجع:* ${ref}
+
+${divider}
+
+عرض الحجز:
+${bookingUrl}
+
+ردّوا على هذه الرسالة إذا احتجتم لإعادة الجدولة.
+نراكم قريبًا إن شاء الله 🌿`
+      : `🌿 *Razan Hijama Center*
+${divider}
+
+As-salamu alaykum *${args.customerName}*,
+
+Your appointment is confirmed ✅
+
+📋 *Service:* ${args.serviceNameEn}
+📅 *Date:* ${enDate}
+🕐 *Time:* ${enTime}
+📍 *Where:* ${whereEn}
+🎫 *Ref:* ${ref}
+
+${divider}
+
+View your booking:
+${bookingUrl}
+
+Reply to this message if you need to reschedule.
+See you then 🌿`,
   );
 
   const body = `

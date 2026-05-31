@@ -206,11 +206,63 @@ function buildWhatsAppConfirmLink(a: AppointmentCardData): string {
   }).format(when);
   const ref = a.id.slice(-8).toUpperCase();
   const name = a.guestName ?? "";
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+    "https://razan-hijama.vercel.app";
+  const bookingUrl = `${siteUrl}/${a.locale}/book/confirmed/${a.id}`;
+  const divider = "━━━━━━━━━━━━━━━";
+
+  const whereAr =
+    a.location === "HOME_VISIT"
+      ? "زيارة منزلية" + (a.addressLine ? ` — ${a.addressLine}` : "")
+      : "في العيادة";
+  const whereEn =
+    a.location === "HOME_VISIT"
+      ? "Home visit" + (a.addressLine ? ` — ${a.addressLine}` : "")
+      : "At the clinic";
 
   const message =
     a.locale === "ar"
-      ? `السلام عليكم ${name}،\n\nنؤكد لكم موعدكم في مركز رزان للحجامة:\n\n• الخدمة: ${a.serviceNameAr}\n• الوقت: ${date} – ${time}\n• المكان: ${a.location === "HOME_VISIT" ? "زيارة منزلية" + (a.addressLine ? ` — ${a.addressLine}` : "") : "في العيادة"}\n• المرجع: ${ref}\n\nإذا احتجتم لإعادة الجدولة، فقط ردّوا على هذه الرسالة. نراكم قريبًا إن شاء الله. 🌿`
-      : `As-salamu alaykum ${name},\n\nThis confirms your appointment at Razan Hijama Center:\n\n• Service: ${a.serviceName}\n• When: ${date} at ${time}\n• Where: ${a.location === "HOME_VISIT" ? "Home visit" + (a.addressLine ? ` — ${a.addressLine}` : "") : "At the clinic"}\n• Ref: ${ref}\n\nReply to this message if you need to reschedule. See you then. 🌿`;
+      ? `🌿 *مركز رزان للحجامة*
+${divider}
+
+السلام عليكم *${name}*،
+
+موعدك مؤكد ✅
+
+📋 *الخدمة:* ${a.serviceNameAr}
+📅 *التاريخ:* ${date}
+🕐 *الوقت:* ${time}
+📍 *المكان:* ${whereAr}
+🎫 *المرجع:* ${ref}
+
+${divider}
+
+عرض الحجز:
+${bookingUrl}
+
+ردّوا على هذه الرسالة إذا احتجتم لإعادة الجدولة.
+نراكم قريبًا إن شاء الله 🌿`
+      : `🌿 *Razan Hijama Center*
+${divider}
+
+As-salamu alaykum *${name}*,
+
+Your appointment is confirmed ✅
+
+📋 *Service:* ${a.serviceName}
+📅 *Date:* ${date}
+🕐 *Time:* ${time}
+📍 *Where:* ${whereEn}
+🎫 *Ref:* ${ref}
+
+${divider}
+
+View your booking:
+${bookingUrl}
+
+Reply to this message if you need to reschedule.
+See you then 🌿`;
 
   return waLink(a.guestPhone, message);
 }
