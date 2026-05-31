@@ -4,12 +4,36 @@ import { z } from "zod";
 
 export const SLOT_MINUTES = 30;
 export const TIMEZONE = "Asia/Riyadh";
+/**
+ * Saudi Arabia is UTC+3 year-round (no DST). Hardcoding the offset is
+ * intentional and safer than `Intl.DateTimeFormat` gymnastics for slot
+ * generation, which must produce the same UTC ISO whether it runs on a
+ * Vercel server (UTC), a Saudi browser (UTC+3), or anywhere else.
+ */
+const RIYADH_TZ_OFFSET = "+03:00";
 
-/** Saudi week: Sun = 0 ... Sat = 6 (JS Date). Friday (5) opens later. */
-export function getHours(date: Date): { open: number; close: number } {
-  const day = date.getDay(); // 0 = Sun
-  if (day === 5) return { open: 14, close: 22 }; // Friday
+/** Saudi week: Sun = 0 ... Sat = 6. Friday opens later. */
+function getHoursForDayOfWeek(dayOfWeek: number): { open: number; close: number } {
+  if (dayOfWeek === 5) return { open: 14, close: 22 }; // Friday
   return { open: 9, close: 22 };
+}
+
+/** Public hours helper — interprets the date in Riyadh time. */
+export function getHours(date: Date): { open: number; close: number } {
+  const dayName = new Intl.DateTimeFormat("en-US", {
+    timeZone: TIMEZONE,
+    weekday: "short",
+  }).format(date);
+  const dayMap: Record<string, number> = {
+    Sun: 0,
+    Mon: 1,
+    Tue: 2,
+    Wed: 3,
+    Thu: 4,
+    Fri: 5,
+    Sat: 6,
+  };
+  return getHoursForDayOfWeek(dayMap[dayName] ?? 0);
 }
 
 /** Lead time (don't allow same-day bookings inside this window). */
@@ -21,9 +45,9 @@ export const SLOT_CAPACITY = 1;
 /* ─── Slot generation ─────────────────────────────────────────────────── */
 
 export type Slot = {
-  /** ISO 8601 in Asia/Riyadh wall time. */
+  /** ISO 8601 UTC (canonical storage form). */
   iso: string;
-  /** "09:30" — what we show in the grid. */
+  /** "09:30" — what we show in the grid (Riyadh wall time). */
   label: string;
   /** Bucket for grouping. */
   period: "morning" | "afternoon" | "evening";
@@ -31,18 +55,22 @@ export type Slot = {
   available: boolean;
 };
 
-/** Generate all candidate slots for a given local-date (YYYY-MM-DD). */
+/** Generate all candidate slots for a given Riyadh-local-date (YYYY-MM-DD). */
 export function generateSlots(localDate: string, takenIsos: Set<string>): Slot[] {
-  const date = new Date(`${localDate}T00:00:00`);
-  const { open, close } = getHours(date);
+  // Anchor at noon Riyadh time so day-of-week is unambiguous regardless of
+  // server/browser TZ.
+  const dayAnchor = new Date(`${localDate}T12:00:00${RIYADH_TZ_OFFSET}`);
+  const { open, close } = getHours(dayAnchor);
   const now = new Date();
   const leadCutoff = new Date(now.getTime() + MIN_LEAD_MINUTES * 60_000);
 
   const slots: Slot[] = [];
   for (let h = open; h < close; h++) {
     for (let m = 0; m < 60; m += SLOT_MINUTES) {
-      const slot = new Date(date);
-      slot.setHours(h, m, 0, 0);
+      // Construct the slot using an explicit Riyadh offset, then ISO
+      // serializes it back to UTC. Same UTC result on any runtime.
+      const riyadhWall = `${localDate}T${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00${RIYADH_TZ_OFFSET}`;
+      const slot = new Date(riyadhWall);
 
       const label = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
       const period: Slot["period"] =
@@ -62,18 +90,19 @@ export function generateSlots(localDate: string, takenIsos: Set<string>): Slot[]
   return slots;
 }
 
-/** Generate the next N booking dates as YYYY-MM-DD strings. */
+/** Generate the next N booking dates as Riyadh-local YYYY-MM-DD strings. */
 export function nextDates(n: number, from: Date = new Date()): string[] {
   const out: string[] = [];
-  const base = new Date(from);
-  base.setHours(0, 0, 0, 0);
+  // `en-CA` produces YYYY-MM-DD format.
+  const formatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: TIMEZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
   for (let i = 0; i < n; i++) {
-    const d = new Date(base);
-    d.setDate(base.getDate() + i);
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const dd = String(d.getDate()).padStart(2, "0");
-    out.push(`${yyyy}-${mm}-${dd}`);
+    const d = new Date(from.getTime() + i * 24 * 60 * 60_000);
+    out.push(formatter.format(d));
   }
   return out;
 }
