@@ -78,6 +78,7 @@ export default async function AccountDashboard({
   const displayName =
     user.name?.trim() ||
     (locale === "ar" ? "ضيفنا الكريم" : "Welcome");
+  const isFirstTime = appointments.length === 0;
 
   return (
     <div className="relative pb-24 pt-10 sm:pt-16">
@@ -86,19 +87,21 @@ export default async function AccountDashboard({
       <div className="container-wide max-w-5xl">
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="eyebrow">{t("eyebrow")}</p>
+            <p className="eyebrow">
+              {isFirstTime ? t("eyebrowFirst") : t("eyebrow")}
+            </p>
             <h1 className="mt-3 text-display-lg balance">
               {t("greeting", { name: displayName })}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              {t("subtitle")}
+              {isFirstTime ? t("subtitleFirst") : t("subtitle")}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <Button asChild variant="gold">
               <Link href="/book">
                 <CalendarPlus className="h-4 w-4" />
-                {t("bookAnother")}
+                {isFirstTime ? t("bookFirst") : t("bookAnother")}
               </Link>
             </Button>
             <form action={signOutCustomer}>
