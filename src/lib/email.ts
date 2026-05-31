@@ -33,7 +33,7 @@ export async function sendEmail(args: SendArgs): Promise<boolean> {
     const { Resend } = await import("resend");
     const resend = new Resend(apiKey);
     const from =
-      process.env.CONTACT_FROM || "Al-Shifa <onboarding@resend.dev>";
+      process.env.CONTACT_FROM || "Razan <onboarding@resend.dev>";
     await resend.emails.send({
       from,
       to,

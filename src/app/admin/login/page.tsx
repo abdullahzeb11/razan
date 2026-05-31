@@ -17,7 +17,7 @@ export default async function AdminLoginPage({
         <div className="flex items-center gap-2.5">
           <LogoMark className="h-9 w-9" />
           <div className="flex flex-col leading-tight">
-            <span className="text-base font-semibold">Al-Shifa</span>
+            <span className="text-base font-semibold">Razan</span>
             <span className="text-[10px] uppercase tracking-[0.18em] text-gold">
               Admin
             </span>
@@ -33,7 +33,7 @@ export default async function AdminLoginPage({
           </h1>
           <p className="mt-4 max-w-md text-sm leading-relaxed text-primary-foreground/75">
             Approve bookings, manage services, and keep an eye on revenue and
-            reviews — all in one dashboard tuned for the way Al-Shifa actually
+            reviews — all in one dashboard tuned for the way Razan actually
             operates.
           </p>
         </div>

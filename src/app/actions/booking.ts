@@ -153,8 +153,8 @@ async function notifyOnBooking(args: {
   const waReply = waLink(
     args.customerPhone,
     args.locale === "ar"
-      ? `السلام عليكم ${args.customerName}، نؤكد حجزك في مركز الشفاء — ${args.serviceName} يوم ${customerWhen}. نراك قريبًا إن شاء الله.`
-      : `As-salamu alaykum ${args.customerName}, this confirms your appointment at Al-Shifa Hijama Center — ${args.serviceNameEn} on ${enDate} at ${enTime}. See you then.`,
+      ? `السلام عليكم ${args.customerName}، نؤكد حجزك في مركز رزان — ${args.serviceName} يوم ${customerWhen}. نراك قريبًا إن شاء الله.`
+      : `As-salamu alaykum ${args.customerName}, this confirms your appointment at Razan Hijama Center — ${args.serviceNameEn} on ${enDate} at ${enTime}. See you then.`,
   );
 
   const body = `

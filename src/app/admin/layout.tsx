@@ -49,7 +49,7 @@ export default async function AdminLayout({
               newMessagesCount={newMessagesCount}
             />
             <div className="flex min-w-0 flex-1 flex-col">
-              <AdminTopbar title="Al-Shifa Admin" />
+              <AdminTopbar title="Razan Admin" />
               <main className="flex-1 p-5 sm:p-8">{children}</main>
             </div>
           </div>
@@ -61,7 +61,7 @@ export default async function AdminLayout({
 
 export async function generateMetadata() {
   return {
-    title: { default: "Admin · Al-Shifa", template: "%s · Al-Shifa Admin" },
+    title: { default: "Admin · Razan", template: "%s · Razan Admin" },
     robots: { index: false, follow: false },
   };
 }

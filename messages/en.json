@@ -1,8 +1,8 @@
 {
   "Meta": {
-    "title": "Al-Shifa Hijama Center — The sunnah of healing, refined.",
+    "title": "Razan Hijama Center — The sunnah of healing, refined.",
     "description": "Licensed prophetic cupping (hijama) in Saudi Arabia. Single-use sterile tools, certified practitioners, in-clinic and home visits. Book in under a minute.",
-    "ogAlt": "Al-Shifa Hijama Center",
+    "ogAlt": "Razan Hijama Center",
     "keywords": "hijama, cupping therapy Saudi Arabia, hijama Riyadh, hijama Jeddah, prophetic medicine, sunnah cupping, wet cupping"
   },
   "Nav": {
@@ -74,7 +74,7 @@
     "eyebrow": "From the prophetic tradition",
     "title": "“Indeed, the best of remedies you have is hijama.”",
     "narrator": "— Sahih al-Bukhari & Muslim",
-    "body": "Hijama is among the most emphasized therapies in the prophetic tradition. At Al-Shifa we keep this practice alive with modern clinical standards, and align our calendar with the recommended sunnah days.",
+    "body": "Hijama is among the most emphasized therapies in the prophetic tradition. At Razan we keep this practice alive with modern clinical standards, and align our calendar with the recommended sunnah days.",
     "daysTitle": "The recommended days",
     "daysBody": "The 17th, 19th, and 21st of every Hijri month — as narrated from the Prophet ﷺ.",
     "viewSchedule": "View the Hijri calendar",
@@ -196,20 +196,20 @@
     }
   },
   "CTA": {
-    "title": "Begin your journey with Al-Shifa",
+    "title": "Begin your journey with Razan",
     "subtitle": "Book in under a minute. We'll help you choose the right package for your case.",
     "book": "Book now",
     "whatsapp": "Chat with us"
   },
   "Footer": {
-    "tagline": "Al-Shifa — the sunnah of healing, refined.",
+    "tagline": "Razan — the sunnah of healing, refined.",
     "navTitle": "Explore",
     "servicesTitle": "Services",
     "contactTitle": "Contact",
     "newsletterTitle": "Get gentle health notes",
     "newsletterBody": "One short, useful note from our practitioners every two weeks. Never spam.",
     "subscribe": "Subscribe",
-    "rights": "© {year} Al-Shifa Hijama Center. All rights reserved.",
+    "rights": "© {year} Razan Hijama Center. All rights reserved.",
     "privacy": "Privacy",
     "terms": "Terms"
   },
@@ -225,7 +225,7 @@
   },
   "Booking": {
     "metaTitle": "Book a hijama appointment",
-    "metaDescription": "Reserve your session at Al-Shifa — pick a package and a time in under a minute.",
+    "metaDescription": "Reserve your session at Razan — pick a package and a time in under a minute.",
     "eyebrow": "Effortless booking",
     "title": "Book your appointment in a few steps",
     "subtitle": "Choose a package, pick a time, share your details — a WhatsApp confirmation lands instantly.",
@@ -305,7 +305,7 @@
   "Chat": {
     "open": "Open chat",
     "close": "Close chat",
-    "title": "Ask Al-Shifa",
+    "title": "Ask Razan",
     "subtitle": "We usually reply instantly",
     "greetingTitle": "How can we help?",
     "greetingBody": "Ask about hijama, our services, sunnah days, or how to book. We won't give medical advice — just clear, practical answers.",
@@ -323,7 +323,7 @@
     "errorGeneric": "Something went wrong. Please try again."
   },
   "Blog": {
-    "metaTitle": "Journal — Al-Shifa Hijama Center",
+    "metaTitle": "Journal — Razan Hijama Center",
     "metaDescription": "Reflections on hijama, prophetic medicine, pain management, and the everyday wellness practices of our patients.",
     "eyebrow": "From our practice",
     "title": "Notes from the clinic",

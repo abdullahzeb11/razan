@@ -29,7 +29,7 @@ export function MapSection() {
           <div className="lg:col-span-7">
             <div className="aspect-[5/4] overflow-hidden rounded-2xl border border-border bg-card shadow-soft sm:aspect-[16/10] sm:rounded-3xl">
               <iframe
-                title="Al-Shifa Hijama Center location"
+                title="Razan Hijama Center location"
                 src={embedUrl}
                 className="h-full w-full"
                 loading="lazy"

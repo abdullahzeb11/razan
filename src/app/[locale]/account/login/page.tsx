@@ -38,7 +38,7 @@ export default async function AccountLoginPage({
           <LogoMark className="h-9 w-9" />
           <div className="flex flex-col leading-tight">
             <span className="text-base font-semibold">
-              {locale === "ar" ? "الشفاء" : "Al-Shifa"}
+              {locale === "ar" ? "رزان" : "Razan"}
             </span>
             <span className="text-[10px] uppercase tracking-[0.18em] text-gold">
               {locale === "ar" ? "للحجامة" : "Hijama Center"}

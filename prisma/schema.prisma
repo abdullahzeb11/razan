@@ -1,4 +1,4 @@
-// Al-Shifa Hijama — full platform schema.
+// Razan Hijama — full platform schema.
 // Designed once, evolved via migrations. Covers every module in the spec:
 // auth, appointments, services, reviews, blog, gallery, contact, settings.
 

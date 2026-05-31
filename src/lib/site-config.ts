@@ -5,20 +5,20 @@
  */
 export const siteConfig = {
   brand: {
-    nameEn: "Al-Shifa Hijama Center",
-    nameAr: "مركز الشفاء للحجامة",
-    shortEn: "Al-Shifa",
-    shortAr: "الشفاء",
-    domain: "alshifa.sa",
+    nameEn: "Razan Hijama Center",
+    nameAr: "مركز رزان للحجامة",
+    shortEn: "Razan",
+    shortAr: "رزان",
+    domain: "razan.sa",
   },
   url:
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-    "https://alshifa.sa",
+    "https://razan.sa",
   contact: {
     phoneDisplay: "+966 55 250 7654",
     phoneTel: "+966552507654",
     whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "966575056318",
-    email: "hello@alshifa.sa",
+    email: "hello@razan.sa",
     addressEn: "King Fahd Rd, Al-Olaya, Riyadh 12212, Saudi Arabia",
     addressAr: "طريق الملك فهد، حي العليا، الرياض ١٢٢١٢، المملكة العربية السعودية",
     geo: { lat: 24.7136, lng: 46.6753 },
@@ -28,11 +28,11 @@ export const siteConfig = {
     },
   },
   social: {
-    instagram: "https://instagram.com/alshifa.sa",
-    twitter: "https://twitter.com/alshifa_sa",
-    tiktok: "https://tiktok.com/@alshifa.sa",
-    snapchat: "https://snapchat.com/add/alshifa.sa",
-    youtube: "https://youtube.com/@alshifa",
+    instagram: "https://instagram.com/razan.sa",
+    twitter: "https://twitter.com/razan_sa",
+    tiktok: "https://tiktok.com/@razan.sa",
+    snapchat: "https://snapchat.com/add/razan.sa",
+    youtube: "https://youtube.com/@razan",
   },
   nav: [
     { key: "services", href: "#services" },

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Al-Shifa mark: an eight-fold Islamic star fused with a drop motif,
+ * Razan mark: an eight-fold Islamic star fused with a drop motif,
  * referencing both the sunnah aesthetic and the medical/hijama practice.
  * Pure SVG so it scales infinitely and adapts to color via currentColor.
  */
@@ -13,18 +13,18 @@ export function LogoMark({ className }: { className?: string }) {
       aria-hidden="true"
     >
       <defs>
-        <linearGradient id="alshifa-grad" x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id="razan-grad" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="hsl(var(--primary))" />
           <stop offset="100%" stopColor="hsl(var(--primary-deep))" />
         </linearGradient>
-        <linearGradient id="alshifa-gold" x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id="razan-gold" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="hsl(var(--gold-soft))" />
           <stop offset="100%" stopColor="hsl(var(--gold))" />
         </linearGradient>
       </defs>
       {/* Eight-fold star */}
       <g transform="translate(24 24)">
-        <g fill="url(#alshifa-grad)">
+        <g fill="url(#razan-grad)">
           <rect x="-16" y="-16" width="32" height="32" rx="3" />
           <rect
             x="-16"
@@ -39,7 +39,7 @@ export function LogoMark({ className }: { className?: string }) {
         {/* Inner drop / shifa motif */}
         <path
           d="M0 -10 C5 -4 8 0 8 5 A8 8 0 0 1 -8 5 C-8 0 -5 -4 0 -10 Z"
-          fill="url(#alshifa-gold)"
+          fill="url(#razan-gold)"
         />
         <circle cx="0" cy="3" r="2" fill="hsl(var(--primary-deep))" />
       </g>
@@ -64,7 +64,7 @@ export function LogoWordmark({
             locale === "ar" ? "font-kufi" : "font-display",
           )}
         >
-          {locale === "ar" ? "الشفاء" : "Al-Shifa"}
+          {locale === "ar" ? "رزان" : "Razan"}
         </span>
         <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
           {locale === "ar" ? "للحجامة" : "Hijama Center"}

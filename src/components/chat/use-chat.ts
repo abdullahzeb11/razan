@@ -14,7 +14,7 @@ export type ChatMessage = {
 
 type Status = "idle" | "streaming" | "error";
 
-const STORAGE_KEY = "alshifa.chat.v1";
+const STORAGE_KEY = "razan.chat.v1";
 const MAX_PERSIST_MESSAGES = 24;
 
 function makeId() {

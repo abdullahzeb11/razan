@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Al-Shifa Hijama Center";
+export const alt = "Razan Hijama Center";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -32,7 +32,7 @@ export default async function OG() {
             }}
           />
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 28, fontWeight: 600 }}>Al-Shifa</div>
+            <div style={{ fontSize: 28, fontWeight: 600 }}>Razan</div>
             <div
               style={{
                 fontSize: 13,
@@ -89,7 +89,7 @@ export default async function OG() {
             color: "rgba(250, 248, 243, 0.6)",
           }}
         >
-          <div>alshifa.sa</div>
+          <div>razan.sa</div>
           <div>Riyadh · Jeddah · Home visits</div>
         </div>
       </div>

@@ -182,7 +182,7 @@ export default async function CustomersPage({
                   <td className="pe-6 py-3.5 text-end">
                     {c.phone ? (
                       <a
-                        href={waLink(c.phone, "Hi, regarding your Al-Shifa visit…")}
+                        href={waLink(c.phone, "Hi, regarding your Razan visit…")}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1 text-[11px] font-medium hover:bg-accent"

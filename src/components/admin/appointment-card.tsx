@@ -209,8 +209,8 @@ function buildWhatsAppConfirmLink(a: AppointmentCardData): string {
 
   const message =
     a.locale === "ar"
-      ? `السلام عليكم ${name}،\n\nنؤكد لكم موعدكم في مركز الشفاء للحجامة:\n\n• الخدمة: ${a.serviceNameAr}\n• الوقت: ${date} – ${time}\n• المكان: ${a.location === "HOME_VISIT" ? "زيارة منزلية" + (a.addressLine ? ` — ${a.addressLine}` : "") : "في العيادة"}\n• المرجع: ${ref}\n\nإذا احتجتم لإعادة الجدولة، فقط ردّوا على هذه الرسالة. نراكم قريبًا إن شاء الله. 🌿`
-      : `As-salamu alaykum ${name},\n\nThis confirms your appointment at Al-Shifa Hijama Center:\n\n• Service: ${a.serviceName}\n• When: ${date} at ${time}\n• Where: ${a.location === "HOME_VISIT" ? "Home visit" + (a.addressLine ? ` — ${a.addressLine}` : "") : "At the clinic"}\n• Ref: ${ref}\n\nReply to this message if you need to reschedule. See you then. 🌿`;
+      ? `السلام عليكم ${name}،\n\nنؤكد لكم موعدكم في مركز رزان للحجامة:\n\n• الخدمة: ${a.serviceNameAr}\n• الوقت: ${date} – ${time}\n• المكان: ${a.location === "HOME_VISIT" ? "زيارة منزلية" + (a.addressLine ? ` — ${a.addressLine}` : "") : "في العيادة"}\n• المرجع: ${ref}\n\nإذا احتجتم لإعادة الجدولة، فقط ردّوا على هذه الرسالة. نراكم قريبًا إن شاء الله. 🌿`
+      : `As-salamu alaykum ${name},\n\nThis confirms your appointment at Razan Hijama Center:\n\n• Service: ${a.serviceName}\n• When: ${date} at ${time}\n• Where: ${a.location === "HOME_VISIT" ? "Home visit" + (a.addressLine ? ` — ${a.addressLine}` : "") : "At the clinic"}\n• Ref: ${ref}\n\nReply to this message if you need to reschedule. See you then. 🌿`;
 
   return waLink(a.guestPhone, message);
 }

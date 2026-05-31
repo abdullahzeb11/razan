@@ -59,8 +59,8 @@ export default async function ConfirmedPage({
     title: `${siteConfig.brand.nameEn} — ${appointment.service.nameEn}`,
     description:
       locale === "ar"
-        ? "موعد حجامة في مركز الشفاء"
-        : "Hijama appointment at Al-Shifa",
+        ? "موعد حجامة في مركز رزان"
+        : "Hijama appointment at Razan",
     start: scheduledAt,
     durationMin: appointment.durationMin,
     location:
@@ -147,7 +147,7 @@ export default async function ConfirmedPage({
             </a>
           </Button>
           <Button asChild variant="outline" size="lg">
-            <a href={icsHref} download={`alshifa-${appointment.id.slice(-8)}.ics`}>
+            <a href={icsHref} download={`razan-${appointment.id.slice(-8)}.ics`}>
               {t("addToCalendar")}
             </a>
           </Button>
@@ -202,9 +202,9 @@ function buildIcs(args: {
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Al-Shifa//Hijama Booking//EN",
+    "PRODID:-//Razan//Hijama Booking//EN",
     "BEGIN:VEVENT",
-    `UID:${args.id}@alshifa.sa`,
+    `UID:${args.id}@razan.sa`,
     `DTSTAMP:${fmt(new Date())}`,
     `DTSTART:${fmt(args.start)}`,
     `DTEND:${fmt(end)}`,

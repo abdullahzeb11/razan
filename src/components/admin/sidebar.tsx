@@ -50,7 +50,7 @@ export function AdminSidebar({
       <div className="flex items-center gap-2.5 border-b border-border px-5 py-5">
         <LogoMark className="h-8 w-8" />
         <div className="flex flex-col leading-tight">
-          <span className="text-sm font-semibold">Al-Shifa</span>
+          <span className="text-sm font-semibold">Razan</span>
           <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
             Admin
           </span>

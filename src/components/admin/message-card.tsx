@@ -133,7 +133,7 @@ export function MessageCard({ message }: { message: MessageCardData }) {
           {waNumber ? (
             <a
               href={`https://wa.me/${waNumber}?text=${encodeURIComponent(
-                `As-salamu alaykum ${message.name}, this is Al-Shifa Hijama Center responding to your message.`,
+                `As-salamu alaykum ${message.name}, this is Razan Hijama Center responding to your message.`,
               )}`}
               target="_blank"
               rel="noreferrer"
