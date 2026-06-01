@@ -10,6 +10,7 @@ import {
   Star,
   FileText,
   Inbox,
+  Mail,
   LogOut,
   ExternalLink,
 } from "lucide-react";
@@ -31,6 +32,7 @@ const NAV: NavItem[] = [
   { href: "/admin/services", label: "Services", icon: Briefcase },
   { href: "/admin/posts", label: "Posts", icon: FileText },
   { href: "/admin/messages", label: "Messages", icon: Inbox },
+  { href: "/admin/subscribers", label: "Subscribers", icon: Mail },
   { href: "/admin/reviews", label: "Reviews", icon: Star },
 ];
 
