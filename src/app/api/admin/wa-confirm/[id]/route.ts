@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { siteConfig } from "@/lib/site-config";
 import { waLink } from "@/lib/utils";
-import { buildWhatsAppConfirmMessage } from "@/lib/whatsapp-confirm-message";
+import {
+  buildWhatsAppConfirmMessage,
+  isMobileUserAgent,
+} from "@/lib/whatsapp-confirm-message";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +24,7 @@ export const dynamic = "force-dynamic";
  * No destructive action — we just generate a wa.me deep link.
  */
 export async function GET(
-  _req: Request,
+  req: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
@@ -35,6 +38,11 @@ export async function GET(
     return new NextResponse("Appointment not found", { status: 404 });
   }
 
+  // WhatsApp Web (desktop) corrupts 4-byte UTF-8 emojis when they arrive via
+  // the wa.me text parameter. WhatsApp mobile handles them fine. Pick the
+  // right variant based on the requesting device's User-Agent.
+  const mobile = isMobileUserAgent(req.headers.get("user-agent"));
+
   const message = buildWhatsAppConfirmMessage({
     locale: (appointment.locale === "en" ? "en" : "ar") as "ar" | "en",
     customerName: appointment.guestName ?? "",
@@ -45,6 +53,7 @@ export async function GET(
     addressLine: appointment.addressLine,
     appointmentId: appointment.id,
     siteUrl: siteConfig.url,
+    preferAscii: !mobile,
   });
 
   const waUrl = waLink(appointment.guestPhone, message);

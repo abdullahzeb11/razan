@@ -25,8 +25,7 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import { updateAppointmentStatus } from "@/app/actions/admin";
-import { cn, waLink } from "@/lib/utils";
-import { buildWhatsAppConfirmMessage } from "@/lib/whatsapp-confirm-message";
+import { cn } from "@/lib/utils";
 
 export type AppointmentCardData = {
   id: string;
@@ -185,29 +184,15 @@ export function AppointmentCard({ a }: { a: AppointmentCardData }) {
   );
 }
 
-/** Build a wa.me link with the full confirmation message pre-filled,
- *  using the shared message builder so the admin-card link and the
- *  admin-email redirect produce identical text. */
+/** Build a link that routes through our server-side redirect. The redirect
+ *  inspects the User-Agent and serves emojis to mobile WhatsApp / ASCII
+ *  glyphs to WhatsApp Web (which corrupts 4-byte UTF-8 in wa.me params). */
 function buildWhatsAppConfirmLink(a: AppointmentCardData): string {
   if (!a.guestPhone) return "#";
-
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
     "https://razan-hijama.vercel.app";
-
-  const message = buildWhatsAppConfirmMessage({
-    locale: a.locale,
-    customerName: a.guestName ?? "",
-    serviceNameEn: a.serviceName,
-    serviceNameAr: a.serviceNameAr,
-    scheduledAt: new Date(a.scheduledAt),
-    location: a.location,
-    addressLine: a.addressLine,
-    appointmentId: a.id,
-    siteUrl,
-  });
-
-  return waLink(a.guestPhone, message);
+  return `${siteUrl}/api/admin/wa-confirm/${a.id}`;
 }
 
 function Row({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
