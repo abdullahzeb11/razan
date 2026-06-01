@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Moon, ArrowRight } from "lucide-react";
+import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 
 export function Sunnah() {
@@ -78,10 +79,10 @@ export function Sunnah() {
                   size="sm"
                   className="mt-5 w-full sm:mt-6"
                 >
-                  <a href="#services">
+                  <Link href="/book">
                     {t("viewSchedule")}
                     <ArrowRight className="h-4 w-4 rtl:rotate-180" />
-                  </a>
+                  </Link>
                 </Button>
               </div>
             </motion.div>
