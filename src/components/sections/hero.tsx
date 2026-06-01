@@ -1,14 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ShieldCheck, Sparkles, CalendarCheck, Star, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site-config";
 import { waLink } from "@/lib/utils";
 
-export function Hero() {
+export type HeroRating = {
+  /** Average rating across approved reviews. */
+  average: number;
+  /** Number of approved reviews. */
+  count: number;
+};
+
+export function Hero({ rating }: { rating?: HeroRating }) {
   const t = useTranslations("Hero");
 
   return (
@@ -73,7 +80,7 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="relative lg:col-span-5"
         >
-          <HeroCard />
+          <HeroCard rating={rating} />
         </motion.div>
       </div>
     </section>
@@ -89,8 +96,10 @@ function TrustChip({ icon, label }: { icon: React.ReactNode; label: string }) {
   );
 }
 
-function HeroCard() {
+function HeroCard({ rating }: { rating?: HeroRating }) {
   const t = useTranslations("Hero");
+  const locale = useLocale() as "ar" | "en";
+  const showRatingChip = rating && rating.count > 0;
   return (
     <div className="relative mx-auto mb-8 aspect-[4/5] max-w-[320px] sm:mb-0 sm:max-w-md">
       {/* Outer glass card with arabesque pattern */}
@@ -135,6 +144,28 @@ function HeroCard() {
         </div>
       </div>
 
+      {/* Rating chip — only when there's at least 1 approved review */}
+      {showRatingChip ? (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.6 }}
+          className="absolute -bottom-4 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 whitespace-nowrap rounded-full border border-border bg-background px-4 py-2 text-xs font-medium shadow-elevated"
+        >
+          <span className="inline-flex items-center gap-1.5">
+            <Star className="h-3.5 w-3.5 fill-gold text-gold" />
+            {t("ratingLabel", {
+              rating: new Intl.NumberFormat(locale === "ar" ? "ar-SA" : "en-SA", {
+                maximumFractionDigits: 1,
+                minimumFractionDigits: rating!.average % 1 === 0 ? 0 : 1,
+              }).format(rating!.average),
+              count: new Intl.NumberFormat(
+                locale === "ar" ? "ar-SA" : "en-SA",
+              ).format(rating!.count),
+            })}
+          </span>
+        </motion.div>
+      ) : null}
     </div>
   );
 }

@@ -31,6 +31,7 @@
     "trust1": "Saudi MoH licensed",
     "trust2": "Single-use sterile tools",
     "trust3": "Sunnah days available",
+    "ratingLabel": "Rated {rating}/5 by {count} patients",
     "stat1Value": "Sterile",
     "stat1Label": "Single-use tools",
     "stat2Value": "MoH",

@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
-import { Hero } from "@/components/sections/hero";
+import { Hero, type HeroRating } from "@/components/sections/hero";
 import { Benefits } from "@/components/sections/benefits";
 import { Sunnah } from "@/components/sections/sunnah";
 import { Services } from "@/components/sections/services";
@@ -23,7 +23,7 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [services, reviewRows] = await Promise.all([
+  const [services, reviewRows, reviewAgg] = await Promise.all([
     prisma.service.findMany({
       where: { active: true },
       orderBy: { sortOrder: "asc" },
@@ -49,6 +49,11 @@ export default async function HomePage({
         body: true,
       },
     }),
+    prisma.review.aggregate({
+      where: { approved: true },
+      _avg: { rating: true },
+      _count: { _all: true },
+    }),
   ]);
 
   const reviews: TestimonialItem[] = reviewRows.map((r) => ({
@@ -58,9 +63,17 @@ export default async function HomePage({
     body: r.body,
   }));
 
+  const rating: HeroRating | undefined =
+    reviewAgg._count._all > 0 && reviewAgg._avg.rating != null
+      ? {
+          average: Math.round(reviewAgg._avg.rating * 10) / 10,
+          count: reviewAgg._count._all,
+        }
+      : undefined;
+
   return (
     <>
-      <Hero />
+      <Hero rating={rating} />
       <Benefits />
       <Sunnah />
       <Services services={services} />
