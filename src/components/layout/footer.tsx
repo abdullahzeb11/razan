@@ -14,7 +14,7 @@ import {
   AlertCircle,
   Loader2,
 } from "lucide-react";
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { LogoWordmark } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site-config";
@@ -25,6 +25,8 @@ export function Footer() {
   const t = useTranslations("Footer");
   const tn = useTranslations("Nav");
   const tw = useTranslations("Whatsapp");
+  const pathname = usePathname();
+  const onHome = pathname === "/";
   const locale = useLocale() as "ar" | "en";
 
   return (
@@ -48,16 +50,38 @@ export function Footer() {
               {t("navTitle")}
             </h3>
             <ul className="mt-5 space-y-3 text-sm">
-              {siteConfig.nav.map((n) => (
-                <li key={n.key}>
-                  <a
-                    href={n.href}
-                    className="text-foreground/80 transition-colors hover:text-primary"
-                  >
-                    {tn(n.key)}
-                  </a>
-                </li>
-              ))}
+              {siteConfig.nav.map((n) => {
+                const cls =
+                  "text-foreground/80 transition-colors hover:text-primary";
+                // Route link (e.g. /blog) — always Link
+                if (n.href.startsWith("/")) {
+                  return (
+                    <li key={n.key}>
+                      <Link href={n.href} className={cls}>
+                        {tn(n.key)}
+                      </Link>
+                    </li>
+                  );
+                }
+                // Hash link on homepage — plain anchor scrolls within page
+                if (onHome) {
+                  return (
+                    <li key={n.key}>
+                      <a href={n.href} className={cls}>
+                        {tn(n.key)}
+                      </a>
+                    </li>
+                  );
+                }
+                // Hash link off homepage — route home first, then scroll
+                return (
+                  <li key={n.key}>
+                    <Link href={`/${n.href}`} className={cls}>
+                      {tn(n.key)}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
