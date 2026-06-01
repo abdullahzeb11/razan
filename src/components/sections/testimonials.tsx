@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Star, Quote, MessageCircleHeart, ArrowRight } from "lucide-react";
 import { SectionHeader } from "./section";
@@ -12,6 +12,8 @@ export type TestimonialItem = {
   authorName: string;
   rating: number;
   body: string;
+  /** ISO 8601 string — when the review was created. */
+  createdAt: string;
 };
 
 export function Testimonials({
@@ -22,7 +24,13 @@ export function Testimonials({
   totalCount: number;
 }) {
   const t = useTranslations("Testimonials");
+  const locale = useLocale() as "ar" | "en";
   const hasMore = totalCount > reviews.length;
+  const dateFmt = new Intl.DateTimeFormat(locale === "ar" ? "ar-SA" : "en-GB", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <section id="testimonials" className="relative py-16 sm:py-24 lg:py-28">
@@ -79,11 +87,19 @@ export function Testimonials({
                   <blockquote className="mt-5 text-base leading-relaxed text-foreground pretty">
                     “{r.body}”
                   </blockquote>
-                  <figcaption className="mt-6 flex items-center gap-3 border-t border-border pt-5">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-gradient text-sm font-semibold text-primary-foreground">
-                      {r.authorName.charAt(0)}
+                  <figcaption className="mt-6 flex items-center justify-between gap-3 border-t border-border pt-5">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-gradient text-sm font-semibold text-primary-foreground">
+                        {r.authorName.charAt(0)}
+                      </div>
+                      <p className="text-sm font-semibold">{r.authorName}</p>
                     </div>
-                    <p className="text-sm font-semibold">{r.authorName}</p>
+                    <time
+                      dateTime={r.createdAt}
+                      className="text-[11px] text-muted-foreground"
+                    >
+                      {dateFmt.format(new Date(r.createdAt))}
+                    </time>
                   </figcaption>
                 </motion.figure>
               ))}

@@ -48,6 +48,7 @@ export default async function HomePage({
         authorName: true,
         rating: true,
         body: true,
+        createdAt: true,
       },
     }),
     prisma.review.aggregate({
@@ -62,6 +63,7 @@ export default async function HomePage({
     authorName: r.authorName,
     rating: r.rating,
     body: r.body,
+    createdAt: r.createdAt.toISOString(),
   }));
 
   const rating: HeroRating | undefined =
