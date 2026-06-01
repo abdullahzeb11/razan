@@ -25,7 +25,7 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import { updateAppointmentStatus } from "@/app/actions/admin";
-import { cn } from "@/lib/utils";
+import { cn, waLink } from "@/lib/utils";
 
 export type AppointmentCardData = {
   id: string;
@@ -168,6 +168,19 @@ export function AppointmentCard({ a }: { a: AppointmentCardData }) {
               <WAGlyph className="h-3.5 w-3.5" />
             </a>
           ) : null}
+          {a.guestPhone && a.status === "COMPLETED" ? (
+            <a
+              href={buildWhatsAppReviewRequestLink(a)}
+              target="_blank"
+              rel="noreferrer"
+              title="Request review on WhatsApp"
+              aria-label="Request review on WhatsApp"
+              className="inline-flex items-center gap-1 rounded-full bg-gold px-2 py-1 text-[10px] font-semibold text-gold-foreground transition-colors hover:bg-gold/90"
+            >
+              <WAGlyph className="h-3 w-3" />
+              Review
+            </a>
+          ) : null}
           {next.length > 0 ? (
             <button
               type="button"
@@ -193,6 +206,40 @@ function buildWhatsAppConfirmLink(a: AppointmentCardData): string {
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
     "https://razan-hijama.vercel.app";
   return `${siteUrl}/api/admin/wa-confirm/${a.id}`;
+}
+
+/** Build a WhatsApp message asking the customer to leave a review for a
+ *  COMPLETED appointment. The message is simple text + URL — no 4-byte emojis,
+ *  so it survives both mobile WhatsApp and WhatsApp Web with a direct wa.me
+ *  link (no need for a redirect endpoint). */
+function buildWhatsAppReviewRequestLink(a: AppointmentCardData): string {
+  if (!a.guestPhone) return "#";
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+    "https://razan-hijama.vercel.app";
+  const reviewUrl = `${siteUrl}/${a.locale}/review/${a.id}`;
+  const name = a.guestName ?? "";
+
+  const message =
+    a.locale === "ar"
+      ? `السلام عليكم *${name}*،
+
+شكرًا لزيارتك *مركز رزان للحجامة*. نسعد بسماع تجربتك الصادقة — كلماتك تهدي المرضى القادمين بعدك.
+
+اترك تقييمك (أقل من دقيقة):
+${reviewUrl}
+
+جزاكم الله خيرًا.`
+      : `As-salamu alaykum *${name}*,
+
+Thank you for visiting *Razan Hijama Center*. We'd love to hear your honest experience — your words help guide patients who come after you.
+
+Leave a review (less than a minute):
+${reviewUrl}
+
+Jazakum Allahu khayran.`;
+
+  return waLink(a.guestPhone, message);
 }
 
 function Row({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
