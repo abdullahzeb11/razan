@@ -202,6 +202,10 @@
     "newsletterTitle": "Get gentle health notes",
     "newsletterBody": "One short, useful note from our practitioners every two weeks. Never spam.",
     "subscribe": "Subscribe",
+    "subscribing": "Subscribing…",
+    "subscribeSuccess": "You're on the list. Welcome to Razan.",
+    "subscribeInvalid": "That email doesn't look right.",
+    "subscribeError": "Something went wrong. Please try again.",
     "rights": "© {year} Razan Hijama Center. All rights reserved.",
     "privacy": "Privacy",
     "terms": "Terms"

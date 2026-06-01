@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { useLocale, useTranslations } from "next-intl";
 import {
   Instagram,
@@ -9,11 +10,15 @@ import {
   Mail,
   MapPin,
   Send,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { LogoWordmark } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site-config";
+import { subscribeNewsletter } from "@/app/actions/newsletter";
 
 export function Footer() {
   const t = useTranslations("Footer");
@@ -30,26 +35,7 @@ export function Footer() {
               {t("tagline")}
             </p>
 
-            <form className="mt-6 flex max-w-md flex-col gap-2 sm:mt-7 sm:flex-row sm:items-center">
-              <label className="sr-only" htmlFor="newsletter">
-                {t("newsletterTitle")}
-              </label>
-              <input
-                id="newsletter"
-                type="email"
-                placeholder={t("newsletterTitle")}
-                className="h-11 w-full flex-1 rounded-full border border-border bg-background px-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-              />
-              <Button
-                type="submit"
-                variant="default"
-                size="sm"
-                className="h-11 w-full justify-center px-5 sm:w-auto"
-              >
-                <Send className="h-4 w-4" />
-                {t("subscribe")}
-              </Button>
-            </form>
+            <NewsletterForm locale={locale} />
             <p className="mt-3 text-xs text-muted-foreground">
               {t("newsletterBody")}
             </p>
@@ -135,6 +121,86 @@ export function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+function NewsletterForm({ locale }: { locale: "ar" | "en" }) {
+  const t = useTranslations("Footer");
+  const [email, setEmail] = React.useState("");
+  const [state, setState] = React.useState<"idle" | "pending" | "success" | "error">(
+    "idle",
+  );
+  const [error, setError] = React.useState<string | null>(null);
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim() || state === "pending") return;
+    setState("pending");
+    setError(null);
+    const res = await subscribeNewsletter({ email: email.trim(), locale });
+    if (!res.ok) {
+      setError(t(res.error === "invalid_email" ? "subscribeInvalid" : "subscribeError"));
+      setState("error");
+      return;
+    }
+    setEmail("");
+    setState("success");
+  }
+
+  if (state === "success") {
+    return (
+      <div className="mt-6 flex max-w-md items-start gap-2 rounded-2xl border border-primary/30 bg-primary/5 px-4 py-3 text-sm text-foreground sm:mt-7">
+        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+        <span>{t("subscribeSuccess")}</span>
+      </div>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={onSubmit}
+      className="mt-6 flex max-w-md flex-col gap-2 sm:mt-7 sm:flex-row sm:items-center"
+      noValidate
+    >
+      <label className="sr-only" htmlFor="newsletter">
+        {t("newsletterTitle")}
+      </label>
+      <input
+        id="newsletter"
+        type="email"
+        required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder={t("newsletterTitle")}
+        disabled={state === "pending"}
+        className="h-11 w-full flex-1 rounded-full border border-border bg-background px-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
+      />
+      <Button
+        type="submit"
+        variant="default"
+        size="sm"
+        disabled={state === "pending" || !email.trim()}
+        className="h-11 w-full justify-center px-5 sm:w-auto"
+      >
+        {state === "pending" ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" />
+            {t("subscribing")}
+          </>
+        ) : (
+          <>
+            <Send className="h-4 w-4" />
+            {t("subscribe")}
+          </>
+        )}
+      </Button>
+      {error ? (
+        <div className="flex items-start gap-2 text-xs text-destructive sm:basis-full">
+          <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+          <span>{error}</span>
+        </div>
+      ) : null}
+    </form>
   );
 }
 

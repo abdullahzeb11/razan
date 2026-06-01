@@ -300,6 +300,19 @@ model Notification {
   @@index([userId, read])
 }
 
+// ─── Newsletter subscribers ────────────────────────────────────────────────
+
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  // Locale the visitor was on when they subscribed — useful for sending
+  // localized newsletters later.
+  locale    String   @default("ar")
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
 // ─── Settings (singleton key/value for CMS) ────────────────────────────────
 
 model Setting {
