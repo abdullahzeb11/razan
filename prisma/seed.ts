@@ -14,7 +14,7 @@ const SERVICES = [
       "Wet cupping at the primary sunnah points (kahil & akhda'ayn). Ideal for prevention, headaches, and neck tension.",
     descriptionAr:
       "جلسة حجامة رطبة على نقاط السنة الأساسية (الكاهل والأخدعان)، مناسبة للوقاية وللصداع وآلام الرقبة.",
-    priceSar: 280,
+    priceSar: 150,
     durationMinutes: 45,
     icon: "Stethoscope",
     featured: false,
@@ -31,7 +31,7 @@ const SERVICES = [
       "A tailored protocol for back, shoulder, and sciatic pain — paired with adjunct massage and a personal point-map.",
     descriptionAr:
       "بروتوكول مخصّص لآلام الظهر والكتف وعرق النسا، مع تدليك مرافق وخريطة نقاط شخصية.",
-    priceSar: 450,
+    priceSar: 250,
     durationMinutes: 75,
     icon: "Sparkles",
     featured: true,
@@ -48,7 +48,7 @@ const SERVICES = [
       "We come to you in Riyadh. The same protocol as the clinic, with the highest sterilization standards and total privacy.",
     descriptionAr:
       "نأتي إليك في الرياض. نفس بروتوكول العيادة بأعلى معايير التعقيم وفي خصوصية تامّة.",
-    priceSar: 650,
+    priceSar: 200,
     durationMinutes: 90,
     icon: "Home",
     featured: false,
