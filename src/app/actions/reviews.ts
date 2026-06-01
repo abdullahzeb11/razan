@@ -9,6 +9,7 @@ const submitSchema = z.object({
   authorName: z.string().trim().min(2).max(80),
   rating: z.number().int().min(1).max(5),
   body: z.string().trim().min(20).max(1000),
+  locale: z.enum(["ar", "en"]),
 });
 
 type Result =
@@ -29,7 +30,7 @@ export async function submitReview(
   const parsed = submitSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "invalid" };
 
-  const { appointmentId, authorName, rating, body } = parsed.data;
+  const { appointmentId, authorName, rating, body, locale } = parsed.data;
 
   const appointment = await prisma.appointment.findUnique({
     where: { id: appointmentId },
@@ -55,6 +56,7 @@ export async function submitReview(
         authorName,
         rating,
         body,
+        locale,
         approved: false,
       },
     });

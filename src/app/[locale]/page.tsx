@@ -22,6 +22,7 @@ export default async function HomePage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const loc = locale === "en" ? "en" : "ar";
 
   const [services, reviewRows, reviewAgg] = await Promise.all([
     prisma.service.findMany({
@@ -39,7 +40,7 @@ export default async function HomePage({
       },
     }),
     prisma.review.findMany({
-      where: { approved: true },
+      where: { approved: true, locale: loc },
       orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
       take: 6,
       select: {
@@ -50,7 +51,7 @@ export default async function HomePage({
       },
     }),
     prisma.review.aggregate({
-      where: { approved: true },
+      where: { approved: true, locale: loc },
       _avg: { rating: true },
       _count: { _all: true },
     }),

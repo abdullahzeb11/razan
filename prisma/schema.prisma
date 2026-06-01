@@ -184,13 +184,16 @@ model Review {
   body          String   @db.Text
   approved      Boolean  @default(false)
   featured      Boolean  @default(false)
+  // Language the review was written in — used to filter homepage rendering
+  // per locale so Arabic visitors see Arabic reviews and vice versa.
+  locale        String   @default("ar")
 
   appointment Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
   user        User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
 
-  @@index([approved, featured])
+  @@index([locale, approved, featured])
 }
 
 // ─── Blog (bilingual) ──────────────────────────────────────────────────────

@@ -90,6 +90,7 @@ export function ReviewForm({
       authorName: name.trim(),
       rating,
       body: body.trim(),
+      locale,
     });
     setPending(false);
 

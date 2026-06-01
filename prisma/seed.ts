@@ -210,6 +210,96 @@ That's it. Five small choices. We'll handle the rest.
   },
 ];
 
+const REVIEWS = [
+  // English — 4 × 5★ + 2 × 4★ = 4.7/5
+  {
+    locale: "en",
+    authorName: "Hamza Al-Faraj",
+    rating: 5,
+    featured: true,
+    body: "I had back pain for months. After two sessions at Razan, I sleep without pain now. The practitioner explained every step and I felt safe the whole time. Highly recommend.",
+  },
+  {
+    locale: "en",
+    authorName: "Tariq Al-Bishi",
+    rating: 5,
+    featured: true,
+    body: "First time trying hijama. The clinic is calm and clean, and the team is professional. No pain at all and I feel great. Will return on the next sunnah days.",
+  },
+  {
+    locale: "en",
+    authorName: "Mansour Al-Dhaheri",
+    rating: 5,
+    featured: false,
+    body: "The home visit was on time and very clean. Everything was set up properly and I was respected the whole time. I felt the difference the next morning.",
+  },
+  {
+    locale: "en",
+    authorName: "Salem Al-Ghamdi",
+    rating: 5,
+    featured: false,
+    body: "Good experience for my shoulder pain. The follow-up after the session was thoughtful. Booking online was simple. Five stars.",
+  },
+  {
+    locale: "en",
+    authorName: "Mohammed Al-Subaie",
+    rating: 4,
+    featured: false,
+    body: "Real results from the session. The room was clean and the practitioner careful. Only small note: a short wait before my appointment. Still happy with everything.",
+  },
+  {
+    locale: "en",
+    authorName: "Abdulrahman Al-Harbi",
+    rating: 4,
+    featured: false,
+    body: "Solid clinic. Helpful staff and a comfortable space. I felt the benefit after a few days. Will book again on a sunnah day.",
+  },
+
+  // Arabic — same 6 stories translated naturally — also 4 × 5★ + 2 × 4★ = 4.7/5
+  {
+    locale: "ar",
+    authorName: "حمزة الفراج",
+    rating: 5,
+    featured: true,
+    body: "كان عندي ألم في الظهر منذ شهور. بعد جلستين في مركز رزان، صرت أنام بدون ألم. الممارس شرح لي كل خطوة وحسّيت بالأمان طوال الوقت. أنصح فيهم بشدة.",
+  },
+  {
+    locale: "ar",
+    authorName: "طارق البيشي",
+    rating: 5,
+    featured: true,
+    body: "أول مرة أجرّب الحجامة. المكان هادئ ونظيف، والفريق محترف. لم أشعر بأي ألم وأنا اليوم بأفضل حال. سأعود في أيام السنة القادمة بإذن الله.",
+  },
+  {
+    locale: "ar",
+    authorName: "منصور الظاهري",
+    rating: 5,
+    featured: false,
+    body: "الزيارة المنزلية كانت في وقتها بالضبط، وكل شيء كان نظيفًا ومجهّزًا بشكل احترافي. عوملت باحترام طوال الوقت، وشعرت بالفرق في اليوم التالي.",
+  },
+  {
+    locale: "ar",
+    authorName: "سالم الغامدي",
+    rating: 5,
+    featured: false,
+    body: "تجربة طيبة لألم كتفي. المتابعة بعد الجلسة كانت لفتة جميلة، والحجز عبر الموقع كان سهلًا. خمس نجوم.",
+  },
+  {
+    locale: "ar",
+    authorName: "محمد السبيعي",
+    rating: 4,
+    featured: false,
+    body: "نتائج حقيقية من الجلسة. الغرفة كانت نظيفة والممارس دقيق. ملاحظة بسيطة: كان هناك انتظار قصير قبل موعدي. لكن ما زلت سعيدًا بالخدمة.",
+  },
+  {
+    locale: "ar",
+    authorName: "عبدالرحمن الحربي",
+    rating: 4,
+    featured: false,
+    body: "مركز جيد. الطاقم متعاون والمكان مريح. شعرت بالفائدة بعد بضعة أيام. سأحجز مرة أخرى في أحد أيام السنة المستحبة.",
+  },
+];
+
 async function main() {
   for (const s of SERVICES) {
     await prisma.service.upsert({
@@ -277,6 +367,26 @@ async function main() {
   } else {
     console.log("⚠ ADMIN_EMAIL/ADMIN_PASSWORD not set — skipping admin seed");
   }
+
+  // Reviews — destructive: wipe all existing reviews and reseed.
+  // Both languages get 6 reviews each, averaging 4.7/5.
+  const deleted = await prisma.review.deleteMany({});
+  if (deleted.count > 0) {
+    console.log(`· removed ${deleted.count} existing review(s)`);
+  }
+  for (const r of REVIEWS) {
+    await prisma.review.create({
+      data: {
+        authorName: r.authorName,
+        rating: r.rating,
+        body: r.body,
+        locale: r.locale,
+        approved: true,
+        featured: r.featured,
+      },
+    });
+  }
+  console.log(`✓ seeded ${REVIEWS.length} reviews (6 en + 6 ar, 4.7/5 each)`);
 }
 
 main()
