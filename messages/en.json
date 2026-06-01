@@ -31,13 +31,12 @@
     "trust1": "Saudi MoH licensed",
     "trust2": "Single-use sterile tools",
     "trust3": "Sunnah days available",
-    "ratingLabel": "Rated {rating}/5 by over {count} patients",
-    "stat1Value": "7,200+",
-    "stat1Label": "Sessions delivered",
-    "stat2Value": "12 yrs",
-    "stat2Label": "Clinical experience",
-    "stat3Value": "4.9",
-    "stat3Label": "Average rating"
+    "stat1Value": "Sterile",
+    "stat1Label": "Single-use tools",
+    "stat2Value": "MoH",
+    "stat2Label": "Saudi licensed",
+    "stat3Value": "Sunnah",
+    "stat3Label": "17 · 19 · 21 Hijri"
   },
   "Benefits": {
     "eyebrow": "Why hijama?",
@@ -117,29 +116,9 @@
   "Testimonials": {
     "eyebrow": "Patient stories",
     "title": "Trust, built one session at a time",
-    "subtitle": "Over 7,200 sessions and thousands of stories. Here are a few.",
-    "items": {
-      "0": {
-        "name": "Ahmed Al-Otaibi",
-        "city": "Riyadh",
-        "body": "Honestly, my back pain dropped noticeably after just two sessions. Sterilization is professional and the practitioner is experienced. Highly recommended."
-      },
-      "1": {
-        "name": "Noura Al-Qahtani",
-        "city": "Riyadh",
-        "body": "First time trying hijama — they received me in a private women's room with a certified practitioner. A calm, dignified experience."
-      },
-      "2": {
-        "name": "Khalid Al-Shahri",
-        "city": "Jeddah",
-        "body": "The home visit was right on time. Kit was spotless and the result was excellent — I felt the difference by the next day."
-      },
-      "3": {
-        "name": "Sarah Al-Dossari",
-        "city": "Riyadh",
-        "body": "I love that scheduling is flexible and that they follow up after the session. I now visit them on the sunnah days every month."
-      }
-    }
+    "subtitle": "Real reviews from real patients, published only with consent.",
+    "emptyTitle": "Your story could be the first",
+    "emptyBody": "Razan has just opened its doors. After your session, we'd be grateful if you shared a word — your honest experience will help guide the patients who come after you."
   },
   "FAQ": {
     "eyebrow": "Frequently asked",

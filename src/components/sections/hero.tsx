@@ -76,9 +76,6 @@ export function Hero() {
           <HeroCard />
         </motion.div>
       </div>
-
-      <div className="hairline" />
-      <StatsStrip />
     </section>
   );
 }
@@ -138,18 +135,6 @@ function HeroCard() {
         </div>
       </div>
 
-      {/* Rating chip */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.9, duration: 0.6 }}
-        className="absolute -bottom-4 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 whitespace-nowrap rounded-full border border-border bg-background px-4 py-2 text-xs font-medium shadow-elevated"
-      >
-        <span className="inline-flex items-center gap-1.5">
-          <Star className="h-3.5 w-3.5 fill-gold text-gold" />
-          {t("ratingLabel", { rating: "4.9", count: "7,200" })}
-        </span>
-      </motion.div>
     </div>
   );
 }
@@ -196,34 +181,3 @@ function FloatingTile({
   );
 }
 
-function StatsStrip() {
-  const t = useTranslations("Hero");
-  const stats = [
-    { v: t("stat1Value"), l: t("stat1Label") },
-    { v: t("stat2Value"), l: t("stat2Label") },
-    { v: t("stat3Value"), l: t("stat3Label") },
-  ];
-  return (
-    <div className="container-wide py-8 sm:py-10">
-      <dl className="grid grid-cols-3 gap-3 sm:gap-6">
-        {stats.map((s, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: i * 0.08 }}
-            className="text-center sm:text-start"
-          >
-            <dt className="text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground sm:text-[11px] sm:tracking-[0.18em]">
-              {s.l}
-            </dt>
-            <dd className="mt-1.5 text-xl font-semibold tracking-tight text-foreground sm:mt-2 sm:text-3xl lg:text-4xl">
-              {s.v}
-            </dd>
-          </motion.div>
-        ))}
-      </dl>
-    </div>
-  );
-}

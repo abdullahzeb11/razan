@@ -5,7 +5,7 @@ import { Benefits } from "@/components/sections/benefits";
 import { Sunnah } from "@/components/sections/sunnah";
 import { Services } from "@/components/sections/services";
 import { Gallery } from "@/components/sections/gallery";
-import { Testimonials } from "@/components/sections/testimonials";
+import { Testimonials, type TestimonialItem } from "@/components/sections/testimonials";
 import { FAQ } from "@/components/sections/faq";
 import { MapSection } from "@/components/sections/map";
 import { Contact } from "@/components/sections/contact";
@@ -23,20 +23,40 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const services = await prisma.service.findMany({
-    where: { active: true },
-    orderBy: { sortOrder: "asc" },
-    select: {
-      id: true,
-      slug: true,
-      nameEn: true,
-      nameAr: true,
-      priceSar: true,
-      durationMinutes: true,
-      icon: true,
-      featured: true,
-    },
-  });
+  const [services, reviewRows] = await Promise.all([
+    prisma.service.findMany({
+      where: { active: true },
+      orderBy: { sortOrder: "asc" },
+      select: {
+        id: true,
+        slug: true,
+        nameEn: true,
+        nameAr: true,
+        priceSar: true,
+        durationMinutes: true,
+        icon: true,
+        featured: true,
+      },
+    }),
+    prisma.review.findMany({
+      where: { approved: true },
+      orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
+      take: 6,
+      select: {
+        id: true,
+        authorName: true,
+        rating: true,
+        body: true,
+      },
+    }),
+  ]);
+
+  const reviews: TestimonialItem[] = reviewRows.map((r) => ({
+    id: r.id,
+    authorName: r.authorName,
+    rating: r.rating,
+    body: r.body,
+  }));
 
   return (
     <>
@@ -45,7 +65,7 @@ export default async function HomePage({
       <Sunnah />
       <Services services={services} />
       <Gallery />
-      <Testimonials />
+      <Testimonials reviews={reviews} />
       <FAQ />
       <MapSection />
       <Contact />
