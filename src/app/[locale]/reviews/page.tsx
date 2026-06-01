@@ -130,7 +130,7 @@ export default async function ReviewsPage({
         ) : null}
 
         {reviews.length === 0 ? (
-          <div className="mt-12 rounded-3xl border border-border bg-card/60 p-10 text-center sm:p-14">
+          <div className="mt-12 rounded-3xl border border-border bg-card/60 p-6 text-center sm:p-10 lg:p-14">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
               <MessageCircleHeart className="h-6 w-6" />
             </div>

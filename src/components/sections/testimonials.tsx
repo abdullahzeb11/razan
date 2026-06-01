@@ -47,7 +47,7 @@ export function Testimonials({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
-            className="mt-14 mx-auto max-w-2xl rounded-3xl border border-border bg-card/60 p-10 text-center backdrop-blur-sm sm:p-14"
+            className="mt-14 mx-auto max-w-2xl rounded-3xl border border-border bg-card/60 p-6 text-center backdrop-blur-sm sm:p-10 lg:p-14"
           >
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
               <MessageCircleHeart className="h-6 w-6" />

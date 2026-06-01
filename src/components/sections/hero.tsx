@@ -110,7 +110,7 @@ function HeroCard({ rating }: { rating?: HeroRating }) {
 
           {/* Calligraphic accent — large star mark watermark */}
           <svg
-            className="absolute -end-12 -top-12 h-72 w-72 text-gold/20"
+            className="absolute -end-10 -top-10 h-44 w-44 text-gold/20 sm:-end-12 sm:-top-12 sm:h-72 sm:w-72"
             viewBox="0 0 48 48"
             fill="currentColor"
           >

@@ -226,14 +226,14 @@ function SuccessState({
   t: (k: string) => string;
 }) {
   return (
-    <div className="rounded-3xl border border-primary/30 bg-primary/5 p-10 text-center sm:p-14">
+    <div className="rounded-3xl border border-primary/30 bg-primary/5 p-6 text-center sm:p-10 lg:p-14">
       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-soft">
         <CheckCircle2 className="h-7 w-7" />
       </div>
-      <h2 className="mt-5 font-display text-2xl font-semibold text-foreground sm:text-3xl">
+      <h2 className="mt-5 font-display text-xl font-semibold text-foreground sm:text-2xl lg:text-3xl">
         {title}
       </h2>
-      <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">
+      <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground sm:text-base lg:text-lg">
         {body}
       </p>
       <Button asChild variant="ghost" className="mt-6">
@@ -255,14 +255,14 @@ function InfoState({
   t: (k: string) => string;
 }) {
   return (
-    <div className="rounded-3xl border border-border bg-card p-10 text-center sm:p-14">
+    <div className="rounded-3xl border border-border bg-card p-6 text-center sm:p-10 lg:p-14">
       <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
         {icon}
       </div>
-      <h2 className="mt-5 text-2xl font-semibold text-foreground sm:text-3xl">
+      <h2 className="mt-5 text-xl font-semibold text-foreground sm:text-2xl lg:text-3xl">
         {title}
       </h2>
-      <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">
+      <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground sm:text-base lg:text-lg">
         {body}
       </p>
       <Button asChild variant="ghost" className="mt-6">

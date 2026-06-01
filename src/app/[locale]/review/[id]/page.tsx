@@ -45,14 +45,14 @@ export default async function ReviewPage({
   if (!appointment) {
     return (
       <Shell>
-        <div className="rounded-3xl border border-border bg-card p-10 text-center sm:p-14">
+        <div className="rounded-3xl border border-border bg-card p-6 text-center sm:p-10 lg:p-14">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
             <Inbox className="h-6 w-6" />
           </div>
-          <h2 className="mt-5 text-2xl font-semibold text-foreground sm:text-3xl">
+          <h2 className="mt-5 text-xl font-semibold text-foreground sm:text-2xl lg:text-3xl">
             {t("notFoundTitle")}
           </h2>
-          <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground sm:text-base lg:text-lg">
             {t("notFoundBody")}
           </p>
           <Button asChild variant="ghost" className="mt-6">
