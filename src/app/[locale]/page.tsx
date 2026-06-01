@@ -42,7 +42,7 @@ export default async function HomePage({
     prisma.review.findMany({
       where: { approved: true, locale: loc },
       orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
-      take: 6,
+      take: 4,
       select: {
         id: true,
         authorName: true,
@@ -79,7 +79,10 @@ export default async function HomePage({
       <Sunnah />
       <Services services={services} />
       <Gallery />
-      <Testimonials reviews={reviews} />
+      <Testimonials
+        reviews={reviews}
+        totalCount={reviewAgg._count._all}
+      />
       <FAQ />
       <MapSection />
       <Contact />

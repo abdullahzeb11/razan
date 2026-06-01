@@ -118,8 +118,21 @@
     "eyebrow": "Patient stories",
     "title": "Trust, built one session at a time",
     "subtitle": "Real reviews from real patients, published only with consent.",
+    "viewAll": "Read all {count} reviews",
     "emptyTitle": "Your story could be the first",
     "emptyBody": "Razan has just opened its doors. After your session, we'd be grateful if you shared a word — your honest experience will help guide the patients who come after you."
+  },
+  "Reviews": {
+    "metaTitle": "All reviews — Razan",
+    "metaDescription": "Read every approved patient review for Razan Hijama Center. Honest experiences, published only with consent.",
+    "eyebrow": "All reviews",
+    "title": "What our patients say",
+    "subtitle": "Every approved review from our patients — sorted by featured stories first, then newest.",
+    "totalLabel": "{count} reviews",
+    "featuredBadge": "Featured",
+    "backHome": "Back to home",
+    "emptyTitle": "No reviews yet",
+    "emptyBody": "We've just opened. Be among the first to share your experience after your session."
   },
   "FAQ": {
     "eyebrow": "Frequently asked",
