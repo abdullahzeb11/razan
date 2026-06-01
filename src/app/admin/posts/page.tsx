@@ -135,6 +135,7 @@ export default async function PostsPage({
                       day: "2-digit",
                       month: "short",
                       year: "numeric",
+                      timeZone: "Asia/Riyadh",
                     }).format(p.updatedAt)}
                   </td>
                   <td className="px-4 py-3">

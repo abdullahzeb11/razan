@@ -42,6 +42,7 @@ export default async function SubscribersPage({
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: "Asia/Riyadh",
   });
 
   return (

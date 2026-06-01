@@ -176,6 +176,7 @@ export default async function CustomersPage({
                           month: "short",
                           day: "numeric",
                           year: "numeric",
+                          timeZone: "Asia/Riyadh",
                         }).format(c.lastVisit)
                       : "—"}
                   </td>
