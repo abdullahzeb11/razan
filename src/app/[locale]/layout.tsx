@@ -106,7 +106,7 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar isSignedIn={isCustomer} />
             <main>{children}</main>
             <Footer />

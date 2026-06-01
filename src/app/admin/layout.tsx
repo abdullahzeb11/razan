@@ -25,7 +25,7 @@ export default async function AdminLayout({
     return (
       <html lang="en" dir="ltr" suppressHydrationWarning className={fontVariables}>
         <body className="min-h-dvh bg-background font-sans text-foreground">
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
           </ThemeProvider>
         </body>
@@ -41,7 +41,7 @@ export default async function AdminLayout({
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning className={fontVariables}>
       <body className="min-h-dvh bg-secondary/40 font-sans text-foreground">
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="flex min-h-dvh">
             <AdminSidebar
               user={{ name: session.user.name, email: session.user.email }}
