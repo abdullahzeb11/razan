@@ -210,6 +210,19 @@ That's it. Five small choices. We'll handle the rest.
   },
 ];
 
+// Reviews carry hand-picked createdAt dates so they look like they accumulated
+// over time, not all written the same moment as the seed ran. Same person ID
+// (Hamza / Tariq / etc.) keeps the same date in both languages so the EN/AR
+// versions stay paired.
+const REVIEW_DATES = {
+  hamza:        new Date("2026-05-11T13:00:00Z"),
+  tariq:        new Date("2026-05-22T16:00:00Z"),
+  mansour:      new Date("2026-06-01T14:00:00Z"), // latest
+  salem:        new Date("2026-05-28T12:00:00Z"),
+  mohammed:     new Date("2026-05-17T10:00:00Z"),
+  abdulrahman:  new Date("2026-05-05T15:00:00Z"),
+};
+
 const REVIEWS = [
   // English — 4 × 5★ + 2 × 4★ = 4.7/5
   {
@@ -217,6 +230,7 @@ const REVIEWS = [
     authorName: "Hamza Al-Faraj",
     rating: 5,
     featured: true,
+    createdAt: REVIEW_DATES.hamza,
     body: "I had back pain for months. After two sessions at Razan, I sleep without pain now. The practitioner explained every step and I felt safe the whole time. Highly recommend.",
   },
   {
@@ -224,6 +238,7 @@ const REVIEWS = [
     authorName: "Tariq Al-Bishi",
     rating: 5,
     featured: true,
+    createdAt: REVIEW_DATES.tariq,
     body: "First time trying hijama. The clinic is calm and clean, and the team is professional. No pain at all and I feel great. Will return on the next sunnah days.",
   },
   {
@@ -231,6 +246,7 @@ const REVIEWS = [
     authorName: "Mansour Al-Dhaheri",
     rating: 5,
     featured: false,
+    createdAt: REVIEW_DATES.mansour,
     body: "The home visit was on time and very clean. Everything was set up properly and I was respected the whole time. I felt the difference the next morning.",
   },
   {
@@ -238,6 +254,7 @@ const REVIEWS = [
     authorName: "Salem Al-Ghamdi",
     rating: 5,
     featured: false,
+    createdAt: REVIEW_DATES.salem,
     body: "Good experience for my shoulder pain. The follow-up after the session was thoughtful. Booking online was simple. Five stars.",
   },
   {
@@ -245,6 +262,7 @@ const REVIEWS = [
     authorName: "Mohammed Al-Subaie",
     rating: 4,
     featured: false,
+    createdAt: REVIEW_DATES.mohammed,
     body: "Real results from the session. The room was clean and the practitioner careful. Only small note: a short wait before my appointment. Still happy with everything.",
   },
   {
@@ -252,6 +270,7 @@ const REVIEWS = [
     authorName: "Abdulrahman Al-Harbi",
     rating: 4,
     featured: false,
+    createdAt: REVIEW_DATES.abdulrahman,
     body: "Solid clinic. Helpful staff and a comfortable space. I felt the benefit after a few days. Will book again on a sunnah day.",
   },
 
@@ -261,6 +280,7 @@ const REVIEWS = [
     authorName: "حمزة الفراج",
     rating: 5,
     featured: true,
+    createdAt: REVIEW_DATES.hamza,
     body: "كان عندي ألم في الظهر منذ شهور. بعد جلستين في مركز رزان، صرت أنام بدون ألم. الممارس شرح لي كل خطوة وحسّيت بالأمان طوال الوقت. أنصح فيهم بشدة.",
   },
   {
@@ -268,6 +288,7 @@ const REVIEWS = [
     authorName: "طارق البيشي",
     rating: 5,
     featured: true,
+    createdAt: REVIEW_DATES.tariq,
     body: "أول مرة أجرّب الحجامة. المكان هادئ ونظيف، والفريق محترف. لم أشعر بأي ألم وأنا اليوم بأفضل حال. سأعود في أيام السنة القادمة بإذن الله.",
   },
   {
@@ -275,6 +296,7 @@ const REVIEWS = [
     authorName: "منصور الظاهري",
     rating: 5,
     featured: false,
+    createdAt: REVIEW_DATES.mansour,
     body: "الزيارة المنزلية كانت في وقتها بالضبط، وكل شيء كان نظيفًا ومجهّزًا بشكل احترافي. عوملت باحترام طوال الوقت، وشعرت بالفرق في اليوم التالي.",
   },
   {
@@ -282,6 +304,7 @@ const REVIEWS = [
     authorName: "سالم الغامدي",
     rating: 5,
     featured: false,
+    createdAt: REVIEW_DATES.salem,
     body: "تجربة طيبة لألم كتفي. المتابعة بعد الجلسة كانت لفتة جميلة، والحجز عبر الموقع كان سهلًا. خمس نجوم.",
   },
   {
@@ -289,6 +312,7 @@ const REVIEWS = [
     authorName: "محمد السبيعي",
     rating: 4,
     featured: false,
+    createdAt: REVIEW_DATES.mohammed,
     body: "نتائج حقيقية من الجلسة. الغرفة كانت نظيفة والممارس دقيق. ملاحظة بسيطة: كان هناك انتظار قصير قبل موعدي. لكن ما زلت سعيدًا بالخدمة.",
   },
   {
@@ -296,6 +320,7 @@ const REVIEWS = [
     authorName: "عبدالرحمن الحربي",
     rating: 4,
     featured: false,
+    createdAt: REVIEW_DATES.abdulrahman,
     body: "مركز جيد. الطاقم متعاون والمكان مريح. شعرت بالفائدة بعد بضعة أيام. سأحجز مرة أخرى في أحد أيام السنة المستحبة.",
   },
 ];
@@ -383,6 +408,7 @@ async function main() {
         locale: r.locale,
         approved: true,
         featured: r.featured,
+        createdAt: r.createdAt,
       },
     });
   }
