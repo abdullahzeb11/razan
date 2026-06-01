@@ -28,11 +28,11 @@ export const siteConfig = {
     },
   },
   social: {
-    instagram: "https://instagram.com/razan.sa",
-    twitter: "https://twitter.com/razan_sa",
+    instagram: "https://www.instagram.com/abdullah__zeb/",
+    twitter: "https://x.com/AbdullahZeb90",
     tiktok: "https://tiktok.com/@razan.sa",
     snapchat: "https://snapchat.com/add/razan.sa",
-    youtube: "https://youtube.com/@razan",
+    youtube: "https://www.youtube.com/@abdullahzeb2887",
   },
   nav: [
     { key: "services", href: "#services" },
