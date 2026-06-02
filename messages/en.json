@@ -91,19 +91,19 @@
     "popular": "Most booked",
     "items": {
       "classic": {
-        "name": "Classic Hijama (Home Visit)",
-        "description": "Wet cupping at the primary sunnah points (kahil & akhda'ayn) — performed in your home. Ideal for prevention, headaches, and neck tension.",
+        "name": "Sunnah Hijama",
+        "description": "Preventive wet cupping at the primary sunnah points (kahil & akhda'ayn). Ideal for general wellness on the sunnah days, performed in your home.",
         "includes": ["15-min consultation", "5–7 sunnah points", "Single-use sterile kit", "Post-session report"]
       },
       "therapeutic": {
-        "name": "Therapeutic Hijama (Home Visit)",
-        "description": "A tailored protocol for back, shoulder, and sciatic pain — paired with adjunct massage and a personal point-map, performed in your home.",
+        "name": "Therapeutic Hijama",
+        "description": "Pain-focused protocol for back, shoulder, and sciatic pain — paired with light adjunct massage and a 7-day WhatsApp follow-up.",
         "includes": ["30-min consultation", "10–14 targeted points", "Adjunct massage", "7-day follow-up"]
       },
       "home": {
-        "name": "Premium Home Visit",
-        "description": "Our most comprehensive package — extended consultation, multi-area protocol, and follow-up plan. Same on-site sterilization and total privacy in your home.",
-        "includes": ["Extended consultation", "Full on-site sterilization", "Portable medical-grade kit", "7-day follow-up"]
+        "name": "Comprehensive Hijama",
+        "description": "Our most thorough package — multi-area protocol, extended consultation, lifestyle and diet guidance, and a 14-day follow-up. The full reset.",
+        "includes": ["Extended consultation", "Multi-area protocol", "Lifestyle & diet guidance", "14-day follow-up"]
       }
     }
   },

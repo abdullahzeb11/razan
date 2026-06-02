@@ -3,54 +3,58 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
+// Home-visit-only packages. All three are delivered at the customer's home in
+// Riyadh — the tiers differ by scope, depth, and follow-up, not by location.
+// Slugs are kept stable (classic/therapeutic/home) so existing appointment FKs
+// in the DB don't break when names change.
 const SERVICES = [
   {
     slug: "classic",
-    nameEn: "Classic Hijama",
-    nameAr: "الحجامة الكلاسيكية",
-    shortEn: "Sunnah points · prevention focus",
-    shortAr: "نقاط السنة · للوقاية",
+    nameEn: "Sunnah Hijama",
+    nameAr: "حجامة السنة",
+    shortEn: "Preventive · sunnah points",
+    shortAr: "وقائية · نقاط السنة",
     descriptionEn:
-      "Wet cupping at the primary sunnah points (kahil & akhda'ayn). Ideal for prevention, headaches, and neck tension.",
+      "Preventive wet cupping at the primary sunnah points (kahil & akhda'ayn). 5–7 points, 15-minute consultation — ideal for general wellness on the sunnah days, performed at your home anywhere in Riyadh.",
     descriptionAr:
-      "جلسة حجامة رطبة على نقاط السنة الأساسية (الكاهل والأخدعان)، مناسبة للوقاية وللصداع وآلام الرقبة.",
+      "حجامة وقائية على نقاط السنة الأساسية (الكاهل والأخدعان). من 5 إلى 7 نقاط، استشارة 15 دقيقة — مناسبة للوقاية والصحة العامة في أيام السنة، تُجرى في منزلك في أي مكان داخل الرياض.",
     priceSar: 150,
     durationMinutes: 45,
-    icon: "Stethoscope",
+    icon: "Sprout",
     featured: false,
-    homeVisit: false,
+    homeVisit: true,
     sortOrder: 1,
   },
   {
     slug: "therapeutic",
     nameEn: "Therapeutic Hijama",
     nameAr: "الحجامة العلاجية",
-    shortEn: "Targeted protocol · 10–14 points",
-    shortAr: "بروتوكول مخصّص · ١٠–١٤ نقطة",
+    shortEn: "Pain-focused · 7-day follow-up",
+    shortAr: "للألم · متابعة 7 أيام",
     descriptionEn:
-      "A tailored protocol for back, shoulder, and sciatic pain — paired with adjunct massage and a personal point-map.",
+      "Targeted protocol for back, shoulder, and sciatic pain. 10–14 targeted points, 30-minute consultation, light adjunct massage, and a 7-day WhatsApp follow-up — performed at your home in Riyadh.",
     descriptionAr:
-      "بروتوكول مخصّص لآلام الظهر والكتف وعرق النسا، مع تدليك مرافق وخريطة نقاط شخصية.",
+      "بروتوكول مخصّص لآلام الظهر والكتف وعرق النسا. من 10 إلى 14 نقطة، استشارة 30 دقيقة، تدليك خفيف مرافق، ومتابعة عبر واتساب لمدة 7 أيام — تُجرى في منزلك في الرياض.",
     priceSar: 250,
     durationMinutes: 75,
     icon: "Sparkles",
     featured: true,
-    homeVisit: false,
+    homeVisit: true,
     sortOrder: 2,
   },
   {
     slug: "home",
-    nameEn: "Home Visit",
-    nameAr: "زيارة منزلية",
-    shortEn: "We come to you · Riyadh",
-    shortAr: "نأتي إليك · داخل الرياض",
+    nameEn: "Comprehensive Hijama",
+    nameAr: "الحجامة الشاملة",
+    shortEn: "Full reset · 14-day follow-up",
+    shortAr: "إعادة ضبط شاملة · متابعة 14 يومًا",
     descriptionEn:
-      "We come to you in Riyadh. The same protocol as the clinic, with the highest sterilization standards and total privacy.",
+      "Multi-area protocol — front, back, and targeted points. Extended consultation, personal lifestyle and diet guidance, and a 14-day WhatsApp follow-up. The full reset, performed at your home.",
     descriptionAr:
-      "نأتي إليك في الرياض. نفس بروتوكول العيادة بأعلى معايير التعقيم وفي خصوصية تامّة.",
-    priceSar: 200,
-    durationMinutes: 90,
-    icon: "Home",
+      "بروتوكول متعدد المناطق — أمام وخلف ونقاط موجّهة. استشارة موسّعة، إرشادات نمط حياة وتغذية شخصية، ومتابعة عبر واتساب لمدة 14 يومًا. إعادة ضبط شاملة، تُجرى في منزلك.",
+    priceSar: 350,
+    durationMinutes: 120,
+    icon: "Crown",
     featured: false,
     homeVisit: true,
     sortOrder: 3,
