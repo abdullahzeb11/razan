@@ -51,6 +51,7 @@ export async function GET(
     scheduledAt: appointment.scheduledAt,
     location: appointment.location,
     addressLine: appointment.addressLine,
+    mapsUrl: appointment.mapsUrl,
     appointmentId: appointment.id,
     siteUrl: siteConfig.url,
     preferAscii: !mobile,

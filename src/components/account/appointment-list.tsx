@@ -13,6 +13,7 @@ import {
   AlertCircle,
   Loader2,
   CheckCircle2,
+  Navigation,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -32,6 +33,7 @@ export type CustomerAppointment = {
   priceSar: number;
   location: "CLINIC" | "HOME_VISIT";
   addressLine: string | null;
+  mapsUrl: string | null;
   serviceNameEn: string;
   serviceNameAr: string;
 };
@@ -147,6 +149,18 @@ function AppointmentCard({ a }: { a: CustomerAppointment }) {
             ? a.addressLine ?? t("home")
             : t("clinic")}
         </Row>
+        {a.mapsUrl ? (
+          <Row icon={<Navigation className="h-3.5 w-3.5" />}>
+            <a
+              href={a.mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-primary hover:underline"
+            >
+              {t("openInMaps")}
+            </a>
+          </Row>
+        ) : null}
       </dl>
 
       {error ? (

@@ -9,6 +9,7 @@ import {
   Mail,
   User,
   ArrowLeft,
+  ExternalLink,
 } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { Link } from "@/i18n/routing";
@@ -111,6 +112,19 @@ export default async function ConfirmedPage({
             <Row icon={<MapPin className="h-4 w-4" />} label={t("location")}>
               {`${t("home")} · ${appointment.addressLine ?? (locale === "ar" ? siteConfig.contact.serviceAreaAr : siteConfig.contact.serviceAreaEn)}`}
             </Row>
+            {appointment.mapsUrl ? (
+              <Row icon={<ExternalLink className="h-4 w-4" />} label={t("mapsUrl")}>
+                <a
+                  href={appointment.mapsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  dir="ltr"
+                  className="text-primary hover:underline"
+                >
+                  {t("openInMaps")}
+                </a>
+              </Row>
+            ) : null}
             <Row icon={<User className="h-4 w-4" />} label={t("name")}>
               {appointment.guestName}
             </Row>

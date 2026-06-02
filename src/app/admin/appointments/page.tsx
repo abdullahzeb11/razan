@@ -61,6 +61,7 @@ export default async function AppointmentsPage({
     guestName: a.guestName,
     guestPhone: a.guestPhone,
     addressLine: a.addressLine,
+    mapsUrl: a.mapsUrl,
     serviceName: a.service.nameEn,
     serviceNameAr: a.service.nameAr,
     locale: (a.locale === "en" ? "en" : "ar") as "ar" | "en",

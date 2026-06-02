@@ -132,6 +132,17 @@ export const appointmentInputSchema = z
       .or(z.literal("")),
     addressLine: z.string().trim().max(200).optional(),
     city: z.string().trim().max(80).optional(),
+    // Optional Google Maps share URL. Accept any https URL up to 500 chars;
+    // we don't enforce a domain whitelist because Google rotates short-link
+    // hosts (maps.app.goo.gl, goo.gl/maps, g.co/maps, google.com/maps).
+    mapsUrl: z
+      .string()
+      .trim()
+      .max(500)
+      .url("Please paste a valid link")
+      .refine((v) => v.startsWith("https://"), "Link must start with https://")
+      .optional()
+      .or(z.literal("")),
     notes: z.string().trim().max(500).optional(),
     locale: z.enum(["ar", "en"]).default("ar"),
   })

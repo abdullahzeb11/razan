@@ -15,6 +15,7 @@ import {
   UserX,
   Undo2,
   Loader2,
+  Navigation,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -37,6 +38,7 @@ export type AppointmentCardData = {
   guestName: string | null;
   guestPhone: string | null;
   addressLine: string | null;
+  mapsUrl: string | null;     // Customer's Google Maps share link, if provided
   serviceName: string;        // English (shown on card)
   serviceNameAr: string;      // Arabic (used in Arabic WhatsApp message)
   locale: "ar" | "en";        // Locale the customer booked in
@@ -151,11 +153,35 @@ export function AppointmentCard({ a }: { a: AppointmentCardData }) {
             <span dir="ltr">{a.guestPhone}</span>
           </Row>
         ) : null}
+        {a.mapsUrl ? (
+          <Row icon={<Navigation className="h-3.5 w-3.5" />}>
+            <a
+              href={a.mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-primary hover:underline"
+            >
+              Open in Google Maps
+            </a>
+          </Row>
+        ) : null}
       </dl>
 
       <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
         <p className="text-xs font-semibold tabular-nums">{a.priceSar} SAR</p>
         <div className="flex items-center gap-1.5">
+          {a.mapsUrl ? (
+            <a
+              href={a.mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              title="Open location in Google Maps"
+              aria-label="Open location in Google Maps"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-border text-primary transition-colors hover:bg-primary/10"
+            >
+              <Navigation className="h-3.5 w-3.5" />
+            </a>
+          ) : null}
           {a.guestPhone && (a.status === "PENDING" || a.status === "CONFIRMED") ? (
             <a
               href={buildWhatsAppConfirmLink(a)}

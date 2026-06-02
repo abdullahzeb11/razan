@@ -154,6 +154,11 @@ model Appointment {
   // Address for home visits
   addressLine  String?
   city         String?
+  // Optional Google Maps share URL the customer pastes when booking
+  // (e.g. https://maps.app.goo.gl/...). The practitioner uses this to
+  // navigate directly — far more reliable than text addresses in Saudi
+  // Arabia where compound numbering and street naming vary.
+  mapsUrl      String?
   // Internal
   notes        String?             @db.Text
   cancelReason String?

@@ -13,6 +13,7 @@ export type Details = {
   location: "CLINIC" | "HOME_VISIT";
   addressLine: string;
   city: string;
+  mapsUrl: string;
   notes: string;
 };
 
@@ -127,22 +128,40 @@ export function StepDetails({
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <div className="grid gap-4 rounded-2xl border border-gold/30 bg-gold/5 p-4 sm:grid-cols-3">
-              <Field
-                label={tb("address")}
-                value={value.addressLine}
-                error={errors.addressLine}
-                onChange={(v) => onChange({ addressLine: v })}
-                className="sm:col-span-2"
-                autoComplete="street-address"
-              />
-              <Field
-                label={tb("city")}
-                value={value.city}
-                error={errors.city}
-                onChange={(v) => onChange({ city: v })}
-                autoComplete="address-level2"
-              />
+            <div className="space-y-4 rounded-2xl border border-gold/30 bg-gold/5 p-4">
+              <div className="grid gap-4 sm:grid-cols-3">
+                <Field
+                  label={tb("address")}
+                  value={value.addressLine}
+                  error={errors.addressLine}
+                  onChange={(v) => onChange({ addressLine: v })}
+                  className="sm:col-span-2"
+                  autoComplete="street-address"
+                />
+                <Field
+                  label={tb("city")}
+                  value={value.city}
+                  error={errors.city}
+                  onChange={(v) => onChange({ city: v })}
+                  autoComplete="address-level2"
+                />
+              </div>
+              <div>
+                <Field
+                  label={tb("mapsUrl")}
+                  value={value.mapsUrl}
+                  error={errors.mapsUrl}
+                  onChange={(v) => onChange({ mapsUrl: v })}
+                  type="url"
+                  dir="ltr"
+                  placeholder="https://maps.app.goo.gl/..."
+                  autoComplete="off"
+                  optional
+                />
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                  {tb("mapsUrlHint")}
+                </p>
+              </div>
             </div>
           </motion.div>
         ) : null}

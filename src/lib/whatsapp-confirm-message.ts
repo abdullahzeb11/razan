@@ -18,6 +18,8 @@ export type WhatsAppConfirmArgs = {
   scheduledAt: Date;
   location: "CLINIC" | "HOME_VISIT";
   addressLine: string | null;
+  /** Optional Google Maps share URL the customer pasted at booking time. */
+  mapsUrl: string | null;
   appointmentId: string;
   siteUrl: string;
   /** When true, swap colorful emojis for plain BMP/ASCII glyphs. Default false. */
@@ -88,7 +90,24 @@ export function buildWhatsAppConfirmMessage(args: WhatsAppConfirmArgs): string {
       ? "Home visit" + (args.addressLine ? ` — ${args.addressLine}` : "")
       : "At the clinic";
 
+  // Location pin handling for home visits:
+  //   - If the customer pasted a Google Maps link at booking → echo it back
+  //     so the practitioner has it in WhatsApp too.
+  //   - Otherwise → ask the customer to share their WhatsApp location pin.
+  //     This is the most natural flow in Saudi Arabia where text addresses
+  //     are often vague.
+  const isHomeVisit = args.location === "HOME_VISIT";
+  const hasMapsUrl = isHomeVisit && Boolean(args.mapsUrl);
+  const needsPinRequest = isHomeVisit && !args.mapsUrl;
+
   if (args.locale === "ar") {
+    const mapsBlockAr = hasMapsUrl
+      ? `\n${g.where} *الموقع:* ${args.mapsUrl}\n`
+      : "";
+    const pinRequestAr = needsPinRequest
+      ? `\n${g.where} لمساعدتنا في الوصول، يُرجى مشاركة موقعك عبر زر الموقع في واتساب 📍\n`
+      : "";
+
     return `${g.brand}*مركز رزان للحجامة*
 ${DIVIDER}
 
@@ -101,7 +120,7 @@ ${g.date} *التاريخ:* ${date}
 ${g.time} *الوقت:* ${time}
 ${g.where} *المكان:* ${whereAr}
 ${g.ref} *المرجع:* ${ref}
-
+${mapsBlockAr}${pinRequestAr}
 ${DIVIDER}
 
 عرض الحجز:
@@ -110,6 +129,13 @@ ${bookingUrl}
 ردّوا على هذه الرسالة إذا احتجتم لإعادة الجدولة.
 نراكم قريبًا إن شاء الله${g.closing}`;
   }
+
+  const mapsBlockEn = hasMapsUrl
+    ? `\n${g.where} *Location pin:* ${args.mapsUrl}\n`
+    : "";
+  const pinRequestEn = needsPinRequest
+    ? `\n${g.where} To help us find you, please share your live location via WhatsApp's location button 📍\n`
+    : "";
 
   return `${g.brand}*Razan Hijama Center*
 ${DIVIDER}
@@ -123,7 +149,7 @@ ${g.date} *Date:* ${date}
 ${g.time} *Time:* ${time}
 ${g.where} *Where:* ${whereEn}
 ${g.ref} *Ref:* ${ref}
-
+${mapsBlockEn}${pinRequestEn}
 ${DIVIDER}
 
 View your booking:

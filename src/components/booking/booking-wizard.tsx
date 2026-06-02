@@ -26,6 +26,7 @@ const DEFAULTS: Details = {
   location: siteConfig.homeVisitOnly ? "HOME_VISIT" : "CLINIC",
   addressLine: "",
   city: "",
+  mapsUrl: "",
   notes: "",
 };
 
@@ -122,6 +123,7 @@ export function BookingWizard({
       guestEmail: details.guestEmail.trim(),
       addressLine: details.addressLine.trim() || undefined,
       city: details.city.trim() || undefined,
+      mapsUrl: details.mapsUrl.trim() || undefined,
       notes: details.notes.trim() || undefined,
       locale,
     };

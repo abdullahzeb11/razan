@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { Calendar, Clock, MapPin, User, Phone, Mail, FileText } from "lucide-react";
+import { Calendar, Clock, MapPin, User, Phone, Mail, FileText, ExternalLink } from "lucide-react";
 import { formatSAR } from "@/lib/utils";
 import type { ServiceOption } from "./step-service";
 import type { Details } from "./step-details";
@@ -77,6 +77,19 @@ export function StepReview({
               ? `${tb("home")} · ${details.addressLine}${details.city ? ` · ${details.city}` : ""}`
               : tb("clinic")}
           </Row>
+          {details.mapsUrl ? (
+            <Row icon={<ExternalLink className="h-4 w-4" />} label={tb("mapsUrl")}>
+              <a
+                href={details.mapsUrl}
+                target="_blank"
+                rel="noreferrer"
+                dir="ltr"
+                className="break-all text-primary hover:underline"
+              >
+                {details.mapsUrl}
+              </a>
+            </Row>
+          ) : null}
           <Row icon={<User className="h-4 w-4" />} label={tb("name")}>
             {details.guestName}
           </Row>

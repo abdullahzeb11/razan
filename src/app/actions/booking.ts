@@ -68,6 +68,7 @@ export async function createAppointment(raw: unknown): Promise<Result> {
       guestEmail: input.guestEmail || null,
       addressLine: input.addressLine || null,
       city: input.city || null,
+      mapsUrl: input.mapsUrl || null,
       notes: input.notes || null,
       status: "PENDING",
     },
@@ -89,6 +90,7 @@ export async function createAppointment(raw: unknown): Promise<Result> {
     priceSar: service.priceSar,
     location: input.location,
     addressLine: input.addressLine || null,
+    mapsUrl: input.mapsUrl || null,
     notes: input.notes || null,
     locale: input.locale,
   });
@@ -108,6 +110,7 @@ async function notifyOnBooking(args: {
   priceSar: number;
   location: "CLINIC" | "HOME_VISIT";
   addressLine: string | null;
+  mapsUrl: string | null;
   notes: string | null;
   locale: "ar" | "en";
 }) {
@@ -164,6 +167,7 @@ async function notifyOnBooking(args: {
   <tr><td style="padding:6px 0; color:#666;">Service</td><td style="padding:6px 0;">${escapeHtml(args.serviceNameEn)} <span style="color:#999;">· ${args.durationMin} min · ${args.priceSar} SAR</span></td></tr>
   <tr><td style="padding:6px 0; color:#666;">When</td><td style="padding:6px 0;"><strong>${escapeHtml(enDate)} · ${escapeHtml(enTime)}</strong></td></tr>
   <tr><td style="padding:6px 0; color:#666;">Where</td><td style="padding:6px 0;">${args.location === "HOME_VISIT" ? `Home visit${args.addressLine ? ` — ${escapeHtml(args.addressLine)}` : ""}` : "At the clinic"}</td></tr>
+  ${args.mapsUrl ? `<tr><td style="padding:6px 0; color:#666;">Map</td><td style="padding:6px 0;"><a href="${escapeHtml(args.mapsUrl)}" style="color:#0E6E5A; text-decoration:none; font-weight:600;">Open in Google Maps →</a></td></tr>` : ""}
   <tr><td style="padding:6px 0; color:#666;">Ref</td><td style="padding:6px 0; font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; color:#888;">${escapeHtml(ref)}</td></tr>
 </table>
 ${args.notes ? `<div style="margin-top:8px; padding:12px 14px; border-radius:8px; background:#fafaf7; border-left:3px solid #C9A961; white-space:pre-wrap; font-size:14px;"><strong style="color:#666; font-size:12px;">Notes:</strong><br>${escapeHtml(args.notes)}</div>` : ""}

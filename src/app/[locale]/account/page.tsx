@@ -66,6 +66,7 @@ export default async function AccountDashboard({
       priceSar: a.priceSar,
       location: a.location,
       addressLine: a.addressLine,
+      mapsUrl: a.mapsUrl,
       serviceNameEn: a.service.nameEn,
       serviceNameAr: a.service.nameAr,
     };
