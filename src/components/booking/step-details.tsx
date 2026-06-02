@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { Home, Building2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/lib/site-config";
 
 export type Details = {
   guestName: string;
@@ -40,36 +41,49 @@ export function StepDetails({
         </p>
       </header>
 
-      {/* Location switcher */}
-      <div className="grid grid-cols-2 gap-3 rounded-2xl border border-border bg-card p-2">
-        {(
-          [
-            { key: "CLINIC", icon: Building2, labelKey: "clinic" },
-            { key: "HOME_VISIT", icon: Home, labelKey: "home" },
-          ] as const
-        ).map(({ key, icon: Icon, labelKey }) => {
-          const active = value.location === key;
-          const disabled = homeVisitForced && key === "CLINIC";
-          return (
-            <button
-              key={key}
-              type="button"
-              disabled={disabled}
-              onClick={() => onChange({ location: key })}
-              className={cn(
-                "flex items-center justify-center gap-2 rounded-xl px-3 py-3 text-sm font-medium transition-colors",
-                active
-                  ? "bg-primary text-primary-foreground shadow-soft"
-                  : "text-muted-foreground hover:bg-accent",
-                disabled && "cursor-not-allowed opacity-40",
-              )}
-            >
-              <Icon className="h-4 w-4" />
-              {tb(`location.${labelKey}`)}
-            </button>
-          );
-        })}
-      </div>
+      {/* Location switcher — hidden when the business is home-visit-only
+          (no CLINIC alternative exists to switch to). */}
+      {siteConfig.homeVisitOnly ? (
+        <div className="flex items-center gap-3 rounded-2xl border border-primary/30 bg-primary/5 p-4 text-sm">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary">
+            <Home className="h-4 w-4" />
+          </div>
+          <div>
+            <p className="font-medium text-foreground">{tb("location.home")}</p>
+            <p className="text-xs text-muted-foreground">{tb("location.homeNote")}</p>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-3 rounded-2xl border border-border bg-card p-2">
+          {(
+            [
+              { key: "CLINIC", icon: Building2, labelKey: "clinic" },
+              { key: "HOME_VISIT", icon: Home, labelKey: "home" },
+            ] as const
+          ).map(({ key, icon: Icon, labelKey }) => {
+            const active = value.location === key;
+            const disabled = homeVisitForced && key === "CLINIC";
+            return (
+              <button
+                key={key}
+                type="button"
+                disabled={disabled}
+                onClick={() => onChange({ location: key })}
+                className={cn(
+                  "flex items-center justify-center gap-2 rounded-xl px-3 py-3 text-sm font-medium transition-colors",
+                  active
+                    ? "bg-primary text-primary-foreground shadow-soft"
+                    : "text-muted-foreground hover:bg-accent",
+                  disabled && "cursor-not-allowed opacity-40",
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {tb(`location.${labelKey}`)}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* Personal */}
       <div className="grid gap-4 sm:grid-cols-2">

@@ -14,14 +14,20 @@ export const siteConfig = {
   url:
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
     "https://razan.sa",
+  // Home-visit-only mobile service. No public clinic address — the practitioner
+  // travels to the patient within Riyadh. A real address is held privately for
+  // Google Business Profile verification only.
+  homeVisitOnly: true,
   contact: {
     phoneDisplay: "+966 55 250 7654",
     phoneTel: "+966552507654",
     whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "966575056318",
     email: "hello@razan.sa",
-    addressEn: "King Fahd Rd, Al-Olaya, Riyadh 12212, Saudi Arabia",
-    addressAr: "طريق الملك فهد، حي العليا، الرياض ١٢٢١٢، المملكة العربية السعودية",
-    geo: { lat: 24.7136, lng: 46.6753 },
+    serviceAreaEn: "Home visits across Riyadh",
+    serviceAreaAr: "زيارات منزلية في جميع أنحاء الرياض",
+    cityEn: "Riyadh",
+    cityAr: "الرياض",
+    countryCode: "SA",
     hours: {
       weekdays: { open: "09:00", close: "22:00" },
       friday: { open: "14:00", close: "22:00" },

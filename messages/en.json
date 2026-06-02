@@ -1,9 +1,9 @@
 {
   "Meta": {
-    "title": "Razan Hijama Riyadh — Licensed Cupping Therapy & Home Visits",
-    "description": "Razan Hijama Center in Riyadh. Licensed prophetic cupping (hijama) on sunnah days, single-use sterile tools, certified practitioners, in-clinic and home visits across Riyadh. Book online in under a minute.",
-    "ogAlt": "Razan Hijama Center — Riyadh",
-    "keywords": "hijama Riyadh, hijama clinic Riyadh, cupping therapy Riyadh, hijama home visit Riyadh, prophetic medicine Saudi Arabia, sunnah cupping, wet cupping Riyadh, MoH licensed hijama, sunnah days hijama, الحجامة في الرياض, مركز حجامة, حجامة منزلية, حجامة نبوية, حجامة السنة"
+    "title": "Razan Hijama Riyadh — Licensed Home-Visit Cupping Therapy",
+    "description": "Home-visit hijama in Riyadh. Licensed prophetic cupping on sunnah days — we come to you with single-use sterile tools and full on-site sterilization. Certified practitioners, total privacy at home. Book online in under a minute.",
+    "ogAlt": "Razan Hijama — Home-Visit Cupping Therapy in Riyadh",
+    "keywords": "hijama home visit Riyadh, hijama Riyadh, mobile hijama Riyadh, home cupping therapy Riyadh, cupping at home Riyadh, prophetic medicine Saudi Arabia, sunnah cupping home visit, wet cupping Riyadh home, MoH licensed hijama, sunnah days hijama, حجامة منزلية الرياض, حجامة في البيت الرياض, حجامة متنقلة الرياض, الحجامة في الرياض, حجامة نبوية, حجامة السنة"
   },
   "Nav": {
     "services": "Services",
@@ -22,15 +22,15 @@
     "account": "My account"
   },
   "Hero": {
-    "eyebrow": "Certified prophetic cupping",
+    "eyebrow": "Home-visit prophetic cupping",
     "title": "The sunnah of healing,",
-    "titleAccent": "refined.",
-    "subtitle": "We practice hijama with reverence for the sunnah, clinical precision, and a calm, considered hospitality. MoH-licensed practitioners, single-use sterile instruments, and total privacy for every guest.",
+    "titleAccent": "at your door.",
+    "subtitle": "Home-visit hijama across Riyadh. We come to you with reverence for the sunnah, clinical precision, and considered hospitality — MoH-licensed practitioner, single-use sterile instruments, full on-site sterilization, and total privacy in your own home.",
     "ctaBook": "Book your session",
     "ctaWhatsapp": "Chat on WhatsApp",
     "trust1": "Saudi MoH licensed",
     "trust2": "Single-use sterile tools",
-    "trust3": "Sunnah days available",
+    "trust3": "We come to you",
     "ratingLabel": "Rated {rating}/5 by {count} patients",
     "stat1Value": "Sterile",
     "stat1Label": "Single-use tools",
@@ -74,7 +74,7 @@
     "eyebrow": "From the prophetic tradition",
     "title": "“Indeed, the best of remedies you have is hijama.”",
     "narrator": "— Sahih al-Bukhari & Muslim",
-    "body": "Hijama is among the most emphasized therapies in the prophetic tradition. At Razan we keep this practice alive with modern clinical standards, and align our calendar with the recommended sunnah days.",
+    "body": "Hijama is among the most emphasized therapies in the prophetic tradition. At Razan we keep this practice alive with modern clinical standards, performed in the quiet of your own home, and we align our calendar with the recommended sunnah days.",
     "daysTitle": "The recommended days",
     "daysBody": "The 17th, 19th, and 21st of every Hijri month — as narrated from the Prophet ﷺ.",
     "viewSchedule": "View the Hijri calendar",
@@ -82,8 +82,8 @@
   },
   "Services": {
     "eyebrow": "Our services",
-    "title": "Hijama packages",
-    "subtitle": "Three packages built around real patient needs. Every session includes a consultation, full sterilization, and a post-session report.",
+    "title": "Home-visit hijama packages",
+    "subtitle": "Three packages built around real patient needs — performed in your home anywhere in Riyadh. Every session includes a consultation, full on-site sterilization, and a post-session report.",
     "duration": "{minutes} min",
     "currency": "SAR",
     "from": "from",
@@ -91,19 +91,19 @@
     "popular": "Most booked",
     "items": {
       "classic": {
-        "name": "Classic Hijama",
-        "description": "Wet cupping at the primary sunnah points (kahil & akhda'ayn). Ideal for prevention, headaches, and neck tension.",
+        "name": "Classic Hijama (Home Visit)",
+        "description": "Wet cupping at the primary sunnah points (kahil & akhda'ayn) — performed in your home. Ideal for prevention, headaches, and neck tension.",
         "includes": ["15-min consultation", "5–7 sunnah points", "Single-use sterile kit", "Post-session report"]
       },
       "therapeutic": {
-        "name": "Therapeutic Hijama",
-        "description": "A tailored protocol for back, shoulder, and sciatic pain — paired with adjunct massage and a personal point-map.",
+        "name": "Therapeutic Hijama (Home Visit)",
+        "description": "A tailored protocol for back, shoulder, and sciatic pain — paired with adjunct massage and a personal point-map, performed in your home.",
         "includes": ["30-min consultation", "10–14 targeted points", "Adjunct massage", "7-day follow-up"]
       },
       "home": {
-        "name": "Home Visit",
-        "description": "We come to you in Riyadh. The same protocol as the clinic, with the highest sterilization standards and total privacy.",
-        "includes": ["We respect your schedule", "Full on-site sterilization", "Portable medical-grade kit", "Riyadh coverage"]
+        "name": "Premium Home Visit",
+        "description": "Our most comprehensive package — extended consultation, multi-area protocol, and follow-up plan. Same on-site sterilization and total privacy in your home.",
+        "includes": ["Extended consultation", "Full on-site sterilization", "Portable medical-grade kit", "7-day follow-up"]
       }
     }
   },
@@ -148,7 +148,7 @@
       },
       "2": {
         "q": "Are you licensed?",
-        "a": "Yes. The clinic and our practitioners are licensed by the Saudi Ministry of Health under the complementary medicine framework."
+        "a": "Yes. Our practitioner is licensed by the Saudi Ministry of Health under the complementary medicine framework, and we carry the same sterile-supply standards as a licensed clinic."
       },
       "3": {
         "q": "Which days are preferred?",
@@ -159,18 +159,18 @@
         "a": "For pregnant women, those with bleeding disorders, or on blood thinners. We'll assess in your consultation."
       },
       "5": {
-        "q": "Do you offer home visits?",
-        "a": "Yes, within Riyadh. You can book it directly from the services section."
+        "q": "Where do sessions take place?",
+        "a": "We're a home-visit service — every session takes place in your home anywhere in Riyadh. The practitioner brings a portable medical-grade kit, performs full on-site sterilization, and leaves your home exactly as it was."
       }
     }
   },
   "Map": {
-    "eyebrow": "Find us",
-    "title": "In the heart of Riyadh",
-    "subtitle": "A quiet location with private parking and separate male and female rooms.",
-    "address": "King Fahd Rd, Al-Olaya, Riyadh 12212",
-    "hours": "Sat – Thu: 9:00 AM – 10:00 PM",
-    "directions": "Get directions",
+    "eyebrow": "We come to you",
+    "title": "Home-visit hijama, anywhere in Riyadh",
+    "subtitle": "Tell us your neighbourhood and a time that suits you — we travel to your home with a full portable kit and leave it exactly as we found it.",
+    "address": "Service area",
+    "hours": "Hours",
+    "directions": "WhatsApp us",
     "call": "Call us"
   },
   "Contact": {
@@ -195,7 +195,7 @@
     "whatsapp": "Chat with us"
   },
   "Footer": {
-    "tagline": "Razan — the sunnah of healing, refined.",
+    "tagline": "Razan — home-visit hijama, the sunnah of healing brought to your door.",
     "navTitle": "Explore",
     "servicesTitle": "Services",
     "contactTitle": "Contact",
@@ -259,7 +259,8 @@
       "notes": "Notes (optional)",
       "location": {
         "clinic": "At the clinic",
-        "home": "Home visit"
+        "home": "Home visit",
+        "homeNote": "We'll travel to your address in Riyadh — please enter it below."
       }
     },
     "step4": {

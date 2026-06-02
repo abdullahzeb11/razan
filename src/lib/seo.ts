@@ -44,6 +44,9 @@ export function localBusinessJsonLd(
     url: `${siteConfig.url}/${locale}/book`,
   }));
 
+  // Service-area business: no public street address, no GeoCoordinates.
+  // areaServed declares the city we travel to. address.addressLocality is
+  // kept so Google can still associate the listing with Riyadh in search.
   return {
     "@context": "https://schema.org",
     "@type": ["MedicalBusiness", "HealthAndBeautyBusiness"],
@@ -56,16 +59,9 @@ export function localBusinessJsonLd(
     ...(priceRange ? { priceRange } : {}),
     address: {
       "@type": "PostalAddress",
-      streetAddress: "King Fahd Rd",
-      addressLocality: "Riyadh",
-      addressRegion: "Riyadh",
-      postalCode: "12212",
-      addressCountry: "SA",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: siteConfig.contact.geo.lat,
-      longitude: siteConfig.contact.geo.lng,
+      addressLocality: locale === "ar" ? siteConfig.contact.cityAr : siteConfig.contact.cityEn,
+      addressRegion: locale === "ar" ? siteConfig.contact.cityAr : siteConfig.contact.cityEn,
+      addressCountry: siteConfig.contact.countryCode,
     },
     openingHoursSpecification: [
       {
@@ -105,7 +101,12 @@ export function localBusinessJsonLd(
       : {}),
     areaServed: {
       "@type": "City",
-      name: locale === "ar" ? "الرياض" : "Riyadh",
+      name: locale === "ar" ? siteConfig.contact.cityAr : siteConfig.contact.cityEn,
+    },
+    // Service-area business marker for Google's structured-data parser.
+    serviceArea: {
+      "@type": "AdministrativeArea",
+      name: locale === "ar" ? siteConfig.contact.cityAr : siteConfig.contact.cityEn,
     },
     sameAs: [
       siteConfig.social.instagram,

@@ -63,10 +63,7 @@ export default async function ConfirmedPage({
         : "Hijama appointment at Razan",
     start: scheduledAt,
     durationMin: appointment.durationMin,
-    location:
-      appointment.location === "HOME_VISIT"
-        ? appointment.addressLine ?? ""
-        : siteConfig.contact.addressEn,
+    location: appointment.addressLine ?? siteConfig.contact.serviceAreaEn,
   });
   const icsHref = `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
 
@@ -112,11 +109,7 @@ export default async function ConfirmedPage({
               <span dir="ltr">{timeLabel}</span>
             </Row>
             <Row icon={<MapPin className="h-4 w-4" />} label={t("location")}>
-              {appointment.location === "HOME_VISIT"
-                ? `${t("home")} · ${appointment.addressLine}`
-                : locale === "ar"
-                  ? siteConfig.contact.addressAr
-                  : siteConfig.contact.addressEn}
+              {`${t("home")} · ${appointment.addressLine ?? (locale === "ar" ? siteConfig.contact.serviceAreaAr : siteConfig.contact.serviceAreaEn)}`}
             </Row>
             <Row icon={<User className="h-4 w-4" />} label={t("name")}>
               {appointment.guestName}

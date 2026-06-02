@@ -13,6 +13,7 @@ import { StepDetails, type Details } from "./step-details";
 import { StepReview } from "./step-review";
 import { createAppointment } from "@/app/actions/booking";
 import { appointmentInputSchema } from "@/lib/booking";
+import { siteConfig } from "@/lib/site-config";
 
 type Stage = 0 | 1 | 2 | 3;
 
@@ -20,7 +21,9 @@ const DEFAULTS: Details = {
   guestName: "",
   guestPhone: "",
   guestEmail: "",
-  location: "CLINIC",
+  // Default to HOME_VISIT when the business is home-visit-only — the toggle
+  // is hidden in that mode, so this is the only location customers can book.
+  location: siteConfig.homeVisitOnly ? "HOME_VISIT" : "CLINIC",
   addressLine: "",
   city: "",
   notes: "",
@@ -50,19 +53,23 @@ export function BookingWizard({
     guestName: prefill?.name ?? "",
     guestPhone: prefill?.phone ?? "",
     guestEmail: prefill?.email ?? "",
-    location:
-      services.find((s) => s.id === initialId)?.homeVisit ? "HOME_VISIT" : "CLINIC",
+    location: siteConfig.homeVisitOnly
+      ? "HOME_VISIT"
+      : services.find((s) => s.id === initialId)?.homeVisit
+        ? "HOME_VISIT"
+        : "CLINIC",
   });
   const [errors, setErrors] = React.useState<Partial<Record<string, string>>>({});
   const [submitting, setSubmitting] = React.useState(false);
   const [serverError, setServerError] = React.useState<string | null>(null);
 
   const selectedService = services.find((s) => s.id === serviceId) ?? null;
-  const homeVisitForced = selectedService?.homeVisit === true;
+  const homeVisitForced =
+    siteConfig.homeVisitOnly || selectedService?.homeVisit === true;
 
   // Keep location consistent with service when service changes.
   React.useEffect(() => {
-    if (selectedService?.homeVisit) {
+    if (siteConfig.homeVisitOnly || selectedService?.homeVisit) {
       setDetails((d) => ({ ...d, location: "HOME_VISIT" }));
     }
   }, [selectedService]);
