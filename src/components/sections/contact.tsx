@@ -158,7 +158,7 @@ function Field({
   dir?: "ltr" | "rtl";
 }) {
   const inputClasses =
-    "block w-full rounded-xl border border-border bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20";
+    "block min-h-11 w-full rounded-xl border border-border bg-background px-4 py-3 text-base placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:text-sm";
   return (
     <label className={className}>
       <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">

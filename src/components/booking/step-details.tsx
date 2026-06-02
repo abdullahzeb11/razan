@@ -205,7 +205,7 @@ function Field({
   autoComplete?: string;
 }) {
   const base =
-    "block w-full rounded-xl border bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 transition-colors";
+    "block min-h-11 w-full rounded-xl border bg-background px-4 py-3 text-base placeholder:text-muted-foreground focus:outline-none focus:ring-2 transition-colors sm:text-sm";
   const border = error
     ? "border-destructive focus:border-destructive focus:ring-destructive/20"
     : "border-border focus:border-primary focus:ring-primary/20";

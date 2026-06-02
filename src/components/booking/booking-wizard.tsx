@@ -272,13 +272,14 @@ export function BookingWizard({
           </p>
         ) : null}
 
-        <div className="mt-10 flex items-center justify-between gap-3 border-t border-border pt-6">
+        <div className="mt-10 flex flex-col-reverse gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
           <Button
             type="button"
             variant="ghost"
             onClick={back}
             disabled={submitting}
             aria-label={stage === 0 ? tb("backToSite") : tb("back")}
+            className="w-full justify-center sm:w-auto"
           >
             <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
             {stage === 0 ? tb("backToSite") : tb("back")}
@@ -290,6 +291,7 @@ export function BookingWizard({
               size="lg"
               disabled={!canAdvance}
               onClick={next}
+              className="w-full justify-center sm:w-auto"
             >
               {tb("next")}
               <ArrowRight className="h-4 w-4 rtl:rotate-180" />
@@ -301,6 +303,7 @@ export function BookingWizard({
               size="lg"
               disabled={submitting || success}
               onClick={submit}
+              className="w-full justify-center sm:w-auto"
             >
               {submitting ? (
                 <>

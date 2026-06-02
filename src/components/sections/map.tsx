@@ -39,12 +39,14 @@ export function MapSection() {
                 allowFullScreen
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
-              <div className="pointer-events-none absolute bottom-4 left-4 right-4 rounded-xl border border-primary/40 bg-background/95 px-4 py-3 text-sm font-medium shadow-soft backdrop-blur sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-xs">
+              <div className="pointer-events-none absolute bottom-3 left-3 right-3 rounded-xl border border-primary/40 bg-background/95 px-3 py-2.5 text-xs font-medium shadow-soft backdrop-blur sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-xs sm:px-4 sm:py-3 sm:text-sm">
                 <span className="flex items-center gap-2 text-primary">
                   <MapPin className="h-4 w-4 shrink-0" />
-                  {locale === "ar"
-                    ? siteConfig.contact.serviceAreaAr
-                    : siteConfig.contact.serviceAreaEn}
+                  <span className="break-words">
+                    {locale === "ar"
+                      ? siteConfig.contact.serviceAreaAr
+                      : siteConfig.contact.serviceAreaEn}
+                  </span>
                 </span>
               </div>
             </div>

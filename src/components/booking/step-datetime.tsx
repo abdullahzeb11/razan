@@ -93,7 +93,7 @@ export function StepDateTime({
                 type="button"
                 onClick={() => setActiveDate(iso)}
                 className={cn(
-                  "relative flex w-[78px] shrink-0 flex-col items-center gap-1 rounded-2xl border bg-card px-3 py-3 transition-all hover:-translate-y-0.5",
+                  "relative flex w-[68px] shrink-0 flex-col items-center gap-1 rounded-2xl border bg-card px-2.5 py-3 transition-all hover:-translate-y-0.5 sm:w-[78px] sm:px-3",
                   active
                     ? "border-primary bg-primary text-primary-foreground shadow-elevated"
                     : "border-border",

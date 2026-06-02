@@ -78,7 +78,10 @@ export function AppointmentCard({ a }: { a: AppointmentCardData }) {
           </p>
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
+          <DropdownMenuTrigger
+            className="-m-1.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            aria-label="Appointment actions"
+          >
             <MoreHorizontal className="h-4 w-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
