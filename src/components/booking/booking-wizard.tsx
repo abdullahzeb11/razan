@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, CheckCircle2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
@@ -64,6 +64,10 @@ export function BookingWizard({
   });
   const [errors, setErrors] = React.useState<Partial<Record<string, string>>>({});
   const [submitting, setSubmitting] = React.useState(false);
+  // "success" briefly stays true between server-OK and the redirect — gives
+  // the user a clear "booked!" beat before the page changes, so the confirm
+  // click never feels like nothing happened.
+  const [success, setSuccess] = React.useState(false);
   const [serverError, setServerError] = React.useState<string | null>(null);
 
   const selectedService = services.find((s) => s.id === serviceId) ?? null;
@@ -155,22 +159,64 @@ export function BookingWizard({
     }
 
     const res = await createAppointment(parsed.data);
-    setSubmitting(false);
 
     if (!res.ok) {
+      setSubmitting(false);
       setServerError(res.error);
       if (res.field === "scheduledAt") setStage(1);
       else if (res.field === "serviceId") setStage(0);
       return;
     }
-    router.push(`/book/confirmed/${res.id}`);
+
+    // Server confirmed the booking. Show the "booked!" state for a beat so
+    // the user gets explicit feedback, then navigate to the confirmation
+    // page — much less jarring than an abrupt route change.
+    setSubmitting(false);
+    setSuccess(true);
+    setTimeout(() => {
+      router.push(`/book/confirmed/${res.id}`);
+    }, 700);
   }
 
   return (
     <div className="space-y-10">
       <ProgressRail steps={steps} current={stage} />
 
-      <div className="rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-10">
+      <div className="relative rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-10">
+        <AnimatePresence>
+          {submitting || success ? (
+            <motion.div
+              key={success ? "success" : "submitting"}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 rounded-3xl bg-card/95 px-6 text-center backdrop-blur-sm"
+              aria-live="polite"
+              role="status"
+            >
+              {success ? (
+                <>
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-elevated">
+                    <CheckCircle2 className="h-7 w-7" strokeWidth={2.5} />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-base font-semibold sm:text-lg">{tb("successTitle")}</p>
+                    <p className="text-xs text-muted-foreground sm:text-sm">{tb("successHint")}</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                  <div className="space-y-1">
+                    <p className="text-base font-semibold sm:text-lg">{tb("confirmingTitle")}</p>
+                    <p className="text-xs text-muted-foreground sm:text-sm">{tb("confirmingHint")}</p>
+                  </div>
+                </>
+              )}
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
         <AnimatePresence mode="wait">
           <motion.div
             key={stage}
@@ -249,7 +295,7 @@ export function BookingWizard({
               type="button"
               variant="gold"
               size="lg"
-              disabled={submitting}
+              disabled={submitting || success}
               onClick={submit}
             >
               {submitting ? (

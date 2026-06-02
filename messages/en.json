@@ -231,6 +231,10 @@
     "backToSite": "Back",
     "confirm": "Confirm booking",
     "confirming": "Confirming…",
+    "confirmingTitle": "Confirming your booking…",
+    "confirmingHint": "Saving your appointment and preparing the WhatsApp confirmation. Don't refresh the page.",
+    "successTitle": "Booking confirmed",
+    "successHint": "Taking you to your confirmation page…",
     "step1": {
       "short": "Service",
       "title": "Choose your package",
