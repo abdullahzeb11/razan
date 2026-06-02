@@ -106,6 +106,17 @@ export function BookingWizard({
 
   function back() {
     setServerError(null);
+    if (stage === 0) {
+      // No earlier wizard step — leave the booking page entirely. Use browser
+      // history if it exists (preserves where the user came from, e.g. the
+      // services section), otherwise fall back to the homepage.
+      if (typeof window !== "undefined" && window.history.length > 1) {
+        router.back();
+      } else {
+        router.push("/");
+      }
+      return;
+    }
     setStage((s) => Math.max(0, s - 1) as Stage);
   }
 
@@ -203,10 +214,11 @@ export function BookingWizard({
             type="button"
             variant="ghost"
             onClick={back}
-            disabled={stage === 0 || submitting}
+            disabled={submitting}
+            aria-label={stage === 0 ? tb("backToSite") : tb("back")}
           >
             <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
-            {tb("back")}
+            {stage === 0 ? tb("backToSite") : tb("back")}
           </Button>
           {stage < 3 ? (
             <Button
