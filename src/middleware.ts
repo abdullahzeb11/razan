@@ -59,6 +59,6 @@ export const config = {
   // - /icon, /apple-icon, /opengraph-image — file-convention routes
   // - any path containing a dot (e.g. /favicon.ico, /sitemap.xml, /robots.txt)
   matcher: [
-    "/((?!api|_next|_vercel|icon|apple-icon|opengraph-image|.*\\..*).*)",
+    "/((?!api|_next|_vercel|icon|apple-icon|opengraph-image|brand-logo|.*\\..*).*)",
   ],
 };
