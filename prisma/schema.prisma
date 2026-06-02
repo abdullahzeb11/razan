@@ -136,6 +136,16 @@ enum AppointmentLocation {
   HOME_VISIT
 }
 
+// How the customer plans to pay. CASH = on arrival, TRANSFER = bank transfer /
+// Mada Atheer / STC Pay before the visit, ONLINE_CARD = card via processor
+// (reserved for a future Moyasar integration — disabled in the booking UI
+// until the merchant account is live).
+enum PaymentMethod {
+  CASH
+  TRANSFER
+  ONLINE_CARD
+}
+
 model Appointment {
   id           String              @id @default(cuid())
   userId       String?
@@ -159,6 +169,9 @@ model Appointment {
   // navigate directly — far more reliable than text addresses in Saudi
   // Arabia where compound numbering and street naming vary.
   mapsUrl      String?
+  // Payment method the customer selected at booking time. Default CASH
+  // because that's the most common Saudi home-service expectation.
+  paymentMethod PaymentMethod      @default(CASH)
   // Internal
   notes        String?             @db.Text
   cancelReason String?

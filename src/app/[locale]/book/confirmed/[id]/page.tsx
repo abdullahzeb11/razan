@@ -10,6 +10,7 @@ import {
   User,
   ArrowLeft,
   ExternalLink,
+  Wallet,
 } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { Link } from "@/i18n/routing";
@@ -136,6 +137,9 @@ export default async function ConfirmedPage({
                 <span dir="ltr">{appointment.guestEmail}</span>
               </Row>
             ) : null}
+            <Row icon={<Wallet className="h-4 w-4" />} label={t("payment")}>
+              {t(`paymentMethod.${appointment.paymentMethod}`)}
+            </Row>
           </dl>
         </div>
 

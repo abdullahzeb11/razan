@@ -144,6 +144,11 @@ export const appointmentInputSchema = z
       .optional()
       .or(z.literal("")),
     notes: z.string().trim().max(500).optional(),
+    // Payment method the customer chose at booking. ONLINE_CARD is only
+    // selectable from the UI once the Moyasar merchant account is live —
+    // until then the UI only sends CASH or TRANSFER, but we accept the
+    // enum so future integration doesn't need a schema change.
+    paymentMethod: z.enum(["CASH", "TRANSFER", "ONLINE_CARD"]).default("CASH"),
     locale: z.enum(["ar", "en"]).default("ar"),
   })
   .refine(

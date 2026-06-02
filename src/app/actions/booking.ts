@@ -69,6 +69,7 @@ export async function createAppointment(raw: unknown): Promise<Result> {
       addressLine: input.addressLine || null,
       city: input.city || null,
       mapsUrl: input.mapsUrl || null,
+      paymentMethod: input.paymentMethod,
       notes: input.notes || null,
       status: "PENDING",
     },
@@ -91,6 +92,7 @@ export async function createAppointment(raw: unknown): Promise<Result> {
     location: input.location,
     addressLine: input.addressLine || null,
     mapsUrl: input.mapsUrl || null,
+    paymentMethod: input.paymentMethod,
     notes: input.notes || null,
     locale: input.locale,
   });
@@ -111,6 +113,7 @@ async function notifyOnBooking(args: {
   location: "CLINIC" | "HOME_VISIT";
   addressLine: string | null;
   mapsUrl: string | null;
+  paymentMethod: "CASH" | "TRANSFER" | "ONLINE_CARD";
   notes: string | null;
   locale: "ar" | "en";
 }) {
@@ -168,6 +171,7 @@ async function notifyOnBooking(args: {
   <tr><td style="padding:6px 0; color:#666;">When</td><td style="padding:6px 0;"><strong>${escapeHtml(enDate)} · ${escapeHtml(enTime)}</strong></td></tr>
   <tr><td style="padding:6px 0; color:#666;">Where</td><td style="padding:6px 0;">${args.location === "HOME_VISIT" ? `Home visit${args.addressLine ? ` — ${escapeHtml(args.addressLine)}` : ""}` : "At the clinic"}</td></tr>
   ${args.mapsUrl ? `<tr><td style="padding:6px 0; color:#666;">Map</td><td style="padding:6px 0;"><a href="${escapeHtml(args.mapsUrl)}" style="color:#0E6E5A; text-decoration:none; font-weight:600;">Open in Google Maps →</a></td></tr>` : ""}
+  <tr><td style="padding:6px 0; color:#666;">Payment</td><td style="padding:6px 0;">${paymentLabel(args.paymentMethod)}</td></tr>
   <tr><td style="padding:6px 0; color:#666;">Ref</td><td style="padding:6px 0; font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; color:#888;">${escapeHtml(ref)}</td></tr>
 </table>
 ${args.notes ? `<div style="margin-top:8px; padding:12px 14px; border-radius:8px; background:#fafaf7; border-left:3px solid #C9A961; white-space:pre-wrap; font-size:14px;"><strong style="color:#666; font-size:12px;">Notes:</strong><br>${escapeHtml(args.notes)}</div>` : ""}
@@ -185,4 +189,15 @@ ${args.notes ? `<div style="margin-top:8px; padding:12px 14px; border-radius:8px
     }),
     replyTo: args.customerEmail || undefined,
   });
+}
+
+function paymentLabel(method: "CASH" | "TRANSFER" | "ONLINE_CARD"): string {
+  switch (method) {
+    case "CASH":
+      return "Cash on arrival";
+    case "TRANSFER":
+      return "Bank transfer / Mada Atheer / STC Pay";
+    case "ONLINE_CARD":
+      return "Online card (pending)";
+  }
 }

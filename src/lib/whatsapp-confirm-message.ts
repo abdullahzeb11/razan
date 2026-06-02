@@ -20,10 +20,23 @@ export type WhatsAppConfirmArgs = {
   addressLine: string | null;
   /** Optional Google Maps share URL the customer pasted at booking time. */
   mapsUrl: string | null;
+  /** Payment method the customer chose at booking. */
+  paymentMethod: "CASH" | "TRANSFER" | "ONLINE_CARD";
   appointmentId: string;
   siteUrl: string;
   /** When true, swap colorful emojis for plain BMP/ASCII glyphs. Default false. */
   preferAscii?: boolean;
+};
+
+const PAYMENT_LABELS_AR: Record<"CASH" | "TRANSFER" | "ONLINE_CARD", string> = {
+  CASH: "نقدًا عند الوصول",
+  TRANSFER: "تحويل بنكي / مدى أثير / STC Pay",
+  ONLINE_CARD: "دفع إلكتروني (قيد التفعيل)",
+};
+const PAYMENT_LABELS_EN: Record<"CASH" | "TRANSFER" | "ONLINE_CARD", string> = {
+  CASH: "Cash on arrival",
+  TRANSFER: "Bank transfer / Mada Atheer / STC Pay",
+  ONLINE_CARD: "Online card (pending)",
 };
 
 const DIVIDER = "━━━━━━━━━━━━━━━";
@@ -35,6 +48,7 @@ type Glyphs = {
   date: string;        // date field
   time: string;        // time field
   where: string;       // location field
+  pay: string;         // payment field
   ref: string;         // reference field
   closing: string;     // closing line trailing accent
 };
@@ -46,6 +60,7 @@ const EMOJI_GLYPHS: Glyphs = {
   date: "📅",
   time: "🕐",
   where: "📍",
+  pay: "💳",
   ref: "🎫",
   closing: " 🌿",
 };
@@ -57,6 +72,7 @@ const ASCII_GLYPHS: Glyphs = {
   date: "▸",
   time: "▸",
   where: "▸",
+  pay: "▸",
   ref: "▸",
   closing: "",
 };
@@ -119,6 +135,7 @@ ${g.service} *الخدمة:* ${args.serviceNameAr}
 ${g.date} *التاريخ:* ${date}
 ${g.time} *الوقت:* ${time}
 ${g.where} *المكان:* ${whereAr}
+${g.pay} *الدفع:* ${PAYMENT_LABELS_AR[args.paymentMethod]}
 ${g.ref} *المرجع:* ${ref}
 ${mapsBlockAr}${pinRequestAr}
 ${DIVIDER}
@@ -148,6 +165,7 @@ ${g.service} *Service:* ${args.serviceNameEn}
 ${g.date} *Date:* ${date}
 ${g.time} *Time:* ${time}
 ${g.where} *Where:* ${whereEn}
+${g.pay} *Payment:* ${PAYMENT_LABELS_EN[args.paymentMethod]}
 ${g.ref} *Ref:* ${ref}
 ${mapsBlockEn}${pinRequestEn}
 ${DIVIDER}

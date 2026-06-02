@@ -10,12 +10,13 @@ import { ProgressRail, type Step } from "./progress-rail";
 import { StepService, type ServiceOption } from "./step-service";
 import { StepDateTime } from "./step-datetime";
 import { StepDetails, type Details } from "./step-details";
+import { StepPayment, type PaymentMethod } from "./step-payment";
 import { StepReview } from "./step-review";
 import { createAppointment } from "@/app/actions/booking";
 import { appointmentInputSchema } from "@/lib/booking";
 import { siteConfig } from "@/lib/site-config";
 
-type Stage = 0 | 1 | 2 | 3;
+type Stage = 0 | 1 | 2 | 3 | 4;
 
 const DEFAULTS: Details = {
   guestName: "",
@@ -49,6 +50,7 @@ export function BookingWizard({
   const [stage, setStage] = React.useState<Stage>(0);
   const [serviceId, setServiceId] = React.useState<string | null>(initialId);
   const [scheduledAt, setScheduledAt] = React.useState<string | null>(null);
+  const [paymentMethod, setPaymentMethod] = React.useState<PaymentMethod>("CASH");
   const [details, setDetails] = React.useState<Details>({
     ...DEFAULTS,
     guestName: prefill?.name ?? "",
@@ -79,7 +81,8 @@ export function BookingWizard({
     { key: "service", label: tb("step1.short") },
     { key: "datetime", label: tb("step2.short") },
     { key: "details", label: tb("step3.short") },
-    { key: "review", label: tb("step4.short") },
+    { key: "payment", label: tb("step4.short") },
+    { key: "review", label: tb("step5.short") },
   ];
 
   const canAdvance =
@@ -89,7 +92,9 @@ export function BookingWizard({
         ? Boolean(scheduledAt)
         : stage === 2
           ? validateDetails(details, homeVisitForced).ok
-          : true;
+          : stage === 3
+            ? Boolean(paymentMethod)
+            : true;
 
   function next() {
     setServerError(null);
@@ -101,7 +106,7 @@ export function BookingWizard({
       }
       setErrors({});
     }
-    setStage((s) => Math.min(3, s + 1) as Stage);
+    setStage((s) => Math.min(4, s + 1) as Stage);
   }
 
   function back() {
@@ -136,6 +141,7 @@ export function BookingWizard({
       city: details.city.trim() || undefined,
       mapsUrl: details.mapsUrl.trim() || undefined,
       notes: details.notes.trim() || undefined,
+      paymentMethod,
       locale,
     };
 
@@ -193,11 +199,18 @@ export function BookingWizard({
                 }
               />
             ) : null}
-            {stage === 3 && selectedService && scheduledAt ? (
+            {stage === 3 ? (
+              <StepPayment
+                value={paymentMethod}
+                onChange={setPaymentMethod}
+              />
+            ) : null}
+            {stage === 4 && selectedService && scheduledAt ? (
               <StepReview
                 service={selectedService}
                 scheduledAt={scheduledAt}
                 details={details}
+                paymentMethod={paymentMethod}
               />
             ) : null}
           </motion.div>
@@ -220,7 +233,7 @@ export function BookingWizard({
             <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
             {stage === 0 ? tb("backToSite") : tb("back")}
           </Button>
-          {stage < 3 ? (
+          {stage < 4 ? (
             <Button
               type="button"
               variant="gold"

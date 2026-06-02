@@ -52,6 +52,7 @@ export async function GET(
     location: appointment.location,
     addressLine: appointment.addressLine,
     mapsUrl: appointment.mapsUrl,
+    paymentMethod: appointment.paymentMethod,
     appointmentId: appointment.id,
     siteUrl: siteConfig.url,
     preferAscii: !mobile,

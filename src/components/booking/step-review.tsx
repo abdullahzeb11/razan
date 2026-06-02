@@ -1,21 +1,25 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { Calendar, Clock, MapPin, User, Phone, Mail, FileText, ExternalLink } from "lucide-react";
+import { Calendar, Clock, MapPin, User, Phone, Mail, FileText, ExternalLink, Wallet } from "lucide-react";
 import { formatSAR } from "@/lib/utils";
 import type { ServiceOption } from "./step-service";
 import type { Details } from "./step-details";
+import type { PaymentMethod } from "./step-payment";
 
 export function StepReview({
   service,
   scheduledAt,
   details,
+  paymentMethod,
 }: {
   service: ServiceOption;
   scheduledAt: string;
   details: Details;
+  paymentMethod: PaymentMethod;
 }) {
-  const tb = useTranslations("Booking.step4");
+  const tb = useTranslations("Booking.step5");
+  const tp = useTranslations("Booking.step4.payment");
   const locale = useLocale() as "ar" | "en";
 
   const date = new Date(scheduledAt);
@@ -106,6 +110,9 @@ export function StepReview({
               {details.notes}
             </Row>
           ) : null}
+          <Row icon={<Wallet className="h-4 w-4" />} label={tb("payment")}>
+            {tp(`${paymentMethod}.name`)}
+          </Row>
         </dl>
       </div>
 

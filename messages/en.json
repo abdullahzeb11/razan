@@ -267,6 +267,27 @@
       }
     },
     "step4": {
+      "short": "Payment",
+      "title": "How will you pay?",
+      "subtitle": "Pick the payment method that works for you. You can change this later by replying on WhatsApp.",
+      "payment": {
+        "comingSoon": "Coming soon",
+        "note": "Whatever you pick, you're not charged at booking — payment happens at the visit (cash) or before (transfer). We never ask for card details over WhatsApp.",
+        "CASH": {
+          "name": "Cash on arrival",
+          "description": "Pay in cash directly to the practitioner when they arrive. Have the exact amount ready if possible."
+        },
+        "TRANSFER": {
+          "name": "Bank transfer · Mada Atheer · STC Pay",
+          "description": "We'll send you our IBAN / phone number via WhatsApp after you book. Transfer the amount and send us the receipt before the visit."
+        },
+        "ONLINE_CARD": {
+          "name": "Pay online · Card · Apple Pay · Tabby",
+          "description": "Card and BNPL payments are launching soon. We're finalizing the merchant setup with our payment provider."
+        }
+      }
+    },
+    "step5": {
       "short": "Review",
       "title": "Review your booking",
       "subtitle": "Double-check the details. We'll WhatsApp you to confirm in minutes.",
@@ -281,6 +302,7 @@
       "phone": "Mobile",
       "email": "Email",
       "notes": "Notes",
+      "payment": "Payment",
       "minutes": "min",
       "terms": "By confirming you accept our cancellation policy and agree that the clinic may contact you on WhatsApp to finalize the appointment."
     },
@@ -298,6 +320,12 @@
       "name": "Name",
       "phone": "Mobile",
       "email": "Email",
+      "payment": "Payment",
+      "paymentMethod": {
+        "CASH": "Cash on arrival",
+        "TRANSFER": "Bank transfer · Mada Atheer · STC Pay",
+        "ONLINE_CARD": "Online card (coming soon)"
+      },
       "minutes": "min",
       "approvalNote": "Your appointment is pending our review. You'll receive a final WhatsApp confirmation shortly.",
       "whatsappCta": "Chat on WhatsApp",

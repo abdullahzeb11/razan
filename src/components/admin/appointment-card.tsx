@@ -16,6 +16,9 @@ import {
   Undo2,
   Loader2,
   Navigation,
+  Banknote,
+  ArrowRightLeft,
+  CreditCard,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -39,6 +42,7 @@ export type AppointmentCardData = {
   guestPhone: string | null;
   addressLine: string | null;
   mapsUrl: string | null;     // Customer's Google Maps share link, if provided
+  paymentMethod: "CASH" | "TRANSFER" | "ONLINE_CARD";
   serviceName: string;        // English (shown on card)
   serviceNameAr: string;      // Arabic (used in Arabic WhatsApp message)
   locale: "ar" | "en";        // Locale the customer booked in
@@ -165,6 +169,9 @@ export function AppointmentCard({ a }: { a: AppointmentCardData }) {
             </a>
           </Row>
         ) : null}
+        <Row icon={paymentIcon(a.paymentMethod)}>
+          <span className="truncate">{paymentLabel(a.paymentMethod)}</span>
+        </Row>
       </dl>
 
       <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
@@ -275,6 +282,28 @@ function Row({ icon, children }: { icon: React.ReactNode; children: React.ReactN
       <span className="truncate">{children}</span>
     </div>
   );
+}
+
+function paymentIcon(method: AppointmentCardData["paymentMethod"]) {
+  switch (method) {
+    case "CASH":
+      return <Banknote className="h-3.5 w-3.5" />;
+    case "TRANSFER":
+      return <ArrowRightLeft className="h-3.5 w-3.5" />;
+    case "ONLINE_CARD":
+      return <CreditCard className="h-3.5 w-3.5" />;
+  }
+}
+
+function paymentLabel(method: AppointmentCardData["paymentMethod"]): string {
+  switch (method) {
+    case "CASH":
+      return "Cash on arrival";
+    case "TRANSFER":
+      return "Bank transfer";
+    case "ONLINE_CARD":
+      return "Online card (pending)";
+  }
 }
 
 function nextActions(status: AppointmentCardData["status"]) {
