@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const pages = ["", "/blog", "/privacy", "/terms"];
+  const pages = ["", "/book", "/blog", "/reviews", "/privacy", "/terms"];
 
   const staticEntries: MetadataRoute.Sitemap = pages.flatMap((page) =>
     routing.locales.map((locale) => ({

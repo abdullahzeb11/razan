@@ -12,6 +12,7 @@ import { ChatWidget } from "@/components/chat/chat-widget";
 import { fontVariables } from "@/lib/fonts";
 import { siteConfig } from "@/lib/site-config";
 import { localBusinessJsonLd } from "@/lib/seo";
+import { prisma } from "@/lib/prisma";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -81,15 +82,41 @@ export default async function LocaleLayout({
   if (!routing.locales.includes(locale as Locale)) notFound();
   setRequestLocale(locale);
 
-  const [messages, t, session] = await Promise.all([
+  const typedLocale = locale as Locale;
+  const [messages, t, session, services, reviewAgg] = await Promise.all([
     getMessages(),
     getTranslations({ locale, namespace: "Meta" }),
     auth(),
+    prisma.service.findMany({
+      where: { active: true },
+      orderBy: { sortOrder: "asc" },
+      select: {
+        slug: true,
+        nameEn: true,
+        nameAr: true,
+        priceSar: true,
+        durationMinutes: true,
+      },
+    }),
+    prisma.review.aggregate({
+      where: { approved: true, locale: typedLocale },
+      _avg: { rating: true },
+      _count: { _all: true },
+    }),
   ]);
-  const typedLocale = locale as Locale;
+
+  const rating =
+    reviewAgg._count._all > 0 && reviewAgg._avg.rating != null
+      ? {
+          average: Math.round(reviewAgg._avg.rating * 10) / 10,
+          count: reviewAgg._count._all,
+        }
+      : undefined;
+
   const jsonLd = localBusinessJsonLd(typedLocale, {
-    name: siteConfig.brand.nameEn,
     description: t("description"),
+    services,
+    rating,
   });
   const isCustomer = Boolean(session?.user) && session?.user.role !== "ADMIN" && session?.user.role !== "STAFF";
 

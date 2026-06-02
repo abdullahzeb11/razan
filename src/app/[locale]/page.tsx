@@ -1,5 +1,6 @@
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
+import { faqJsonLd } from "@/lib/seo";
 import { Hero, type HeroRating } from "@/components/sections/hero";
 import { Benefits } from "@/components/sections/benefits";
 import { Sunnah } from "@/components/sections/sunnah";
@@ -74,8 +75,22 @@ export default async function HomePage({
         }
       : undefined;
 
+  // Build FAQ structured data from the same translation keys the FAQ
+  // section renders, so Google indexes the exact text on the page.
+  const tFaq = await getTranslations({ locale, namespace: "FAQ" });
+  const faqLd = faqJsonLd(
+    ["0", "1", "2", "3", "4", "5"].map((id) => ({
+      q: tFaq(`items.${id}.q`),
+      a: tFaq(`items.${id}.a`),
+    })),
+  );
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <Hero rating={rating} />
       <Benefits />
       <Sunnah />
