@@ -78,9 +78,7 @@ export function Navbar({ isSignedIn = false }: { isSignedIn?: boolean }) {
         </nav>
 
         <div className="flex items-center gap-1.5">
-          <div className="hidden md:block">
-            <LanguageSwitcher />
-          </div>
+          <LanguageSwitcher />
           <ThemeToggle />
           {isSignedIn ? (
             <Button
