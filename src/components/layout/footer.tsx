@@ -39,10 +39,15 @@ export function Footer() {
               {t("tagline")}
             </p>
 
-            <NewsletterForm locale={locale} />
-            <p className="mt-3 text-xs text-muted-foreground">
-              {t("newsletterBody")}
-            </p>
+            <div className="mt-8 max-w-md">
+              <h3 className="text-sm font-semibold text-foreground">
+                {t("newsletterTitle")}
+              </h3>
+              <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                {t("newsletterBody")}
+              </p>
+              <NewsletterForm locale={locale} />
+            </div>
           </div>
 
           <div className="lg:col-span-3">
@@ -191,7 +196,7 @@ function NewsletterForm({ locale }: { locale: "ar" | "en" }) {
   return (
     <form
       onSubmit={onSubmit}
-      className="mt-6 flex max-w-md flex-col gap-2 sm:mt-7 sm:flex-row sm:items-center"
+      className="mt-4 flex flex-col gap-2.5 sm:flex-row sm:items-center"
       noValidate
     >
       <label className="sr-only" htmlFor="newsletter">
@@ -203,9 +208,11 @@ function NewsletterForm({ locale }: { locale: "ar" | "en" }) {
         required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder={t("newsletterTitle")}
+        placeholder={t("newsletterPlaceholder")}
         disabled={state === "pending"}
-        className="h-11 w-full flex-1 rounded-full border border-border bg-background px-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
+        autoComplete="email"
+        inputMode="email"
+        className="h-11 w-full flex-1 rounded-xl border border-border bg-background px-4 text-base placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50 sm:rounded-full sm:text-sm"
       />
       <Button
         type="submit"

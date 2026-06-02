@@ -201,6 +201,7 @@
     "contactTitle": "Contact",
     "newsletterTitle": "Get gentle health notes",
     "newsletterBody": "One short, useful note from our practitioners every two weeks. Never spam.",
+    "newsletterPlaceholder": "you@email.com",
     "subscribe": "Subscribe",
     "subscribing": "Subscribing…",
     "subscribeSuccess": "You're on the list. Welcome to Razan.",
