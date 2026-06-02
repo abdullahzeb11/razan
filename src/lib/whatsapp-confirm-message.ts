@@ -22,22 +22,37 @@ export type WhatsAppConfirmArgs = {
   mapsUrl: string | null;
   /** Payment method the customer chose at booking. */
   paymentMethod: "CASH" | "TRANSFER" | "ONLINE_CARD";
+  /** Payment lifecycle state — drives the "Paid" vs "Pending" suffix. */
+  paymentStatus: "PENDING_OFFLINE" | "AWAITING_CARD" | "PAID" | "FAILED" | "REFUNDED";
   appointmentId: string;
   siteUrl: string;
   /** When true, swap colorful emojis for plain BMP/ASCII glyphs. Default false. */
   preferAscii?: boolean;
 };
 
-const PAYMENT_LABELS_AR: Record<"CASH" | "TRANSFER" | "ONLINE_CARD", string> = {
-  CASH: "نقدًا عند الوصول",
-  TRANSFER: "تحويل بنكي / مدى أثير / STC Pay",
-  ONLINE_CARD: "دفع إلكتروني (قيد التفعيل)",
-};
-const PAYMENT_LABELS_EN: Record<"CASH" | "TRANSFER" | "ONLINE_CARD", string> = {
-  CASH: "Cash on arrival",
-  TRANSFER: "Bank transfer / Mada Atheer / STC Pay",
-  ONLINE_CARD: "Online card (pending)",
-};
+function paymentLabel(
+  method: "CASH" | "TRANSFER" | "ONLINE_CARD",
+  status: "PENDING_OFFLINE" | "AWAITING_CARD" | "PAID" | "FAILED" | "REFUNDED",
+  locale: "ar" | "en",
+  preferAscii: boolean,
+): string {
+  // When sending to desktop WhatsApp Web we swap the trailing 4-byte emoji
+  // (✅) for a BMP checkmark — Gmail's URL re-encoder corrupts 4-byte UTF-8
+  // when the wa.me link is opened from an email view.
+  const paidSuffix = preferAscii ? " ✓" : " ✅";
+  if (locale === "ar") {
+    if (method === "CASH") return "نقدًا عند الوصول";
+    if (method === "TRANSFER") return "تحويل بنكي / مدى أثير / STC Pay";
+    if (status === "PAID") return "دفع إلكتروني · مدفوع" + paidSuffix;
+    if (status === "FAILED") return "دفع إلكتروني · فشل";
+    return "دفع إلكتروني · قيد الانتظار";
+  }
+  if (method === "CASH") return "Cash on arrival";
+  if (method === "TRANSFER") return "Bank transfer / Mada Atheer / STC Pay";
+  if (status === "PAID") return "Online card · Paid" + paidSuffix;
+  if (status === "FAILED") return "Online card · Failed";
+  return "Online card · Pending";
+}
 
 const DIVIDER = "━━━━━━━━━━━━━━━";
 
@@ -116,12 +131,17 @@ export function buildWhatsAppConfirmMessage(args: WhatsAppConfirmArgs): string {
   const hasMapsUrl = isHomeVisit && Boolean(args.mapsUrl);
   const needsPinRequest = isHomeVisit && !args.mapsUrl;
 
+  // Trailing pin emoji (📍) is 4-byte UTF-8 and corrupts via Gmail's URL
+  // re-encoder for desktop WhatsApp Web. Strip it in ASCII mode — the
+  // ▸ glyph at the line start already signals what the line is about.
+  const pinSuffix = args.preferAscii ? "" : " 📍";
+
   if (args.locale === "ar") {
     const mapsBlockAr = hasMapsUrl
       ? `\n${g.where} *الموقع:* ${args.mapsUrl}\n`
       : "";
     const pinRequestAr = needsPinRequest
-      ? `\n${g.where} لمساعدتنا في الوصول، يُرجى مشاركة موقعك عبر زر الموقع في واتساب 📍\n`
+      ? `\n${g.where} لمساعدتنا في الوصول، يُرجى مشاركة موقعك عبر زر الموقع في واتساب${pinSuffix}\n`
       : "";
 
     return `${g.brand}*مركز رزان للحجامة*
@@ -135,7 +155,7 @@ ${g.service} *الخدمة:* ${args.serviceNameAr}
 ${g.date} *التاريخ:* ${date}
 ${g.time} *الوقت:* ${time}
 ${g.where} *المكان:* ${whereAr}
-${g.pay} *الدفع:* ${PAYMENT_LABELS_AR[args.paymentMethod]}
+${g.pay} *الدفع:* ${paymentLabel(args.paymentMethod, args.paymentStatus, "ar", Boolean(args.preferAscii))}
 ${g.ref} *المرجع:* ${ref}
 ${mapsBlockAr}${pinRequestAr}
 ${DIVIDER}
@@ -151,7 +171,7 @@ ${bookingUrl}
     ? `\n${g.where} *Location pin:* ${args.mapsUrl}\n`
     : "";
   const pinRequestEn = needsPinRequest
-    ? `\n${g.where} To help us find you, please share your live location via WhatsApp's location button 📍\n`
+    ? `\n${g.where} To help us find you, please share your live location via WhatsApp's location button${pinSuffix}\n`
     : "";
 
   return `${g.brand}*Razan Hijama Center*
@@ -165,7 +185,7 @@ ${g.service} *Service:* ${args.serviceNameEn}
 ${g.date} *Date:* ${date}
 ${g.time} *Time:* ${time}
 ${g.where} *Where:* ${whereEn}
-${g.pay} *Payment:* ${PAYMENT_LABELS_EN[args.paymentMethod]}
+${g.pay} *Payment:* ${paymentLabel(args.paymentMethod, args.paymentStatus, "en", Boolean(args.preferAscii))}
 ${g.ref} *Ref:* ${ref}
 ${mapsBlockEn}${pinRequestEn}
 ${DIVIDER}

@@ -286,10 +286,22 @@
           "description": "We'll send you our IBAN / phone number via WhatsApp after you book. Transfer the amount and send us the receipt before the visit."
         },
         "ONLINE_CARD": {
-          "name": "Pay online · Card · Apple Pay · Tabby",
-          "description": "Card and BNPL payments are launching soon. We're finalizing the merchant setup with our payment provider."
+          "name": "Pay online · Card · STC Pay",
+          "description": "Secure card payment via Moyasar — Visa, Mastercard, Mada, and STC Pay. Your card data goes directly to Moyasar, never our servers."
         }
       }
+    },
+    "pay": {
+      "eyebrow": "Payment",
+      "title": "Complete your payment",
+      "subtitle": "You're paying for {service}. Card details go directly to Moyasar — they're never seen or stored by Razan.",
+      "amountLabel": "Amount due",
+      "currency": "SAR",
+      "for": "{service}",
+      "notConfiguredTitle": "Online payments not configured",
+      "notConfiguredBody": "We're not currently accepting card payments. Please contact us on WhatsApp to switch to bank transfer or cash on arrival.",
+      "secured": "Secured by Moyasar · PCI-DSS Level 1 compliant · 3D Secure enabled",
+      "testMode": "Test mode — use card 4111 1111 1111 1111, any CVC, any future expiry"
     },
     "step5": {
       "short": "Review",
@@ -328,9 +340,14 @@
       "paymentMethod": {
         "CASH": "Cash on arrival",
         "TRANSFER": "Bank transfer · Mada Atheer · STC Pay",
-        "ONLINE_CARD": "Online card (coming soon)"
+        "ONLINE_CARD": "Pay online · Card · STC Pay"
       },
       "minutes": "min",
+      "paidTitle": "Payment received",
+      "paidBody": "Thank you. Your card was charged successfully and we've sent a confirmation to your WhatsApp.",
+      "paymentFailedTitle": "Payment didn't go through",
+      "paymentFailedBody": "Your appointment is held, but the card payment failed. You can retry now or switch to bank transfer / cash on arrival.",
+      "retryPayment": "Retry payment",
       "approvalNote": "Your appointment is pending our review. You'll receive a final WhatsApp confirmation shortly.",
       "whatsappCta": "Chat on WhatsApp",
       "whatsappPrefilled": "As-salamu alaykum, I just booked a hijama appointment and want to confirm it.",

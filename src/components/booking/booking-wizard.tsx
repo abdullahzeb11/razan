@@ -169,12 +169,16 @@ export function BookingWizard({
     }
 
     // Server confirmed the booking. Show the "booked!" state for a beat so
-    // the user gets explicit feedback, then navigate to the confirmation
-    // page — much less jarring than an abrupt route change.
+    // the user gets explicit feedback, then navigate. For card payments we
+    // send the customer to the Moyasar payment page; otherwise to the
+    // confirmation page directly.
     setSubmitting(false);
     setSuccess(true);
     setTimeout(() => {
-      router.push(`/book/confirmed/${res.id}`);
+      const dest = res.paymentRequired
+        ? `/book/pay/${res.id}`
+        : `/book/confirmed/${res.id}`;
+      router.push(dest);
     }, 700);
   }
 

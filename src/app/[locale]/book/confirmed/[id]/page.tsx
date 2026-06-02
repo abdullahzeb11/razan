@@ -22,10 +22,13 @@ export const dynamic = "force-dynamic";
 
 export default async function ConfirmedPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; id: string }>;
+  searchParams: Promise<{ payment?: string }>;
 }) {
   const { locale: rawLocale, id } = await params;
+  const sp = await searchParams;
   const locale: "ar" | "en" = rawLocale === "en" ? "en" : "ar";
   setRequestLocale(locale);
 
@@ -34,6 +37,13 @@ export default async function ConfirmedPage({
     include: { service: true },
   });
   if (!appointment) notFound();
+
+  // payment=paid|failed|verifying is set by the Moyasar callback so we can
+  // show a contextual banner. paymentStatus is the source of truth though —
+  // the query string is just a UX hint.
+  const justPaid = sp.payment === "paid" || appointment.paymentStatus === "PAID";
+  const paymentFailed =
+    sp.payment === "failed" || appointment.paymentStatus === "FAILED";
 
   const t = await getTranslations({ locale, namespace: "Booking.confirmed" });
 
@@ -142,6 +152,36 @@ export default async function ConfirmedPage({
             </Row>
           </dl>
         </div>
+
+        {justPaid && appointment.paymentMethod === "ONLINE_CARD" ? (
+          <div className="mt-6 flex items-start gap-3 rounded-2xl border border-primary/40 bg-primary/5 px-5 py-4">
+            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+            <div>
+              <p className="text-sm font-semibold text-foreground">
+                {t("paidTitle")}
+              </p>
+              <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+                {t("paidBody")}
+              </p>
+            </div>
+          </div>
+        ) : null}
+
+        {paymentFailed && appointment.paymentMethod === "ONLINE_CARD" ? (
+          <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-destructive/40 bg-destructive/5 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold text-destructive">
+                {t("paymentFailedTitle")}
+              </p>
+              <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+                {t("paymentFailedBody")}
+              </p>
+            </div>
+            <Button asChild variant="default" size="sm">
+              <Link href={`/book/pay/${id}`}>{t("retryPayment")}</Link>
+            </Button>
+          </div>
+        ) : null}
 
         <p className="mt-6 rounded-2xl border border-gold/30 bg-gold/5 px-5 py-4 text-sm leading-relaxed text-foreground">
           {t("approvalNote")}

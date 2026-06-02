@@ -63,6 +63,7 @@ export default async function AppointmentsPage({
     addressLine: a.addressLine,
     mapsUrl: a.mapsUrl,
     paymentMethod: a.paymentMethod,
+    paymentStatus: a.paymentStatus,
     serviceName: a.service.nameEn,
     serviceNameAr: a.service.nameAr,
     locale: (a.locale === "en" ? "en" : "ar") as "ar" | "en",

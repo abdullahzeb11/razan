@@ -6,6 +6,12 @@ import { cn } from "@/lib/utils";
 
 export type PaymentMethod = "CASH" | "TRANSFER" | "ONLINE_CARD";
 
+// ONLINE_CARD is enabled at build time only when a Moyasar publishable key is
+// configured. In test mode (sk_test_*) developers/recruiters can pay with the
+// Moyasar test cards. In production without a live key this stays disabled
+// and shows a "Coming soon" badge.
+const ONLINE_CARD_ENABLED = Boolean(process.env.NEXT_PUBLIC_MOYASAR_PUBLISHABLE_KEY);
+
 const OPTIONS: Array<{
   key: PaymentMethod;
   icon: typeof Banknote;
@@ -13,9 +19,7 @@ const OPTIONS: Array<{
 }> = [
   { key: "CASH", icon: Banknote, enabled: true },
   { key: "TRANSFER", icon: ArrowRightLeft, enabled: true },
-  // ONLINE_CARD is reserved for the future Moyasar integration. Disabled
-  // until the merchant account is live — see the "Coming soon" badge.
-  { key: "ONLINE_CARD", icon: CreditCard, enabled: false },
+  { key: "ONLINE_CARD", icon: CreditCard, enabled: ONLINE_CARD_ENABLED },
 ];
 
 export function StepPayment({

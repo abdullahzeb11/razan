@@ -137,13 +137,25 @@ enum AppointmentLocation {
 }
 
 // How the customer plans to pay. CASH = on arrival, TRANSFER = bank transfer /
-// Mada Atheer / STC Pay before the visit, ONLINE_CARD = card via processor
-// (reserved for a future Moyasar integration — disabled in the booking UI
-// until the merchant account is live).
+// Mada Atheer / STC Pay before the visit, ONLINE_CARD = card via Moyasar.
 enum PaymentMethod {
   CASH
   TRANSFER
   ONLINE_CARD
+}
+
+// Lifecycle of the payment itself, separate from how it was chosen.
+//   PENDING_OFFLINE — chose CASH or TRANSFER, payment happens out-of-band
+//   AWAITING_CARD   — chose ONLINE_CARD, sent to Moyasar but not paid yet
+//   PAID            — Moyasar confirmed the charge (or admin marked offline paid)
+//   FAILED          — Moyasar declined / cancelled
+//   REFUNDED        — refund processed
+enum PaymentStatus {
+  PENDING_OFFLINE
+  AWAITING_CARD
+  PAID
+  FAILED
+  REFUNDED
 }
 
 model Appointment {
@@ -172,6 +184,12 @@ model Appointment {
   // Payment method the customer selected at booking time. Default CASH
   // because that's the most common Saudi home-service expectation.
   paymentMethod PaymentMethod      @default(CASH)
+  // Status of the actual payment. For CASH/TRANSFER this stays
+  // PENDING_OFFLINE until the practitioner manually marks it PAID.
+  paymentStatus PaymentStatus      @default(PENDING_OFFLINE)
+  // Moyasar payment ID when paid online (e.g. "ee7e8e0b-1bd6..."). Lets
+  // us cross-reference against the Moyasar dashboard for reconciliation.
+  paymentTxnId  String?
   // Internal
   notes        String?             @db.Text
   cancelReason String?

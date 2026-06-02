@@ -43,6 +43,7 @@ export type AppointmentCardData = {
   addressLine: string | null;
   mapsUrl: string | null;     // Customer's Google Maps share link, if provided
   paymentMethod: "CASH" | "TRANSFER" | "ONLINE_CARD";
+  paymentStatus: "PENDING_OFFLINE" | "AWAITING_CARD" | "PAID" | "FAILED" | "REFUNDED";
   serviceName: string;        // English (shown on card)
   serviceNameAr: string;      // Arabic (used in Arabic WhatsApp message)
   locale: "ar" | "en";        // Locale the customer booked in
@@ -171,6 +172,19 @@ export function AppointmentCard({ a }: { a: AppointmentCardData }) {
         ) : null}
         <Row icon={paymentIcon(a.paymentMethod)}>
           <span className="truncate">{paymentLabel(a.paymentMethod)}</span>
+          {a.paymentStatus === "PAID" ? (
+            <span className="ms-1.5 inline-flex items-center rounded-full bg-primary/15 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-primary">
+              Paid
+            </span>
+          ) : a.paymentStatus === "FAILED" ? (
+            <span className="ms-1.5 inline-flex items-center rounded-full bg-destructive/15 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-destructive">
+              Failed
+            </span>
+          ) : a.paymentStatus === "AWAITING_CARD" ? (
+            <span className="ms-1.5 inline-flex items-center rounded-full bg-gold/15 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-gold-foreground dark:text-gold">
+              Awaiting
+            </span>
+          ) : null}
         </Row>
       </dl>
 
@@ -302,7 +316,7 @@ function paymentLabel(method: AppointmentCardData["paymentMethod"]): string {
     case "TRANSFER":
       return "Bank transfer";
     case "ONLINE_CARD":
-      return "Online card (pending)";
+      return "Online card";
   }
 }
 

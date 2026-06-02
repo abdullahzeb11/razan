@@ -13,7 +13,7 @@ import { siteConfig } from "@/lib/site-config";
 import { sendEmail, emailShell, escapeHtml } from "@/lib/email";
 
 type Result =
-  | { ok: true; id: string }
+  | { ok: true; id: string; paymentRequired: boolean }
   | { ok: false; error: string; field?: keyof AppointmentInput };
 
 export async function createAppointment(raw: unknown): Promise<Result> {
@@ -51,8 +51,25 @@ export async function createAppointment(raw: unknown): Promise<Result> {
   const phone = normalizePhone(input.guestPhone);
 
   // If the booker is signed in, link the appointment to their account.
+  // We verify the user still exists in the DB — sessions can outlive the user
+  // record (deleted account, wiped dev DB, etc.) and a stale id would trip
+  // the FK constraint when we try to create the appointment.
   const session = await auth();
-  const userId = session?.user?.id ?? null;
+  let userId: string | null = session?.user?.id ?? null;
+  if (userId) {
+    const exists = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true },
+    });
+    if (!exists) userId = null;
+  }
+
+  // For online card bookings the appointment starts as AWAITING_CARD — the
+  // payment page completes the charge and flips it to PAID via the callback.
+  // Offline methods (cash / transfer) start as PENDING_OFFLINE until the
+  // practitioner manually marks them paid in the admin panel.
+  const initialPaymentStatus =
+    input.paymentMethod === "ONLINE_CARD" ? "AWAITING_CARD" : "PENDING_OFFLINE";
 
   const appointment = await prisma.appointment.create({
     data: {
@@ -70,6 +87,7 @@ export async function createAppointment(raw: unknown): Promise<Result> {
       city: input.city || null,
       mapsUrl: input.mapsUrl || null,
       paymentMethod: input.paymentMethod,
+      paymentStatus: initialPaymentStatus,
       notes: input.notes || null,
       status: "PENDING",
     },
@@ -77,9 +95,13 @@ export async function createAppointment(raw: unknown): Promise<Result> {
 
   const serviceName = input.locale === "ar" ? service.nameAr : service.nameEn;
 
+  // Skip notifications when payment is still pending — we'll fire them after
+  // the customer completes the Moyasar charge (handled in the callback).
+  const paymentRequired = input.paymentMethod === "ONLINE_CARD";
+
   // Fire-and-forget notifications. WhatsApp send is a no-op without Meta
   // Cloud API credentials; the email notification fires on Resend setup.
-  void notifyOnBooking({
+  if (!paymentRequired) void notifyOnBooking({
     appointmentId: appointment.id,
     customerName: input.guestName,
     customerPhone: phone,
@@ -93,14 +115,15 @@ export async function createAppointment(raw: unknown): Promise<Result> {
     addressLine: input.addressLine || null,
     mapsUrl: input.mapsUrl || null,
     paymentMethod: input.paymentMethod,
+    paymentStatus: initialPaymentStatus,
     notes: input.notes || null,
     locale: input.locale,
   });
 
-  return { ok: true, id: appointment.id };
+  return { ok: true, id: appointment.id, paymentRequired };
 }
 
-async function notifyOnBooking(args: {
+export async function notifyOnBooking(args: {
   appointmentId: string;
   customerName: string;
   customerPhone: string;
@@ -114,6 +137,7 @@ async function notifyOnBooking(args: {
   addressLine: string | null;
   mapsUrl: string | null;
   paymentMethod: "CASH" | "TRANSFER" | "ONLINE_CARD";
+  paymentStatus: "PENDING_OFFLINE" | "AWAITING_CARD" | "PAID" | "FAILED" | "REFUNDED";
   notes: string | null;
   locale: "ar" | "en";
 }) {
@@ -171,7 +195,7 @@ async function notifyOnBooking(args: {
   <tr><td style="padding:6px 0; color:#666;">When</td><td style="padding:6px 0;"><strong>${escapeHtml(enDate)} · ${escapeHtml(enTime)}</strong></td></tr>
   <tr><td style="padding:6px 0; color:#666;">Where</td><td style="padding:6px 0;">${args.location === "HOME_VISIT" ? `Home visit${args.addressLine ? ` — ${escapeHtml(args.addressLine)}` : ""}` : "At the clinic"}</td></tr>
   ${args.mapsUrl ? `<tr><td style="padding:6px 0; color:#666;">Map</td><td style="padding:6px 0;"><a href="${escapeHtml(args.mapsUrl)}" style="color:#0E6E5A; text-decoration:none; font-weight:600;">Open in Google Maps →</a></td></tr>` : ""}
-  <tr><td style="padding:6px 0; color:#666;">Payment</td><td style="padding:6px 0;">${paymentLabel(args.paymentMethod)}</td></tr>
+  <tr><td style="padding:6px 0; color:#666;">Payment</td><td style="padding:6px 0;">${paymentLabel(args.paymentMethod, args.paymentStatus)}</td></tr>
   <tr><td style="padding:6px 0; color:#666;">Ref</td><td style="padding:6px 0; font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; color:#888;">${escapeHtml(ref)}</td></tr>
 </table>
 ${args.notes ? `<div style="margin-top:8px; padding:12px 14px; border-radius:8px; background:#fafaf7; border-left:3px solid #C9A961; white-space:pre-wrap; font-size:14px;"><strong style="color:#666; font-size:12px;">Notes:</strong><br>${escapeHtml(args.notes)}</div>` : ""}
@@ -191,13 +215,17 @@ ${args.notes ? `<div style="margin-top:8px; padding:12px 14px; border-radius:8px
   });
 }
 
-function paymentLabel(method: "CASH" | "TRANSFER" | "ONLINE_CARD"): string {
-  switch (method) {
-    case "CASH":
-      return "Cash on arrival";
-    case "TRANSFER":
-      return "Bank transfer / Mada Atheer / STC Pay";
-    case "ONLINE_CARD":
-      return "Online card (pending)";
-  }
+function paymentLabel(
+  method: "CASH" | "TRANSFER" | "ONLINE_CARD",
+  status: "PENDING_OFFLINE" | "AWAITING_CARD" | "PAID" | "FAILED" | "REFUNDED",
+): string {
+  if (method === "CASH") return "Cash on arrival";
+  if (method === "TRANSFER") return "Bank transfer / Mada Atheer / STC Pay";
+  // ONLINE_CARD — the email arrives after payment verification, so status is
+  // the source of truth. Use clear visual cues so the admin can see at a
+  // glance whether the customer has already paid or still owes.
+  if (status === "PAID") return "💳 Online card — <strong style=\"color:#0E6E5A;\">Paid ✓</strong>";
+  if (status === "FAILED") return "💳 Online card — <strong style=\"color:#b91c1c;\">Failed</strong>";
+  if (status === "REFUNDED") return "💳 Online card — Refunded";
+  return "💳 Online card — Pending";
 }
