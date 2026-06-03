@@ -43,7 +43,19 @@ export function Navbar({ isSignedIn = false }: { isSignedIn?: boolean }) {
       )}
     >
       <div className="container-wide flex h-[72px] items-center justify-between gap-4">
-        <Link href="/" aria-label={siteConfig.brand.shortEn}>
+        <Link
+          href="/"
+          aria-label={siteConfig.brand.shortEn}
+          onClick={(e) => {
+            // Next.js skips navigation when href matches the current route, which
+            // makes the logo feel "dead" on the homepage. When we're already on
+            // home, intercept the click and smooth-scroll to top instead.
+            if (onHome) {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+        >
           <LogoWordmark locale={locale} />
         </Link>
 
