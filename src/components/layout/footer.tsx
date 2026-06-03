@@ -212,14 +212,14 @@ function NewsletterForm({ locale }: { locale: "ar" | "en" }) {
         disabled={state === "pending"}
         autoComplete="email"
         inputMode="email"
-        className="h-14 w-full flex-1 rounded-2xl border border-border bg-background px-5 text-base placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50 sm:h-11 sm:rounded-full sm:px-4 sm:text-sm"
+        className="h-16 w-full flex-1 rounded-2xl border border-border bg-background px-5 text-base placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50 sm:h-11 sm:rounded-full sm:px-4 sm:text-sm"
       />
       <Button
         type="submit"
         variant="default"
         size="sm"
         disabled={state === "pending" || !email.trim()}
-        className="h-14 w-full justify-center rounded-2xl px-5 text-base sm:h-11 sm:w-auto sm:rounded-full sm:text-sm"
+        className="h-16 w-full justify-center rounded-2xl px-5 text-base sm:h-11 sm:w-auto sm:rounded-full sm:text-sm"
       >
         {state === "pending" ? (
           <>
