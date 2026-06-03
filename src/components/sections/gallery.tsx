@@ -103,6 +103,11 @@ function BeforeAfterCard({
   const [beforeOk, setBeforeOk] = React.useState(Boolean(beforeUrl));
   const [afterOk, setAfterOk] = React.useState(Boolean(afterUrl));
   const ref = React.useRef<HTMLDivElement>(null);
+  // Only update the slider while the user is actively pressing — never on
+  // passive touchmove. Combined with `touch-pan-y` on the container, vertical
+  // page scrolling stays handled by the browser, only horizontal drags reach
+  // the slider.
+  const draggingRef = React.useRef(false);
 
   const onMove = (clientX: number) => {
     const el = ref.current;
@@ -110,6 +115,30 @@ function BeforeAfterCard({
     const rect = el.getBoundingClientRect();
     const pct = ((clientX - rect.left) / rect.width) * 100;
     setPos(Math.max(0, Math.min(100, pct)));
+  };
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    draggingRef.current = true;
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      // Older browsers may not support pointer capture — degrades to free-cursor tracking.
+    }
+    onMove(e.clientX);
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!draggingRef.current) return;
+    onMove(e.clientX);
+  };
+
+  const stopDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    draggingRef.current = false;
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {
+      // ignore
+    }
   };
 
   return (
@@ -122,9 +151,11 @@ function BeforeAfterCard({
     >
       <div
         ref={ref}
-        className="relative h-full w-full cursor-ew-resize select-none touch-none"
-        onMouseMove={(e) => onMove(e.clientX)}
-        onTouchMove={(e) => onMove(e.touches[0].clientX)}
+        className="relative h-full w-full cursor-ew-resize select-none touch-pan-y"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={stopDrag}
+        onPointerCancel={stopDrag}
       >
         {/* AFTER base layer — the real cupping photo (with gradient fallback) */}
         <div
