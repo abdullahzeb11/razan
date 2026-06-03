@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Loader2,
+  AtSign,
 } from "lucide-react";
 import { Link, usePathname } from "@/i18n/routing";
 import { LogoWordmark } from "@/components/brand/logo";
@@ -201,22 +202,25 @@ function NewsletterForm({ locale }: { locale: "ar" | "en" }) {
       <label className="sr-only" htmlFor="newsletter">
         {t("newsletterTitle")}
       </label>
-      <input
-        id="newsletter"
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder={t("newsletterPlaceholder")}
-        disabled={state === "pending"}
-        autoComplete="email"
-        inputMode="email"
-        className="h-12 w-full flex-1 rounded-xl border border-border bg-card px-4 text-base placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50 sm:h-11 sm:rounded-full sm:text-sm"
-      />
+      <div className="relative w-full flex-1">
+        <AtSign className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <input
+          id="newsletter"
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={t("newsletterPlaceholder")}
+          disabled={state === "pending"}
+          autoComplete="email"
+          inputMode="email"
+          className="h-12 w-full rounded-xl border border-border bg-background ps-11 pe-4 text-base text-foreground placeholder:text-muted-foreground/70 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50 sm:h-11 sm:rounded-full sm:ps-10 sm:text-sm"
+        />
+      </div>
       <button
         type="submit"
         disabled={state === "pending" || !email.trim()}
-        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-soft transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50 sm:h-11 sm:w-auto sm:rounded-full"
+        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:bg-primary/90 hover:shadow-elevated disabled:cursor-not-allowed disabled:opacity-50 sm:h-11 sm:w-auto sm:rounded-full"
       >
         {state === "pending" ? (
           <>
