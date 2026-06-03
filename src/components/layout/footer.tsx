@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import { Link, usePathname } from "@/i18n/routing";
 import { LogoWordmark } from "@/components/brand/logo";
-import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site-config";
 import { waLink } from "@/lib/utils";
 import { subscribeNewsletter } from "@/app/actions/newsletter";
@@ -212,14 +211,12 @@ function NewsletterForm({ locale }: { locale: "ar" | "en" }) {
         disabled={state === "pending"}
         autoComplete="email"
         inputMode="email"
-        className="h-16 w-full flex-1 rounded-2xl border-2 border-border bg-card px-5 text-lg placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50 sm:h-11 sm:rounded-full sm:border sm:px-4 sm:text-sm"
+        className="h-12 w-full flex-1 rounded-xl border border-border bg-card px-4 text-base placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50 sm:h-11 sm:rounded-full sm:text-sm"
       />
-      <Button
+      <button
         type="submit"
-        variant="default"
-        size="sm"
         disabled={state === "pending" || !email.trim()}
-        className="h-16 w-full justify-center rounded-2xl px-5 text-base font-semibold sm:h-11 sm:w-auto sm:rounded-full sm:text-sm"
+        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-soft transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50 sm:h-11 sm:w-auto sm:rounded-full"
       >
         {state === "pending" ? (
           <>
@@ -232,7 +229,7 @@ function NewsletterForm({ locale }: { locale: "ar" | "en" }) {
             {t("subscribe")}
           </>
         )}
-      </Button>
+      </button>
       {error ? (
         <div className="flex items-start gap-2 text-xs text-destructive sm:basis-full">
           <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
