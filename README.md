@@ -105,7 +105,7 @@ Toggle to English via the globe icon in the navbar.
    ```bash
    git init && git add . && git commit -m "feat: razan hijama platform — turn 1"
    git branch -M main
-   git remote add origin git@github.com:<you>/hijama-clinic.git
+   git remote add origin git@github.com:<you>/razan.git
    git push -u origin main
    ```
 2. <https://vercel.com/new> → **Import** the repo → keep the auto-detected
