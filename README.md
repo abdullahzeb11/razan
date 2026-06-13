@@ -46,7 +46,7 @@ platform for hijama in Saudi Arabia. Built like a real funded SaaS product.
 ## 3 · Run it locally
 
 ```bash
-cd ~/projects/hijama-clinic
+cd ~/projects/razan
 cp .env.example .env
 
 # (Optional for turn 1 — only needed once you plug Supabase)
@@ -160,7 +160,7 @@ For automated messages we use the **WhatsApp Business Cloud API** (Meta Graph):
 ## 7 · Project structure
 
 ```
-hijama-clinic/
+razan/
 ├── prisma/
 │   └── schema.prisma              # Full platform schema (every module)
 ├── messages/
