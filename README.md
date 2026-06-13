@@ -1,4 +1,4 @@
-# Al-Shifa · مركز الشفاء للحجامة
+# Razan · مركز رزان للحجامة
 
 **The sunnah of healing, refined.** A premium Arabic + English clinic & booking
 platform for hijama in Saudi Arabia. Built like a real funded SaaS product.
@@ -103,7 +103,7 @@ Toggle to English via the globe icon in the navbar.
 
 1. Push the repo to GitHub.
    ```bash
-   git init && git add . && git commit -m "feat: al-shifa hijama platform — turn 1"
+   git init && git add . && git commit -m "feat: razan hijama platform — turn 1"
    git branch -M main
    git remote add origin git@github.com:<you>/hijama-clinic.git
    git push -u origin main
@@ -113,7 +113,7 @@ Toggle to English via the globe icon in the navbar.
 3. **Environment Variables** → paste every key from `.env.example` filled in.
 4. Deploy. Vercel runs `prisma generate && next build` because that’s our build
    script — no extra config needed.
-5. After deploy, set the production domain (e.g. `alshifa.sa`) and re-deploy so
+5. After deploy, set the production domain (e.g. `razan.sa`) and re-deploy so
    `metadataBase`, `sitemap`, and `robots.txt` pick it up via `NEXT_PUBLIC_SITE_URL`.
 
 ### Free hosting options
